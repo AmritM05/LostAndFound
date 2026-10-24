@@ -19,7 +19,12 @@ export default function PrivatePhoto({
         setFilename(data.filename);
         setFailed(
           !data.hasPreview &&
-            ["image/heic", "image/heif"].includes(data.mimeType),
+            [
+              "image/heic",
+              "image/heif",
+              "image/heic-sequence",
+              "image/heif-sequence",
+            ].includes(data.mimeType),
         );
         setReady(true);
       })

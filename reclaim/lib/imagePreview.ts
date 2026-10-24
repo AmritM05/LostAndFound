@@ -60,7 +60,29 @@ async function prepare(file: File): Promise<Preview> {
 export async function imagePreview(file: File): Promise<Preview> {
   let task = cache.get(file);
   if (!task) {
-    task = prepare(file);
+    task = new Promise<Preview>((resolve) => {
+      const timer = setTimeout(
+        () =>
+          resolve({
+            warning:
+              "Preview unavailable for this image. The original file can still be uploaded and downloaded.",
+          }),
+        12000,
+      );
+      prepare(file).then(
+        (result) => {
+          clearTimeout(timer);
+          resolve(result);
+        },
+        () => {
+          clearTimeout(timer);
+          resolve({
+            warning:
+              "Preview unavailable. The original file can still be uploaded.",
+          });
+        },
+      );
+    });
     cache.set(file, task);
   }
   const result = await task;

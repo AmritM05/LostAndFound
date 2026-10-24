@@ -20,7 +20,6 @@ DATABASE_URL=
 BLOB_READ_WRITE_TOKEN=
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
 NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID=
-NEXT_PUBLIC_MAX_IMAGE_UPLOAD_MB=25
 NEXT_PUBLIC_ALLOWED_EMAIL_DOMAINS=
 ```
 
@@ -28,7 +27,7 @@ Never prefix `DATABASE_URL` or `BLOB_READ_WRITE_TOKEN` with `NEXT_PUBLIC`. Neith
 
 ### Neon dashboard
 
-Create/select a Neon PostgreSQL project and database, open **Connect**, and copy the full PostgreSQL connection string (beginning `postgresql://`, including user, password, hostname, database, and SSL parameters). Put only that connection string in `DATABASE_URL`, not a project ID, key, hostname, `psql` command, or SQL statement. Run `npm run db:migrate` from this directory. The idempotent migration creates the relational schema and upserts all 251 bundled OSU buildings. Use a dedicated application database/role; keep access server-side.
+Create/select a Neon PostgreSQL project and database, open **Connect**, and copy the full PostgreSQL connection string (beginning `postgresql://`, including user, password, hostname, database, and SSL parameters). Put only that connection string in `DATABASE_URL`, not a project ID, key, hostname, `psql` command, or SQL statement. Run `npm run db:migrate` from this directory. The migration command applies every idempotent SQL migration in `db/migrations/`, then creates the relational schema and upserts all 251 bundled OSU buildings. Use a dedicated application database/role; keep access server-side.
 
 The migration script reports configuration failures without printing credentials. It uses Neon's WebSocket driver for the migration batch; application queries use Neon's HTTP driver with parameterized SQL. No ORM is required.
 
@@ -70,7 +69,7 @@ Queries enforce ownership server-side. The app does not rely on old Supabase RLS
 
 ## Private images and HEIC
 
-JPEG/JPG, PNG, WebP, HEIC, and HEIF are supported, including HEIC/HEIF files with missing or generic MIME types and valid extensions. The shared `lib/uploadConfig.ts` controls the default **25 MB per image**, up to three files. The browser and upload token route apply the same limit. Over-limit errors name the configured limit. File picking, mobile photo/camera selection, desktop drop, preview preparation, removal, upload progress, and upload failure/retry are supported.
+JPEG/JPG, PNG, WebP, HEIC, and HEIF are supported, including HEIC/HEIF files with missing or generic MIME types and valid extensions. The shared `lib/uploadConfig.ts` enforces **25 MB per image**, up to three files. The browser and upload token route apply the same limit. The policy is a single source constant; an old environment value cannot silently lower it to 3 MB. HEIC/HEIF sequence MIME types are normalized, and extension fallback handles imperfect iPhone MIME values. File picking, mobile photo/camera selection, desktop drop, preview preparation, removal, upload progress, and upload failure/retry are supported.
 
 The original file is preserved. HEIC conversion runs lazily in the browser using heic2any; compatible previews are resized to a maximum dimension of 1600 pixels and encoded as WebP. Original quality is not destroyed. Some HEIC codecs/devices may fail preview conversion; the file remains accepted with a clear warning and original download. A failed preview upload does not discard the original. Private photo views request compatible previews where present; unsupported HEIC originals are offered as downloads instead of loaded as broken full-size images. Conversion can still require substantial memory for exceptionally large pixel dimensions on older phones.
 
@@ -93,7 +92,24 @@ Live verification requires valid `DATABASE_URL`, a private store token, and the 
 ## Main implementation files
 
 - `lib/server/`, `app/api/`: server-only database, sessions, report CRUD, private image authorization and safe search
-- `db/migrations/001_student_backend.sql`, `scripts/migrate.mts`: Neon schema and campus seed
+- `db/migrations/001_student_backend.sql`, `002_report_deletion.sql`, `scripts/migrate.mts`: Neon schema, deletion protection, and campus seed
 - `services/sessionService.ts`, `workspaceService.ts`, `storageService.ts`: client API adapters and direct private Blob uploads
 - `components/AuthForm.tsx`, `PhotoUploader.tsx`, `PrivatePhoto.tsx`, `components/portal/`: existing student UX integration
 - `lib/uploadConfig.ts`, `imagePreview.ts`: upload limits, HEIC compatibility, optimized previews
+
+
+## Report deletion and upload refinement
+
+`db/migrations/002_report_deletion.sql` adds owner-checked transactional deletion, a shared active-recovery predicate, and a durable Blob cleanup queue. Apply it with `npm run db:migrate` before using the new workspace projection/deletion route.
+
+From an owned lost report’s details, choose **Delete Report**, then confirm or cancel. An active verification/approved claim/unused pickup prevents deletion both in the UI and in PostgreSQL. The server obtains ownership from the existing session, never from a submitted email or reporter ID. Deletion removes private details, image metadata, notes, related matches, inactive claims/pickups, and report-specific updates. Other reports, unrelated image records and notices are retained. Dashboard counts refresh without a full reload.
+
+Blob paths are queued in the same transaction before their database image records disappear. The server attempts private Blob deletion after the commit. A Blob failure is logged and retained as a retry job while the UI correctly removes the report and says **Report deleted.** Retry pending files with:
+
+```sh
+npm run blobs:cleanup
+```
+
+The picker, drag/drop, upload service, reservation route, token route, and completion route share `lib/uploadConfig.ts`. Files travel directly to private Blob storage (multipart for large files); the app request-body cap applies only to small JSON metadata. The 1 MB WebP preview cap is separate from the 25 MB **original per-image** limit. Preview conversion times out with a fallback rather than blocking the original upload or report.
+
+The former 3 MB/JPEG-PNG-WebP restriction still appears only in the archived Supabase bucket SQL, which is not executed by this application. The earlier hosted static browser demo also contains its own historical 3 MB restriction. Local fixes do not update that old deployment: deploy the current Next.js server application to see these fixes live. Do not reapply the archived Supabase schema to Neon.

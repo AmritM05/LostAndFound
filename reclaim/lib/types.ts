@@ -9,6 +9,7 @@ export type ItemStatus =
   | "Secured"
   | "Archived";
 export interface Item {
+  deletionBlocked?: boolean;
   id: string;
   reporterId: string;
   type: ReportType;

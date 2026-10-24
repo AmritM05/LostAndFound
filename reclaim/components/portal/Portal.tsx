@@ -43,6 +43,7 @@ import { signOut } from "../../services/sessionService";
 import { Claim, Item, Match, PublicReport, DropoffZone } from "../../lib/types";
 import * as api from "../../services/workspaceService";
 import PrivatePhoto from "../PrivatePhoto";
+import DeleteReportAction from "../DeleteReportAction";
 import { getPrivatePhotoUrls } from "../../services/storageService";
 const studentNav = [
   { id: "overview", name: "Overview", icon: LayoutDashboard },
@@ -1752,6 +1753,26 @@ export default function Portal({
                     >
                       Edit lost report
                     </button>
+                  )}
+                {!adminPortal &&
+                  selectedItem.type === "lost" &&
+                  selectedItem.reporterId === user?.id && (
+                    <DeleteReportAction
+                      key={selectedItem.id}
+                      reportId={selectedItem.id}
+                      blocked={
+                        !!state.items.find(
+                          (item) => item.id === selectedItem.id,
+                        )?.deletionBlocked
+                      }
+                      onDeleted={() => {
+                        setSelectedItem(null);
+                        setEditing(false);
+                        setSelectedMatch(null);
+                        setToast("Report deleted.");
+                        void refresh();
+                      }}
+                    />
                   )}
                 {editing && !adminPortal && (
                   <EditLostReport

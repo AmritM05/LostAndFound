@@ -102,3 +102,11 @@ export async function connectSearchReport(
 ): Promise<MatchResult> {
   return unavailable();
 }
+
+export async function deleteReport(id: string) {
+  const result = await request(`/api/reports/${encodeURIComponent(id)}/`, {
+    method: "DELETE",
+  });
+  workspaceChanged();
+  return result;
+}

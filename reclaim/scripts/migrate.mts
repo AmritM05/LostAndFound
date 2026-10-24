@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { Pool, neonConfig } from "@neondatabase/serverless";
 import { campus } from "../lib/campus";
 if (!process.env.DATABASE_URL) {
@@ -26,12 +26,11 @@ try {
 neonConfig.webSocketConstructor = WebSocket;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL, max: 1 });
 try {
-  await pool.query(
-    await readFile(
-      new URL("../db/migrations/001_student_backend.sql", import.meta.url),
-      "utf8",
-    ),
-  );
+  const directory = new URL("../db/migrations/", import.meta.url);
+  for (const file of (await readdir(directory))
+    .filter((name) => name.endsWith(".sql"))
+    .sort())
+    await pool.query(await readFile(new URL(file, directory), "utf8"));
   await pool.query(
     `insert into buildings(id,campus_id,name,aliases,latitude,longitude,active)
  select b.id,$2,b.name,coalesce(b.aliases,'{}'),b.lat,b.lng,coalesce(b.active,true)

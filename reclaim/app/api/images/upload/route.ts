@@ -1,3 +1,7 @@
+import {
+  MAX_IMAGE_UPLOAD_BYTES,
+  validateImage,
+} from "../../../../lib/uploadConfig";
 import { handleUpload, type HandleUploadBody } from "@vercel/blob/client";
 import {
   endpoint,
@@ -27,10 +31,18 @@ export async function POST(request: Request) {
             "This upload is unavailable. Select the image again.",
             403,
           );
+        const policyError = validateImage({
+          name: image.filename,
+          type: image.mime_type,
+          size: Number(image.byte_size),
+        });
+        if (policyError) throw new ApiError(policyError);
         const preview = image.preview_pathname === pathname;
         return {
           allowedContentTypes: [preview ? "image/webp" : image.mime_type],
-          maximumSizeInBytes: preview ? 1024 * 1024 : Number(image.byte_size),
+          maximumSizeInBytes: preview
+            ? 1024 * 1024
+            : Math.min(MAX_IMAGE_UPLOAD_BYTES, Number(image.byte_size)),
           validUntil: Date.now() + 15 * 60000,
           addRandomSuffix: false,
           allowOverwrite: false,

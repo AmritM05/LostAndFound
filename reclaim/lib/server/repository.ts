@@ -6,7 +6,7 @@ export function repository(query: Query) {
       const [reports, images, details, updates, matches, claims, messages] =
         await Promise.all([
           query(
-            "select * from reports where reporter_id=$1 and report_type='lost' order by created_at desc",
+            "select *,has_active_recovery(id) as deletion_blocked from reports where reporter_id=$1 and report_type='lost' order by created_at desc",
             [user.id],
           ),
           query(
@@ -35,6 +35,7 @@ export function repository(query: Query) {
         state: {
           items: reports.map((r) => ({
             id: r.id,
+            deletionBlocked: !!r.deletion_blocked,
             reporterId: r.reporter_id,
             type: r.report_type,
             name: r.item_name,
@@ -112,6 +113,13 @@ export function repository(query: Query) {
         imageIds,
         edit,
       ]);
+    },
+    async deleteReport(user: Profile, id: string) {
+      const [row] = await query(
+        "select delete_own_lost_report($1,$2) as deleted",
+        [user.id, id],
+      );
+      return !!row?.deleted;
     },
     async search(): Promise<PublicReport[]> {
       return await query(

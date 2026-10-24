@@ -1,3 +1,4 @@
+import { validateImage } from "../../../../../lib/uploadConfig";
 import { head } from "@vercel/blob";
 import {
   endpoint,
@@ -25,6 +26,12 @@ export async function POST(
       [id, user.id],
     );
     if (!image) throw new ApiError("Image not found.", 404);
+    const invalid = validateImage({
+      name: image.filename,
+      type: image.mime_type,
+      size: Number(image.byte_size),
+    });
+    if (invalid) throw new ApiError(invalid);
     const blob = await head(image.blob_pathname);
     if (
       !new URL(blob.url).hostname.endsWith(

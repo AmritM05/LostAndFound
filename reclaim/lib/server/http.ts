@@ -30,6 +30,7 @@ export async function endpoint(action: () => Promise<Response>) {
         "Choose valid coordinates or location unknown",
         "Report not found",
         "This report has an active claim",
+        "This report cannot be deleted while an active recovery is in progress.",
         "Report ID unavailable",
         "Choose up to three unique images",
         "Image upload is incomplete or unavailable",
@@ -37,7 +38,12 @@ export async function endpoint(action: () => Promise<Response>) {
       if (allowed.includes(message))
         return json(
           { error: message },
-          message === "Report not found" ? 404 : 400,
+          message === "Report not found"
+            ? 404
+            : message ===
+                "This report cannot be deleted while an active recovery is in progress."
+              ? 409
+              : 400,
         );
     }
     console.error("[Magpie API] Request failed", {

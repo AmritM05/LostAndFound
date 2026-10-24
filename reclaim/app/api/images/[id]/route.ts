@@ -39,7 +39,15 @@ export async function GET(
       Vary: "Cookie",
       "X-Content-Type-Options": "nosniff",
     });
-    if (original || ["image/heic", "image/heif"].includes(type))
+    if (
+      original ||
+      [
+        "image/heic",
+        "image/heif",
+        "image/heic-sequence",
+        "image/heif-sequence",
+      ].includes(type)
+    )
       headers.set(
         "Content-Disposition",
         `attachment; filename*=UTF-8''${encodeURIComponent(image.filename)}`,

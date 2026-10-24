@@ -3112,3 +3112,11 @@ label > .required {
 progress { width: 100%; accent-color: var(--blue); }
 .private-photo-grid > div > img { width: 100%; object-fit: contain; max-height: 400px; }
 .private-photo-grid > div > a { display: block; margin-top: 8px; font-size: 11px; }
+
+.delete-report-action { margin: 18px 0; }
+.destructive { color: #a33d37; font-size: 12px; }
+.delete-confirmation { padding: 18px; border: 1px solid #e8c5c2; background: #fff7f6; border-radius: 6px; }
+.delete-confirmation p { margin-top: 8px; font-size: 12px; }
+.delete-confirmation-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.button.danger { background: #a33d37; color: #fff; }
+.button.danger:hover { background: #872f2a; }

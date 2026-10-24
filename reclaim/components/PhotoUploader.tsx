@@ -7,6 +7,7 @@ import {
   MAX_IMAGE_UPLOAD_MB,
   MAX_IMAGES,
   IMAGE_ACCEPT,
+  imageType,
 } from "../lib/uploadConfig";
 export default function PhotoUploader({
   files,
@@ -113,7 +114,10 @@ export default function PhotoUploader({
               <small>
                 {(file.size / 1024 / 1024).toFixed(1)} MB ·{" "}
                 {previews[index]
-                  ? previews[index].warning ||
+                  ? (previews[index].warning &&
+                    ["image/heic", "image/heif"].includes(imageType(file) || "")
+                      ? "HEIC/HEIF image selected · Preview unavailable; original will upload."
+                      : previews[index].warning) ||
                     "Preview ready · original preserved"
                   : "Preparing preview…"}
               </small>
