@@ -1,0 +1,3056 @@
+{
+  "id": "osu-columbus",
+  "name": "Ohio State \u00b7 Columbus",
+  "center": {
+    "lat": 40.0005,
+    "lng": -83.0148
+  },
+  "source": "https://gissvc.osu.edu/arcgis/rest/services/Apps/Campusmap_Buildings_POI/MapServer/1",
+  "retrieved": "2026-10-24",
+  "locations": [
+    {
+      "id": "osu-0191",
+      "name": "4-H Center",
+      "aliases": [],
+      "lat": 40.00789332,
+      "lng": -83.02851216,
+      "address": "2201 Fred Taylor Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1923",
+      "name": "4-H Center - Hoop Greenhouse A",
+      "aliases": [
+        "Greenhouse A"
+      ],
+      "lat": 40.00793623,
+      "lng": -83.02970933,
+      "address": "2201 Fred Taylor Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1924",
+      "name": "4-H Center - Hoop Greenhouse B",
+      "aliases": [
+        "Greenhouse B"
+      ],
+      "lat": 40.00779973,
+      "lng": -83.02969812,
+      "address": "2201 Fred Taylor Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1925",
+      "name": "4-H Center - Hoop Greenhouse C",
+      "aliases": [
+        "Greenhouse C"
+      ],
+      "lat": 40.0076959,
+      "lng": -83.02970589,
+      "address": "2201 Fred Taylor Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1926",
+      "name": "4-H Center - Hoop Greenhouse D",
+      "aliases": [
+        "Greenhouse D"
+      ],
+      "lat": 40.00756071,
+      "lng": -83.02971494,
+      "address": "2201 Fred Taylor Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0211",
+      "name": "Adventure Recreation Center",
+      "aliases": [
+        "ARC"
+      ],
+      "lat": 40.00268456,
+      "lng": -83.03176181,
+      "address": "855 Woody Hayes Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0003",
+      "name": "Agricultural Administration",
+      "aliases": [],
+      "lat": 40.00542636,
+      "lng": -83.02722587,
+      "address": "2120 Fyffe Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0298",
+      "name": "Agricultural Engineering Building",
+      "aliases": [
+        "Agricultural Engineering"
+      ],
+      "lat": 40.00551784,
+      "lng": -83.02498459,
+      "address": "590 Woody Hayes Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0156",
+      "name": "Animal Science Building",
+      "aliases": [
+        "Animal Science Bldg"
+      ],
+      "lat": 40.00363109,
+      "lng": -83.02864867,
+      "address": "2029 Fyffe Ct",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0261",
+      "name": "Archer House",
+      "aliases": [],
+      "lat": 40.00527853,
+      "lng": -83.0140993,
+      "address": "2130 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0131",
+      "name": "Aronoff Laboratory",
+      "aliases": [
+        "Aronoff Lab"
+      ],
+      "lat": 39.99678149,
+      "lng": -83.01676517,
+      "address": "318 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0011",
+      "name": "Arps Hall",
+      "aliases": [],
+      "lat": 40.00193109,
+      "lng": -83.00946551,
+      "address": "1945 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0304",
+      "name": "Athletic Maintenance",
+      "aliases": [],
+      "lat": 40.01107157,
+      "lng": -83.02623545,
+      "address": "2402 Fred Taylor Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0306",
+      "name": "Atwell Hall",
+      "aliases": [],
+      "lat": 39.9936196,
+      "lng": -83.01875209,
+      "address": "453 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0095",
+      "name": "Baker Hall",
+      "aliases": [
+        "Baker Commons"
+      ],
+      "lat": 39.99640032,
+      "lng": -83.01033479,
+      "address": "93, 113, & 129 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0280",
+      "name": "Baker Systems Engineering",
+      "aliases": [],
+      "lat": 40.00159622,
+      "lng": -83.01591664,
+      "address": "1971 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0184",
+      "name": "Barrett House",
+      "aliases": [],
+      "lat": 40.00471762,
+      "lng": -83.01101708,
+      "address": "88 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0228",
+      "name": "Bill Davis Baseball Stadium",
+      "aliases": [],
+      "lat": 40.00938241,
+      "lng": -83.02649134,
+      "address": "650 Borror Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0276",
+      "name": "Biological Sciences Building",
+      "aliases": [
+        "Biological Science Building",
+        "Bio Sciences Bldg & Garage"
+      ],
+      "lat": 39.99649622,
+      "lng": -83.02007965,
+      "address": "484 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0010",
+      "name": "Biological Sciences Greenhouses",
+      "aliases": [
+        "Biological Science Greenhouses",
+        "Bio Sciences Greenhouses"
+      ],
+      "lat": 39.99671921,
+      "lng": -83.01744542,
+      "address": "332 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0112",
+      "name": "Biomedical Research Tower",
+      "aliases": [
+        "BRT"
+      ],
+      "lat": 39.99651244,
+      "lng": -83.0193251,
+      "address": "460 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1107",
+      "name": "Blackburn House",
+      "aliases": [
+        "NRDT I",
+        "Building I - North Residential"
+      ],
+      "lat": 40.00411991,
+      "lng": -83.01256046,
+      "address": "136 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0254",
+      "name": "Blackwell Inn",
+      "aliases": [],
+      "lat": 40.0048292,
+      "lng": -83.01660658,
+      "address": "2110 Tuttle Park Pl",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0360",
+      "name": "Blankenship Hall",
+      "aliases": [],
+      "lat": 40.00231797,
+      "lng": -83.03370875,
+      "address": "901 Woody Hayes Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0315",
+      "name": "Bloch Cancer Survivors Plaza",
+      "aliases": [],
+      "lat": 40.00718474,
+      "lng": -83.02268278,
+      "address": "2180 Olentangy River Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0146",
+      "name": "Bolz Hall",
+      "aliases": [
+        "Civil and Aeronautical Engineering Building"
+      ],
+      "lat": 40.00310156,
+      "lng": -83.01502321,
+      "address": "2036 Neil Ave Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1104",
+      "name": "Bowen House",
+      "aliases": [
+        "NRDT E",
+        "Building E - North Residential"
+      ],
+      "lat": 40.00536354,
+      "lng": -83.00942096,
+      "address": "2125 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0097",
+      "name": "Bradley Hall",
+      "aliases": [],
+      "lat": 39.99656235,
+      "lng": -83.01329387,
+      "address": "221 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0001",
+      "name": "Bricker Hall",
+      "aliases": [],
+      "lat": 40.00062997,
+      "lng": -83.01338995,
+      "address": "190 N Oval Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1024",
+      "name": "Brine Building",
+      "aliases": [
+        "Brine Shed",
+        "Brine Bldg"
+      ],
+      "lat": 40.01031578,
+      "lng": -83.03376333,
+      "address": "2458 Wood Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0108",
+      "name": "Buckeye Field",
+      "aliases": [],
+      "lat": 40.01172144,
+      "lng": -83.0264057,
+      "address": "2410 Fred Taylor Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1105",
+      "name": "Busch House",
+      "aliases": [
+        "NRDT F",
+        "Building F - North Residential"
+      ],
+      "lat": 40.00475441,
+      "lng": -83.00929663,
+      "address": "2115 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0248",
+      "name": "CBEC",
+      "aliases": [],
+      "lat": 40.00342244,
+      "lng": -83.0134007,
+      "address": "151 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0026",
+      "name": "Caldwell Laboratory",
+      "aliases": [
+        "Caldwell Lab"
+      ],
+      "lat": 40.00243311,
+      "lng": -83.01503371,
+      "address": "2024 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0018",
+      "name": "Campbell Hall",
+      "aliases": [],
+      "lat": 39.99775633,
+      "lng": -83.01581751,
+      "address": "1787 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0987",
+      "name": "Campus Shop",
+      "aliases": [],
+      "lat": 40.01006119,
+      "lng": -83.03457019,
+      "address": "2469 Wood Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0098",
+      "name": "Canfield Hall",
+      "aliases": [],
+      "lat": 39.99600422,
+      "lng": -83.01349155,
+      "address": "236 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0371",
+      "name": "Celeste Laboratory of Chemistry",
+      "aliases": [
+        "Celeste Lab of Chemistry"
+      ],
+      "lat": 40.00269732,
+      "lng": -83.01176721,
+      "address": "120 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0227",
+      "name": "Center for Automotive Research",
+      "aliases": [],
+      "lat": 39.99827884,
+      "lng": -83.03277791,
+      "address": "930 Kinnear Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0213",
+      "name": "Center for Integrative Medicine",
+      "aliases": [],
+      "lat": 40.00031545,
+      "lng": -83.03421571,
+      "address": "2000-2002 Kenny Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0077",
+      "name": "Central Service Building",
+      "aliases": [
+        "Central Service Bldg"
+      ],
+      "lat": 40.00180119,
+      "lng": -83.01661558,
+      "address": "2003 Millikin Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0376",
+      "name": "Chilled Water Plant, East Regional",
+      "aliases": [
+        "Chiller Plant",
+        "East Regional; E Regional Chilled Water Plant; Chilled Water Plant",
+        "East"
+      ],
+      "lat": 40.00264794,
+      "lng": -83.0092664,
+      "address": "30 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0200",
+      "name": "Clinical Research and Innovation Facility",
+      "aliases": [
+        "Research Administration Building; Research Foundation",
+        "Clinical Research & Innovation Facility"
+      ],
+      "lat": 39.99944983,
+      "lng": -83.0337253,
+      "address": "1960 Kenny Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0063",
+      "name": "Cockins Hall",
+      "aliases": [],
+      "lat": 40.00124804,
+      "lng": -83.01501866,
+      "address": "1958 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1056",
+      "name": "Coffey Rd Recreation Complex",
+      "aliases": [],
+      "lat": 40.0018199,
+      "lng": -83.0259906,
+      "address": "1966 Coffey Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1145",
+      "name": "Commercial Vehicle Innovation Laboratory",
+      "aliases": [],
+      "lat": 39.99930975,
+      "lng": -83.0325471,
+      "address": "920 Kinnear Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0363",
+      "name": "Comprehensive Cancer Center",
+      "aliases": [],
+      "lat": 39.99658566,
+      "lng": -83.01829262,
+      "address": "410 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0056",
+      "name": "Converse Hall",
+      "aliases": [
+        "Armory",
+        "ROTC"
+      ],
+      "lat": 40.00509444,
+      "lng": -83.01748953,
+      "address": "2121 Tuttle Park Pl",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1036",
+      "name": "Covered Walkway - Med Center",
+      "aliases": [],
+      "lat": 39.99658681,
+      "lng": -83.01780528,
+      "address": null,
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0293",
+      "name": "Cunz Hall",
+      "aliases": [],
+      "lat": 39.99865913,
+      "lng": -83.01703571,
+      "address": "1841 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1106",
+      "name": "Curl Hall",
+      "aliases": [
+        "NRDT H",
+        "Building H - North Residential",
+        "Curl Market"
+      ],
+      "lat": 40.00428073,
+      "lng": -83.01095109,
+      "address": "80 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0113",
+      "name": "Davis Heart and Lung Research Institute",
+      "aliases": [
+        "Davis Heart & Lung Research Institute"
+      ],
+      "lat": 39.99567514,
+      "lng": -83.01924594,
+      "address": "473 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0382",
+      "name": "Davis Medical Research Center",
+      "aliases": [],
+      "lat": 39.99258136,
+      "lng": -83.02013659,
+      "address": "480 Medical Center Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1012",
+      "name": "Davis Tower",
+      "aliases": [],
+      "lat": 40.004958,
+      "lng": -83.012943,
+      "address": "North Residential Town Square",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0030",
+      "name": "Denney Hall",
+      "aliases": [],
+      "lat": 40.00130993,
+      "lng": -83.01252836,
+      "address": "164 Annie & John Glenn Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0025",
+      "name": "Derby Hall",
+      "aliases": [],
+      "lat": 40.00075608,
+      "lng": -83.01242693,
+      "address": "154 N Oval Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0171",
+      "name": "Dodd Hall",
+      "aliases": [
+        "Rehabilitation Hospital"
+      ],
+      "lat": 39.99285523,
+      "lng": -83.01984032,
+      "address": "480 Medical Center Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0189",
+      "name": "Drackett Tower",
+      "aliases": [],
+      "lat": 40.00553097,
+      "lng": -83.01355031,
+      "address": "191 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0279",
+      "name": "Dreese Laboratories",
+      "aliases": [],
+      "lat": 40.00222129,
+      "lng": -83.01599036,
+      "address": "2015 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0049",
+      "name": "Drinko Hall",
+      "aliases": [
+        "Law"
+      ],
+      "lat": 39.99610527,
+      "lng": -83.00827268,
+      "address": "55 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0337",
+      "name": "Dulles Hall",
+      "aliases": [],
+      "lat": 40.00110502,
+      "lng": -83.01440883,
+      "address": "230 Annie & John Glenn Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0004",
+      "name": "Eighteenth Ave, 209 W",
+      "aliases": [],
+      "lat": 40.00154113,
+      "lng": -83.01416752,
+      "address": "209 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0005",
+      "name": "Eighteenth Avenue Library",
+      "aliases": [
+        "Science and Engineering Library",
+        "SEL",
+        "Eighteenth Ave Library"
+      ],
+      "lat": 40.0016329,
+      "lng": -83.01333843,
+      "address": "175 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0193",
+      "name": "Eleventh Ave, 33 W",
+      "aliases": [],
+      "lat": 39.99501532,
+      "lng": -83.00806834,
+      "address": "33 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0964",
+      "name": "Eleventh Ave, 45 W",
+      "aliases": [],
+      "lat": 39.99512087,
+      "lng": -83.00858569,
+      "address": "45 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0902",
+      "name": "Eleventh Ave, 53 W",
+      "aliases": [],
+      "lat": 39.99511373,
+      "lng": -83.00872633,
+      "address": "53 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1068",
+      "name": "Eleventh Ave, 75 W",
+      "aliases": [],
+      "lat": 39.9951718258586,
+      "lng": -83.0094077707187,
+      "address": "75 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0072",
+      "name": "Enarson Classroom Building",
+      "aliases": [
+        "Central Classroom Building",
+        "Enarson Classroom",
+        "Enarson Classroom Bldg"
+      ],
+      "lat": 40.00216943,
+      "lng": -83.01683347,
+      "address": "2009 Millikin Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1044",
+      "name": "Energy Advancement and Innovation Center",
+      "aliases": [
+        "EAIC",
+        "Energy Advancement & Innovation Center"
+      ],
+      "lat": 40.0058858654396,
+      "lng": -83.0348617312896,
+      "address": "2281 Kenny Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0265",
+      "name": "Engineering Research and Education Laboratories",
+      "aliases": [
+        "MacQuigg Laboratory"
+      ],
+      "lat": 40.00353364,
+      "lng": -83.01168483,
+      "address": "2041 College Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1033",
+      "name": "Equine Arena",
+      "aliases": [],
+      "lat": 40.00075269,
+      "lng": -83.0288126,
+      "address": "836 John H Herrick Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0995",
+      "name": "Evans Hall",
+      "aliases": [],
+      "lat": 39.99105724,
+      "lng": -83.02004795,
+      "address": "520 King Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0150",
+      "name": "Evans Laboratory",
+      "aliases": [
+        "Evans Lab"
+      ],
+      "lat": 40.00266349,
+      "lng": -83.01109553,
+      "address": "88 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0028",
+      "name": "Faculty Club",
+      "aliases": [],
+      "lat": 39.99825997,
+      "lng": -83.01269447,
+      "address": "181 S Oval Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0284",
+      "name": "Fawcett Center for Tomorrow",
+      "aliases": [],
+      "lat": 40.01071684,
+      "lng": -83.02088082,
+      "address": "2400 Olentangy River Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0040",
+      "name": "Fechko Alumnae Scholarship House",
+      "aliases": [
+        "Home Management",
+        "Walker"
+      ],
+      "lat": 39.99582458,
+      "lng": -83.01325237,
+      "address": "220-222 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0249",
+      "name": "Fisher Hall",
+      "aliases": [
+        "COB"
+      ],
+      "lat": 40.0049168,
+      "lng": -83.01604067,
+      "address": "2100 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1018",
+      "name": "Fontana Laboratories",
+      "aliases": [
+        "Koffolt Laboratories & Advanced Materials Building",
+        "Advanced Materials Building",
+        "Koffolt Laboratories",
+        "Koffolt Lab"
+      ],
+      "lat": 40.0033461930114,
+      "lng": -83.0124051842146,
+      "address": "140 W 19th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0086",
+      "name": "French Field House",
+      "aliases": [],
+      "lat": 40.00538261,
+      "lng": -83.02040663,
+      "address": "460 Woody Hayes Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0059",
+      "name": "Fry Hall",
+      "aliases": [],
+      "lat": 39.99465239,
+      "lng": -83.01635848,
+      "address": "338 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0282",
+      "name": "Galbreath Equine Center",
+      "aliases": [],
+      "lat": 40.00119862,
+      "lng": -83.02869861,
+      "address": "685 Vernon Tharp St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0860",
+      "name": "Gateway A",
+      "aliases": [],
+      "lat": 39.99466684,
+      "lng": -83.00735996,
+      "address": "1595 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0862",
+      "name": "Gateway B",
+      "aliases": [],
+      "lat": 39.99524398,
+      "lng": -83.00666945,
+      "address": "1620 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0863",
+      "name": "Gateway C",
+      "aliases": [],
+      "lat": 39.99438927,
+      "lng": -83.0062499,
+      "address": "1590 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0865",
+      "name": "Gateway D",
+      "aliases": [],
+      "lat": 39.99378009,
+      "lng": -83.00620601,
+      "address": "1550 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0867",
+      "name": "Gateway F - North",
+      "aliases": [
+        "Gateway F - N"
+      ],
+      "lat": 39.99455295,
+      "lng": -83.00525888,
+      "address": "43-71 E 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0868",
+      "name": "Gateway F - South",
+      "aliases": [
+        "Gateway F - S"
+      ],
+      "lat": 39.9935652,
+      "lng": -83.00516118,
+      "address": "42-68 E 9th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0377",
+      "name": "Generator Building",
+      "aliases": [
+        "Generator - Chiller",
+        "Generator Bldg"
+      ],
+      "lat": 40.00172751,
+      "lng": -83.01690044,
+      "address": "1982 Tuttle Park Pl",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0250",
+      "name": "Gerlach Hall",
+      "aliases": [
+        "COB"
+      ],
+      "lat": 40.00492136,
+      "lng": -83.01489497,
+      "address": "2108 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0965",
+      "name": "German House",
+      "aliases": [],
+      "lat": 39.99522027,
+      "lng": -83.01112952,
+      "address": "141 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0180",
+      "name": "Goss Laboratory",
+      "aliases": [
+        "Veterinary",
+        "Goss Lab"
+      ],
+      "lat": 39.99999697,
+      "lng": -83.02755092,
+      "address": "1925 Coffey Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-2593",
+      "name": "Graham Elementary & Middle School",
+      "aliases": [],
+      "lat": 40.00145877,
+      "lng": -83.00490167,
+      "address": "140 E 16th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0277",
+      "name": "Graves Hall",
+      "aliases": [],
+      "lat": 39.99386197,
+      "lng": -83.01585119,
+      "address": "333 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0168",
+      "name": "Grounds Maintenance Equipment Storage",
+      "aliases": [
+        "Grounds Maintenance Equipment  Storage"
+      ],
+      "lat": 40.00827519,
+      "lng": -83.03380757,
+      "address": "2379 Wood Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0037",
+      "name": "Hagerty Hall",
+      "aliases": [],
+      "lat": 39.99860531,
+      "lng": -83.01030783,
+      "address": "1775 College Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0085",
+      "name": "Hale Hall",
+      "aliases": [
+        "Old Enarson",
+        "Enarson Hall"
+      ],
+      "lat": 39.99701838,
+      "lng": -83.01176493,
+      "address": "154 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0185",
+      "name": "Halloran House",
+      "aliases": [],
+      "lat": 40.00457447,
+      "lng": -83.0103805,
+      "address": "60 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0038",
+      "name": "Hamilton Hall",
+      "aliases": [],
+      "lat": 39.99500717,
+      "lng": -83.0151473,
+      "address": "1645 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0864",
+      "name": "Hanley Alumnae Scholarship House",
+      "aliases": [
+        "Hanley House"
+      ],
+      "lat": 39.99409215,
+      "lng": -83.01312409,
+      "address": "225 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0165",
+      "name": "Harding Hospital",
+      "aliases": [],
+      "lat": 39.99563476,
+      "lng": -83.01996908,
+      "address": "1670 Upham Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0182",
+      "name": "Haverfield House",
+      "aliases": [],
+      "lat": 40.00410134,
+      "lng": -83.01163725,
+      "address": "112 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0039",
+      "name": "Hayes Hall",
+      "aliases": [],
+      "lat": 40.00053815,
+      "lng": -83.01116118,
+      "address": "108 N Oval Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1069",
+      "name": "Heminger Hall",
+      "aliases": [
+        "Newton Hall Addition"
+      ],
+      "lat": 39.9935607031221,
+      "lng": -83.014780986786,
+      "address": "1577 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1023",
+      "name": "Herrick Dr Transit Hub",
+      "aliases": [
+        "Transit Hub"
+      ],
+      "lat": 39.99765031,
+      "lng": -83.01810148,
+      "address": "384 John H Herrick Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0132",
+      "name": "Herrick Dr, 393",
+      "aliases": [
+        "Herrick Rd",
+        "393"
+      ],
+      "lat": 39.99705209,
+      "lng": -83.01769688,
+      "address": "393 John H Herrick Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1021",
+      "name": "Highland St, 1596",
+      "aliases": [],
+      "lat": 39.994478,
+      "lng": -83.010739,
+      "address": "1596 Highland St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0927",
+      "name": "Highland St, 1615",
+      "aliases": [],
+      "lat": 39.99478552,
+      "lng": -83.01111431,
+      "address": "1615 Highland St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1057",
+      "name": "Highland St, 1619",
+      "aliases": [],
+      "lat": 39.99489287,
+      "lng": -83.01113462,
+      "address": "1619 Highland St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0274",
+      "name": "Hitchcock Hall",
+      "aliases": [],
+      "lat": 40.00357404,
+      "lng": -83.01528456,
+      "address": "2070 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0149",
+      "name": "Hopkins Hall",
+      "aliases": [],
+      "lat": 40.00087349,
+      "lng": -83.01154836,
+      "address": "128 N Oval Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0194",
+      "name": "Houck House",
+      "aliases": [],
+      "lat": 40.00521286,
+      "lng": -83.01110256,
+      "address": "61 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1102",
+      "name": "Houston House",
+      "aliases": [
+        "NRDT B",
+        "Building B - North Residential"
+      ],
+      "lat": 40.00580503,
+      "lng": -83.01166471,
+      "address": "97 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0297",
+      "name": "Howlett Greenhouses",
+      "aliases": [
+        "Horticulture"
+      ],
+      "lat": 40.00210284,
+      "lng": -83.02832483,
+      "address": "680 Vernon Tharp St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0295",
+      "name": "Howlett Hall",
+      "aliases": [
+        "Horticulture"
+      ],
+      "lat": 40.00272238,
+      "lng": -83.02809523,
+      "address": "2001 Fyffe Ct",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0042",
+      "name": "Hughes Hall",
+      "aliases": [
+        "Music"
+      ],
+      "lat": 40.00087263,
+      "lng": -83.01078816,
+      "address": "1899 College Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0229",
+      "name": "Ice Rink",
+      "aliases": [],
+      "lat": 40.0052673,
+      "lng": -83.01826165,
+      "address": "390 Woody Hayes Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0338",
+      "name": "Independence Hall",
+      "aliases": [],
+      "lat": 40.00035766,
+      "lng": -83.01575914,
+      "address": "1923 Neil Ave Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0878",
+      "name": "Institute of Brain, Behavior and Immunology",
+      "aliases": [
+        "Institute for Behavioral Medicine Research"
+      ],
+      "lat": 39.99287527,
+      "lng": -83.01880099,
+      "address": "460 Medical Center Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0375",
+      "name": "James Cancer Hospital",
+      "aliases": [],
+      "lat": 39.99495612,
+      "lng": -83.01966815,
+      "address": "460 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0014",
+      "name": "Jennings Hall",
+      "aliases": [
+        "Botany and Zoology"
+      ],
+      "lat": 39.99673985,
+      "lng": -83.0156515,
+      "address": "1735 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0347",
+      "name": "Jesse Owens Recreation Center North",
+      "aliases": [
+        "Jesse Owens Recreation Center N",
+        "Jesse Owens Rec Center N"
+      ],
+      "lat": 40.00592877,
+      "lng": -83.01503422,
+      "address": "2151 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0348",
+      "name": "Jesse Owens Recreation Center South",
+      "aliases": [
+        "Jesse Owens Recreation Center S",
+        "Jesse Owens Rec Center S"
+      ],
+      "lat": 39.99501105,
+      "lng": -83.01186051,
+      "address": "175 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0267",
+      "name": "Jones Tower",
+      "aliases": [],
+      "lat": 40.00534754,
+      "lng": -83.01205943,
+      "address": "123 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0046",
+      "name": "Journalism Building",
+      "aliases": [
+        "Journalism Bldg"
+      ],
+      "lat": 40.00199533,
+      "lng": -83.01504486,
+      "address": "242 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0105",
+      "name": "Kennedy Commons",
+      "aliases": [],
+      "lat": 39.99659471,
+      "lng": -83.01398858,
+      "address": "251 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0232",
+      "name": "Kenny Rd, 1900",
+      "aliases": [],
+      "lat": 39.99840704,
+      "lng": -83.03434362,
+      "address": "1900 Kenny Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0214",
+      "name": "Kenny Rd, 2006-2030",
+      "aliases": [],
+      "lat": 40.00031651,
+      "lng": -83.0332809,
+      "address": "2006-2030 Kenny Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0963",
+      "name": "Kinnear Rd, 760",
+      "aliases": [],
+      "lat": 39.99802775,
+      "lng": -83.02913414,
+      "address": "760 Kinnear Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0226",
+      "name": "Kinnear Rd, 930 - Storage",
+      "aliases": [
+        "Kinnear Rd Storage",
+        "930",
+        "Kinnear Rd, 930 Storage"
+      ],
+      "lat": 39.99883468,
+      "lng": -83.03240322,
+      "address": "930 Kinnear Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0931",
+      "name": "Kinnear Rd, 960",
+      "aliases": [],
+      "lat": 39.99856903,
+      "lng": -83.03367737,
+      "address": "960 Kinnear Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0961",
+      "name": "Knight House",
+      "aliases": [
+        "George Wells"
+      ],
+      "lat": 40.00023807,
+      "lng": -83.00511826,
+      "address": "104 E 15th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0017",
+      "name": "Knowlton Hall",
+      "aliases": [
+        "Architecture",
+        "Brown Hall",
+        "Ives"
+      ],
+      "lat": 40.00359907,
+      "lng": -83.01678866,
+      "address": "275 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0340",
+      "name": "Kottman Hall",
+      "aliases": [
+        "Agronomy"
+      ],
+      "lat": 40.00265631,
+      "lng": -83.02684494,
+      "address": "2021 Coffey Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0959",
+      "name": "Kuhn Honors and Scholars House",
+      "aliases": [
+        "Honors House",
+        "Kuhn Honors & Scholars House"
+      ],
+      "lat": 39.99733634,
+      "lng": -83.01337357,
+      "address": "220 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0918",
+      "name": "Lane Ave, 300 W",
+      "aliases": [],
+      "lat": 40.00665531,
+      "lng": -83.01771224,
+      "address": "300 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0891",
+      "name": "Lawrence Tower",
+      "aliases": [
+        "Lane Avenue Residence Hall"
+      ],
+      "lat": 40.00724257,
+      "lng": -83.01858715,
+      "address": "328 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0041",
+      "name": "Lazenby Hall",
+      "aliases": [],
+      "lat": 39.99857556,
+      "lng": -83.01571289,
+      "address": "1827 Neil Ave Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0271",
+      "name": "Lincoln Tower",
+      "aliases": [
+        "Olentangy River Dorm"
+      ],
+      "lat": 39.99846301,
+      "lng": -83.02196661,
+      "address": "1800 Cannon Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0022",
+      "name": "Longaberger Alumni House",
+      "aliases": [],
+      "lat": 40.00880122,
+      "lng": -83.02129443,
+      "address": "2200 Olentangy River Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1144",
+      "name": "Longaberger Alumni House - Club Car Garage",
+      "aliases": [
+        "Club Car Garage"
+      ],
+      "lat": 40.00885004,
+      "lng": -83.02073367,
+      "address": "2200 Olentangy River Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0100",
+      "name": "Mack Hall",
+      "aliases": [],
+      "lat": 39.99598476,
+      "lng": -83.0141905,
+      "address": "1698 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0078",
+      "name": "Maintenance Building",
+      "aliases": [
+        "Service Building Annex",
+        "Maintenance Bldg"
+      ],
+      "lat": 40.0022105,
+      "lng": -83.01753341,
+      "address": "2000 Tuttle Park Pl",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0252",
+      "name": "Mason Hall",
+      "aliases": [
+        "COB"
+      ],
+      "lat": 40.00439826,
+      "lng": -83.01546758,
+      "address": "250 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0187",
+      "name": "Mathematics Building",
+      "aliases": [
+        "Mathematics Bldg"
+      ],
+      "lat": 40.00147664,
+      "lng": -83.01475734,
+      "address": "231 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0007",
+      "name": "Mathematics Tower",
+      "aliases": [],
+      "lat": 40.00150997,
+      "lng": -83.01442906,
+      "address": "231 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0303",
+      "name": "McCampbell Hall",
+      "aliases": [],
+      "lat": 39.9935717,
+      "lng": -83.02053873,
+      "address": "1581 Dodd Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0247",
+      "name": "McCorkle Aquatic Pavilion",
+      "aliases": [],
+      "lat": 39.99837771,
+      "lng": -83.01793427,
+      "address": "1847 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0069",
+      "name": "McCracken Power Plant",
+      "aliases": [],
+      "lat": 40.00115169,
+      "lng": -83.0166511,
+      "address": "2001 Millikin Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0053",
+      "name": "McPherson Chemical Laboratory",
+      "aliases": [
+        "McPherson Chemical Lab",
+        "McPherson Laboratory"
+      ],
+      "lat": 40.00252216,
+      "lng": -83.01232949,
+      "address": "140 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0281",
+      "name": "Meiling Hall",
+      "aliases": [],
+      "lat": 39.99412359,
+      "lng": -83.01688932,
+      "address": "370 W 9th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0054",
+      "name": "Mendenhall Laboratory",
+      "aliases": [
+        "Mendenhall Lab"
+      ],
+      "lat": 39.99839396,
+      "lng": -83.01114826,
+      "address": "125 S Oval Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0260",
+      "name": "Mendoza House",
+      "aliases": [
+        "Neilwood Gables"
+      ],
+      "lat": 40.00429995,
+      "lng": -83.01418056,
+      "address": "190 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0055",
+      "name": "Mershon Auditorium",
+      "aliases": [],
+      "lat": 40.00054269,
+      "lng": -83.00895461,
+      "address": "1871 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0047",
+      "name": "Mershon Center",
+      "aliases": [],
+      "lat": 39.99182518,
+      "lng": -83.014346,
+      "address": "1501 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0882",
+      "name": "Morehouse Medical Plaza - Concourse",
+      "aliases": [
+        "Morehouse Concourse"
+      ],
+      "lat": 40.00129371,
+      "lng": -83.03154418,
+      "address": "2050 Kenny Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0880",
+      "name": "Morehouse Medical Plaza - Pavilion",
+      "aliases": [
+        "Morehouse Pavilion"
+      ],
+      "lat": 40.00132283,
+      "lng": -83.03287566,
+      "address": "2050 Kenny Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0881",
+      "name": "Morehouse Medical Plaza - Tower",
+      "aliases": [
+        "Morehouse Tower"
+      ],
+      "lat": 40.00085331,
+      "lng": -83.03386517,
+      "address": "2050 Kenny Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0272",
+      "name": "Morrill Tower",
+      "aliases": [
+        "Olentangy River Dorm"
+      ],
+      "lat": 40.00003865,
+      "lng": -83.02187836,
+      "address": "1900 Cannon Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0190",
+      "name": "Morrison Tower",
+      "aliases": [],
+      "lat": 39.99583711,
+      "lng": -83.01278661,
+      "address": "196 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0877",
+      "name": "Neil Ave, 1618-1624",
+      "aliases": [],
+      "lat": 39.99451536,
+      "lng": -83.01416092,
+      "address": "1618-1624 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0147",
+      "name": "Newman and Wolfrom Laboratory of Chemistry",
+      "aliases": [
+        "Newman and Wolfrom Lab of Chemistry",
+        "Newman & Wolfrom Lab of Chemistry"
+      ],
+      "lat": 40.0023758,
+      "lng": -83.01136588,
+      "address": "100 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0275",
+      "name": "Newton Hall",
+      "aliases": [],
+      "lat": 39.99398816,
+      "lng": -83.01486554,
+      "address": "295 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0091",
+      "name": "Nicklaus Museum",
+      "aliases": [],
+      "lat": 40.00985166,
+      "lng": -83.02361309,
+      "address": "2355 Olentangy River Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1109",
+      "name": "North Recreation Center",
+      "aliases": [
+        "NRDT K",
+        "Building K - North Residential"
+      ],
+      "lat": 40.00528535,
+      "lng": -83.01277456,
+      "address": "149 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0357",
+      "name": "Northwood-High Building",
+      "aliases": [
+        "Northwood-High Bldg"
+      ],
+      "lat": 40.00773186,
+      "lng": -83.01009907,
+      "address": "2231 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0186",
+      "name": "Norton House",
+      "aliases": [],
+      "lat": 40.00482563,
+      "lng": -83.013875,
+      "address": "2114 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1110",
+      "name": "Nosker House",
+      "aliases": [
+        "NRDT L",
+        "Building L - North Residential"
+      ],
+      "lat": 40.00484522,
+      "lng": -83.01210824,
+      "address": "124 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0082",
+      "name": "Ohio Stadium",
+      "aliases": [],
+      "lat": 40.00167046,
+      "lng": -83.01972909,
+      "address": "411 Woody Hayes Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0161",
+      "name": "Ohio Union",
+      "aliases": [],
+      "lat": 39.99765973,
+      "lng": -83.00864174,
+      "address": "1739 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1041",
+      "name": "Optometry Clinic",
+      "aliases": [
+        "11th & Neil Building"
+      ],
+      "lat": 39.9953445927001,
+      "lng": -83.0140852292595,
+      "address": "1664 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0012",
+      "name": "Ornamental Plant Germplasm Center",
+      "aliases": [],
+      "lat": 40.00191214,
+      "lng": -83.02776636,
+      "address": "670 Vernon Tharp St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0060",
+      "name": "Orton Hall",
+      "aliases": [],
+      "lat": 39.99832824,
+      "lng": -83.01193358,
+      "address": "155 S Oval Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0102",
+      "name": "Oxley Hall",
+      "aliases": [],
+      "lat": 39.99654916,
+      "lng": -83.01439966,
+      "address": "1712 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0061",
+      "name": "Page Hall",
+      "aliases": [],
+      "lat": 39.99915767,
+      "lng": -83.00963725,
+      "address": "1810 College Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0851",
+      "name": "Park-Stradley Hall",
+      "aliases": [],
+      "lat": 39.99583142,
+      "lng": -83.01070492,
+      "address": "120 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0064",
+      "name": "Parker Food Science and Technology",
+      "aliases": [
+        "Parker Food Science & Technology"
+      ],
+      "lat": 40.0029238,
+      "lng": -83.02870006,
+      "address": "2015 Fyffe Ct",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0273",
+      "name": "Parks Hall",
+      "aliases": [],
+      "lat": 39.99638371,
+      "lng": -83.02093848,
+      "address": "500 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0103",
+      "name": "Paterson Hall",
+      "aliases": [],
+      "lat": 39.99639008,
+      "lng": -83.01253395,
+      "address": "191 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0048",
+      "name": "Pennsylvania Place",
+      "aliases": [],
+      "lat": 39.99146045,
+      "lng": -83.01481562,
+      "address": "1478 Pennsylvania Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0253",
+      "name": "Pfahl Hall",
+      "aliases": [
+        "COB"
+      ],
+      "lat": 40.00432615,
+      "lng": -83.01647741,
+      "address": "280 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0245",
+      "name": "Physical Activity and Education Services - PAES",
+      "aliases": [
+        "Physical Activity & Education Services (PAES)"
+      ],
+      "lat": 39.99983294,
+      "lng": -83.01723863,
+      "address": "305 Annie & John Glenn Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0070",
+      "name": "Physics Research Building",
+      "aliases": [
+        "Physics Research Bldg"
+      ],
+      "lat": 40.00334823,
+      "lng": -83.01424878,
+      "address": "191 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0066",
+      "name": "Plumb Hall",
+      "aliases": [],
+      "lat": 40.00355924,
+      "lng": -83.02666443,
+      "address": "2027 Coffey Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-2318",
+      "name": "Point on Lane",
+      "aliases": [],
+      "lat": 40.0066155315,
+      "lng": -83.0165925931,
+      "address": "264 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0869",
+      "name": "Pomerene Alumnae Scholarship House",
+      "aliases": [
+        "Pomerene House"
+      ],
+      "lat": 39.99407885,
+      "lng": -83.01327442,
+      "address": "231 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0067",
+      "name": "Pomerene Hall",
+      "aliases": [],
+      "lat": 39.99735998,
+      "lng": -83.01446185,
+      "address": "1760 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0024",
+      "name": "Postle Hall",
+      "aliases": [
+        "College of Dentistry"
+      ],
+      "lat": 39.99605682,
+      "lng": -83.01614904,
+      "address": "305 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0153",
+      "name": "Poultry Breeding House 3",
+      "aliases": [],
+      "lat": 40.00738136,
+      "lng": -83.02928301,
+      "address": "708 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0154",
+      "name": "Poultry Brooding House 2",
+      "aliases": [],
+      "lat": 40.0072305,
+      "lng": -83.02960829,
+      "address": "722 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0290",
+      "name": "Printing Facility",
+      "aliases": [],
+      "lat": 40.01138284,
+      "lng": -83.03433746,
+      "address": "2500 Kenny Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0302",
+      "name": "Prior Hall",
+      "aliases": [
+        "Health Sciences Library"
+      ],
+      "lat": 39.99477158,
+      "lng": -83.0170996,
+      "address": "376 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0144",
+      "name": "Psychology Building",
+      "aliases": [
+        "Psychology Bldg"
+      ],
+      "lat": 39.99852017,
+      "lng": -83.01626613,
+      "address": "1835 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1010",
+      "name": "Pump House - Cannon Dr",
+      "aliases": [
+        "Pump House"
+      ],
+      "lat": 39.9918742331204,
+      "lng": -83.0223978671074,
+      "address": "1543 Cannon Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0169",
+      "name": "Quonset Hut 11",
+      "aliases": [],
+      "lat": 40.0079679,
+      "lng": -83.03355194,
+      "address": "2381 Wood Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0166",
+      "name": "Quonset Hut 8",
+      "aliases": [],
+      "lat": 40.00854445,
+      "lng": -83.03393543,
+      "address": "2383 Wood Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0167",
+      "name": "Quonset Hut 9",
+      "aliases": [],
+      "lat": 40.00840763,
+      "lng": -83.0338668,
+      "address": "2381 Wood Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0090",
+      "name": "Ramseyer Hall",
+      "aliases": [],
+      "lat": 40.00330585,
+      "lng": -83.00963518,
+      "address": "29 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1103",
+      "name": "Raney House",
+      "aliases": [
+        "NRDT D",
+        "Building D - North Residential"
+      ],
+      "lat": 40.00547485,
+      "lng": -83.01002933,
+      "address": "33 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0246",
+      "name": "Recreation and Physical Activity Center",
+      "aliases": [
+        "RPAC",
+        "Recreation & Physical Activity Center (RPAC)"
+      ],
+      "lat": 39.9995101,
+      "lng": -83.0183801,
+      "address": "337 Annie & John Glenn Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0850",
+      "name": "Residence on Tenth",
+      "aliases": [
+        "Residences on Tenth"
+      ],
+      "lat": 39.9945947,
+      "lng": -83.01292946,
+      "address": "230 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0266",
+      "name": "Riffe Building",
+      "aliases": [
+        "Biological Sciences and Parks Hall",
+        "Riffe Bldg"
+      ],
+      "lat": 39.99674263,
+      "lng": -83.02043704,
+      "address": "496 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0353",
+      "name": "Ross Heart Hospital",
+      "aliases": [],
+      "lat": 39.99448108,
+      "lng": -83.01843745,
+      "address": "452 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0251",
+      "name": "Schoenbaum Hall",
+      "aliases": [
+        "COB"
+      ],
+      "lat": 40.00432859,
+      "lng": -83.01475293,
+      "address": "210 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0081",
+      "name": "Schottenstein Center",
+      "aliases": [
+        "Value City Arena"
+      ],
+      "lat": 40.00758091,
+      "lng": -83.02513483,
+      "address": "555 Borror Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1108",
+      "name": "Scott House",
+      "aliases": [
+        "NRDT J",
+        "Building J - North Residential",
+        "Traditions at Scott",
+        "Scott Traditions"
+      ],
+      "lat": 40.00438504,
+      "lng": -83.01338547,
+      "address": "160 W Woodruff Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0148",
+      "name": "Scott Laboratory",
+      "aliases": [
+        "Scott Lab"
+      ],
+      "lat": 40.00231227,
+      "lng": -83.01417566,
+      "address": "201 W 19th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0889",
+      "name": "Seventeenth Ave, 237 E",
+      "aliases": [],
+      "lat": 40.00155208,
+      "lng": -83.0018376,
+      "address": "237 E 17th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0099",
+      "name": "Siebert Hall",
+      "aliases": [],
+      "lat": 39.99596568,
+      "lng": -83.01228292,
+      "address": "184 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0080",
+      "name": "Sisson Hall",
+      "aliases": [],
+      "lat": 40.00001366,
+      "lng": -83.02565221,
+      "address": "1920 Coffey Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0065",
+      "name": "Smith Laboratory",
+      "aliases": [
+        "Physics",
+        "Smith Lab"
+      ],
+      "lat": 40.00243085,
+      "lng": -83.01328279,
+      "address": "174 W 18th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0852",
+      "name": "Smith-Steeb Hall",
+      "aliases": [],
+      "lat": 39.99578145,
+      "lng": -83.00948664,
+      "address": "80 W 11th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0076",
+      "name": "St John Arena",
+      "aliases": [],
+      "lat": 40.00533238,
+      "lng": -83.0191574,
+      "address": "410 Woody Hayes Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1054",
+      "name": "Stanton Veterinary Clinic",
+      "aliases": [],
+      "lat": 40.0010400270957,
+      "lng": -83.0261652422607,
+      "address": "655 Vernon L Tharp St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0176",
+      "name": "Starling Loving Hall",
+      "aliases": [],
+      "lat": 39.9949322,
+      "lng": -83.01602227,
+      "address": "320 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-2317",
+      "name": "StateHouse Highline",
+      "aliases": [],
+      "lat": 39.9928371943,
+      "lng": -83.0060813342,
+      "address": "1494 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-2315",
+      "name": "StateHouse Lane",
+      "aliases": [],
+      "lat": 40.00655686,
+      "lng": -83.01350408,
+      "address": "150 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-2316",
+      "name": "StateHouse Norwich",
+      "aliases": [],
+      "lat": 40.00770886,
+      "lng": -83.01632905,
+      "address": "250 W Norwich Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0084",
+      "name": "Stillman Hall",
+      "aliases": [],
+      "lat": 40.00186513,
+      "lng": -83.01099502,
+      "address": "1947 College Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0160",
+      "name": "Student Academic Services",
+      "aliases": [
+        "SAS"
+      ],
+      "lat": 40.00601254,
+      "lng": -83.01612716,
+      "address": "281 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0106",
+      "name": "Sullivant Hall",
+      "aliases": [],
+      "lat": 39.99945284,
+      "lng": -83.00874701,
+      "address": "1813 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0268",
+      "name": "Taylor Tower",
+      "aliases": [],
+      "lat": 40.00568221,
+      "lng": -83.01068714,
+      "address": "55 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0379",
+      "name": "Telecommunications Network Center",
+      "aliases": [],
+      "lat": 39.99247931,
+      "lng": -83.01522755,
+      "address": "320 W 8th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1025",
+      "name": "Theatre, Film and Media Arts Building",
+      "aliases": [
+        "Theatre Building",
+        "Theatre, Film & Media Arts Bldg"
+      ],
+      "lat": 40.0017902410817,
+      "lng": -83.0101716327005,
+      "address": "1932 College Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0050",
+      "name": "Thompson Library",
+      "aliases": [],
+      "lat": 39.99925188,
+      "lng": -83.01488152,
+      "address": "1858 Neil Ave Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1064",
+      "name": "Timashev Family Music Building",
+      "aliases": [
+        "Timashev Family Music Bldg"
+      ],
+      "lat": 40.001015898286,
+      "lng": -83.010059111684,
+      "address": "1900 College Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1101",
+      "name": "Torres House",
+      "aliases": [
+        "NRDT A",
+        "Building A - North Residential"
+      ],
+      "lat": 40.0059512,
+      "lng": -83.01365501,
+      "address": "187 W Lane Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0087",
+      "name": "Townshend Hall",
+      "aliases": [],
+      "lat": 39.99977583,
+      "lng": -83.01579784,
+      "address": "1885 Neil Ave Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0356",
+      "name": "Twelfth Ave, 395 W",
+      "aliases": [],
+      "lat": 39.99594271,
+      "lng": -83.01792301,
+      "address": "395 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0163",
+      "name": "Tzagournis Medical Research Facility",
+      "aliases": [
+        "Tzagournis MRF"
+      ],
+      "lat": 39.99643129,
+      "lng": -83.01875106,
+      "address": "420 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0339",
+      "name": "University Hall",
+      "aliases": [],
+      "lat": 40.00052277,
+      "lng": -83.01443196,
+      "address": "230 N Oval Mall",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0870",
+      "name": "University Hospital",
+      "aliases": [
+        "Medical Center Tower"
+      ],
+      "lat": 39.99494709,
+      "lng": -83.02117783,
+      "address": "520 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0089",
+      "name": "University Hospital - Doan Hall",
+      "aliases": [
+        "Charles Austin Doan Hall",
+        "University Hospital",
+        "U.H.- Doan Hall"
+      ],
+      "lat": 39.99561579,
+      "lng": -83.01762976,
+      "address": "410 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0372",
+      "name": "University Hospital - Pavilion",
+      "aliases": [
+        "Brain and Spine Hospital",
+        "Old James",
+        "James Cancer Hospital",
+        "Tenth Ave",
+        "300 W",
+        "300 W (Previous James)"
+      ],
+      "lat": 39.99561053,
+      "lng": -83.01644197,
+      "address": "300 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0354",
+      "name": "University Hospital - Rhodes Hall",
+      "aliases": [
+        "James A Rhodes Hall",
+        "U.H.- Rhodes Hall"
+      ],
+      "lat": 39.99515458,
+      "lng": -83.01805434,
+      "address": "450 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1031",
+      "name": "University Square North",
+      "aliases": [
+        "Building A",
+        "University Square N"
+      ],
+      "lat": 40.000572495944,
+      "lng": -83.0076911120617,
+      "address": "14 E 15th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1032",
+      "name": "University Square South",
+      "aliases": [
+        "Building B",
+        "University Square S"
+      ],
+      "lat": 39.9992401136102,
+      "lng": -83.00742844231,
+      "address": "15 E 15th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0299",
+      "name": "Veterinary Medical Center",
+      "aliases": [],
+      "lat": 40.00086499,
+      "lng": -83.02768459,
+      "address": "601 Vernon Tharp St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0136",
+      "name": "Veterinary Medicine Academic",
+      "aliases": [],
+      "lat": 39.99952908,
+      "lng": -83.02660826,
+      "address": "1900 Coffey Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1030",
+      "name": "WOSU",
+      "aliases": [],
+      "lat": 39.9991877690328,
+      "lng": -83.0068523177365,
+      "address": "1800 N Pearl St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0390",
+      "name": "Water Treatment",
+      "aliases": [],
+      "lat": 40.00136975,
+      "lng": -83.01714332,
+      "address": "1966 Tuttle Park Pl",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0355",
+      "name": "Weigel Hall",
+      "aliases": [
+        "Eugene J. Weigel Hall"
+      ],
+      "lat": 40.000686,
+      "lng": -83.0098319,
+      "address": "1866 College Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0386",
+      "name": "Wexner Center for the Arts",
+      "aliases": [],
+      "lat": 40.00082115,
+      "lng": -83.00948504,
+      "address": "1871 N High St",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0294",
+      "name": "Wilce Student Health Center",
+      "aliases": [],
+      "lat": 39.99958173,
+      "lng": -83.01642728,
+      "address": "1875 Millikin Rd",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0846",
+      "name": "William Hall Complex - Neil Building",
+      "aliases": [
+        "Neil Bldg"
+      ],
+      "lat": 39.99383921,
+      "lng": -83.01398829,
+      "address": "1578 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0848",
+      "name": "William Hall Complex - Scholars House East",
+      "aliases": [
+        "William Hall Complex - Scholars House E",
+        "Scholars House E"
+      ],
+      "lat": 39.99407695,
+      "lng": -83.012897,
+      "address": "221 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0847",
+      "name": "William Hall Complex - Scholars House West",
+      "aliases": [
+        "William Hall Complex - Scholars House W",
+        "Scholars House W"
+      ],
+      "lat": 39.99409928,
+      "lng": -83.01351541,
+      "address": "239 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0849",
+      "name": "William Hall Complex - Worthington Building",
+      "aliases": [
+        "Worthington Bldg"
+      ],
+      "lat": 39.9939961,
+      "lng": -83.01251588,
+      "address": "203 W 10th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0157",
+      "name": "Wiseman Hall",
+      "aliases": [],
+      "lat": 39.99665128,
+      "lng": -83.01806205,
+      "address": "400 W 12th Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0029",
+      "name": "Women's Field House",
+      "aliases": [],
+      "lat": 39.99810491,
+      "lng": -83.02107561,
+      "address": "1790 Cannon Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-0052",
+      "name": "Younkin Success Center",
+      "aliases": [],
+      "lat": 39.99483229,
+      "lng": -83.01412854,
+      "address": "1640 Neil Ave",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    },
+    {
+      "id": "osu-1220",
+      "name": "enCORE Solar House",
+      "aliases": [],
+      "lat": 40.00869521,
+      "lng": -83.0299466,
+      "address": "2235 Fred Taylor Dr",
+      "hours": "Check with the building desk",
+      "kind": "building",
+      "active": true
+    }
+  ]
+}

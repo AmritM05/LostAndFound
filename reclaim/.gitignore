@@ -1,0 +1,11 @@
+node_modules
+.next
+out
+.env*
+!.env.example
+*.tsbuildinfo
+.openai/*.local.*
+
+.DS_Store
+
+.next-qa
