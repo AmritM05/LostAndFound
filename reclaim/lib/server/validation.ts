@@ -5,7 +5,11 @@ export const uuid = (id: unknown): id is string =>
   /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
     id,
   );
-export function reportInput(data: any, id?: string) {
+export function reportInput(
+  data: any,
+  id?: string,
+  type: "lost" | "found" = "lost",
+) {
   const item = data?.item;
   if (typeof item?.locationKnown !== "boolean")
     throw new ApiError("Choose a known or unknown location.");
@@ -13,7 +17,7 @@ export function reportInput(data: any, id?: string) {
     !item ||
     !uuid(item.id) ||
     (id && id !== item.id) ||
-    item.type !== "lost" ||
+    item.type !== type ||
     !categories.includes(item.category) ||
     typeof item.name !== "string" ||
     !item.name.trim() ||
@@ -21,7 +25,7 @@ export function reportInput(data: any, id?: string) {
     typeof item.color !== "string" ||
     !item.color.trim()
   )
-    throw new ApiError("Add a valid lost item, category, and color.");
+    throw new ApiError("Add a valid item, category, and color.");
   for (const key of [
     "brand",
     "model",

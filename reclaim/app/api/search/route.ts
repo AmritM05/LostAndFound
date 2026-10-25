@@ -3,6 +3,6 @@ import { repository } from "../../../lib/server/repository";
 import { query } from "../../../lib/server/db";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-export async function GET() {
-  return endpoint(async () => json(await repository(query).search()));
+export async function GET(request: Request) {
+  return endpoint(async () => json(await repository(query).search()), request);
 }

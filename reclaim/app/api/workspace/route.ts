@@ -5,7 +5,9 @@ import { query } from "../../../lib/server/db";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
-  return endpoint(async () =>
-    json(await repository(query).workspace(await requireUser(request))),
+  return endpoint(
+    async () =>
+      json(await repository(query).workspace(await requireUser(request))),
+    request,
   );
 }

@@ -99,6 +99,12 @@ test("Neon relational migration and server repository preserve privacy, ownershi
         "utf8",
       ),
     );
+    await db.exec(
+      await readFile(
+        new URL("../db/migrations/003_admin_portal.sql", import.meta.url),
+        "utf8",
+      ),
+    );
     const query = async (sql: string, values: any[] = []) =>
       (await db.query(sql, values)).rows as any[];
     const repo = repository(query);

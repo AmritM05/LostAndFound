@@ -8,5 +8,5 @@ export async function PATCH(request: Request) {
     const user = await requireUser(request);
     await query("update updates set read=true where user_id=$1", [user.id]);
     return json({ ok: true });
-  });
+  }, request);
 }

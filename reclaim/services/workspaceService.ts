@@ -64,14 +64,22 @@ function unavailable(): never {
 export async function updateReportStatus(_id: string, _status: Item["status"]) {
   unavailable();
 }
-export async function dismissMatch(_id: string) {
-  unavailable();
+export async function dismissMatch(id: string) {
+  await request("/api/matches/", {
+    method: "PATCH",
+    body: JSON.stringify({ id }),
+  });
+  workspaceChanged();
 }
 export async function saveDropoffZone(_zone: DropoffZone) {
   unavailable();
 }
-export async function submitClaim(_matchId: string, _answer: string) {
-  unavailable();
+export async function submitClaim(matchId: string, answer: string) {
+  await request("/api/claims/", {
+    method: "POST",
+    body: JSON.stringify({ matchId, answer }),
+  });
+  workspaceChanged();
 }
 export async function reviewClaim(
   _claimId: string,
@@ -100,7 +108,12 @@ export async function connectSearchReport(
   _foundId: string,
   _lostId: string,
 ): Promise<MatchResult> {
-  return unavailable();
+  const result = await request<MatchResult>("/api/matches/", {
+    method: "POST",
+    body: JSON.stringify({ foundId: _foundId, lostId: _lostId }),
+  });
+  workspaceChanged();
+  return result;
 }
 
 export async function deleteReport(id: string) {

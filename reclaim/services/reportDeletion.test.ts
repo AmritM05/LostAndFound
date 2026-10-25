@@ -62,7 +62,9 @@ test("owned deletion is transactional, protects recovery, and queues only relate
     for (const file of [
       "001_student_backend.sql",
       "002_report_deletion.sql",
+      "003_admin_portal.sql",
       "002_report_deletion.sql",
+      "003_admin_portal.sql",
     ])
       await db.exec(
         await readFile(
@@ -81,6 +83,8 @@ test("owned deletion is transactional, protects recovery, and queues only relate
         "insert into reports(id,reporter_id,report_type,category,item_name,lost_date,lost_time,occurred_at) values($1,$2,$3,'Electronics','Sample',current_date,current_time,now())",
         [id(n), id(owner), type],
       );
+    // This suite supplies explicit match fixtures; automatic generation has its own lifecycle suite.
+    await run("alter table reports disable trigger reports_match");
     await insert(10);
     await insert(11, 2);
     await insert(12, 2, "found");

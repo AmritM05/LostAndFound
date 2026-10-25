@@ -1,4 +1,6 @@
 import "server-only";
+import { allowedOrigin } from "./origin";
+import { diagnostic, classifyFailure } from "./diagnostics";
 export class ApiError extends Error {
   constructor(
     message: string,
@@ -13,7 +15,10 @@ export function json(data: unknown, status = 200) {
     headers: { "Cache-Control": "private, no-store" },
   });
 }
-export async function endpoint(action: () => Promise<Response>) {
+export async function endpoint(
+  action: () => Promise<Response>,
+  request?: Request,
+) {
   try {
     return await action();
   } catch (error) {
@@ -23,6 +28,16 @@ export async function endpoint(action: () => Promise<Response>) {
     if (code === "P0001") {
       const message = (error as Error).message;
       const allowed = [
+        "Select an active drop-off zone",
+        "Invalid found report",
+        "Choose valid found and received times",
+        "Match unavailable",
+        "Provide ownership details",
+        "Claim already submitted",
+        "Claim not found",
+        "Claim cannot be changed",
+        "Item already assigned",
+        "Pickup code is invalid or expired",
         "Students may only create lost reports",
         "Item name and category are required",
         "Choose a valid past date",
@@ -46,25 +61,33 @@ export async function endpoint(action: () => Promise<Response>) {
               : 400,
         );
     }
-    console.error("[Magpie API] Request failed", {
-      name: (error as Error).name,
-      code,
-      configurationMissing: !process.env.DATABASE_URL,
-      blobConfigurationMissing: !process.env.BLOB_READ_WRITE_TOKEN,
+    const failure = classifyFailure(error);
+    diagnostic(error, {
+      route: request ? new URL(request.url).pathname : "unknown",
+      action: request?.method || "unknown",
+      status: 503,
+      operation: failure.operation,
     });
-    return json(
-      {
-        error:
-          "Magpie could not complete this request. Please try again. If it continues, check the server setup.",
-      },
-      503,
-    );
+    return json({ error: failure.message }, 503);
   }
 }
 export function sameOrigin(request: Request) {
-  const origin = request.headers.get("origin");
-  if (!origin || origin !== new URL(request.url).origin)
+  if (!allowedOrigin(request)) {
+    if (process.env.NODE_ENV !== "production") {
+      let origin = "missing or invalid";
+      try {
+        origin = new URL(request.headers.get("origin") || "").origin;
+      } catch {}
+      console.warn("[Magpie origin]", {
+        route: new URL(request.url).pathname,
+        requestOrigin: new URL(request.url).origin,
+        origin,
+        host: request.headers.get("host"),
+        forwardedHost: request.headers.get("x-forwarded-host"),
+      });
+    }
     throw new ApiError("Request origin is not allowed.", 403);
+  }
 }
 export async function body(request: Request) {
   if (Number(request.headers.get("content-length")) > 100000)

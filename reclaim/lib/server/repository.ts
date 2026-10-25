@@ -25,7 +25,10 @@ export function repository(query: Query) {
             "select m.* from potential_matches m join reports r on r.id=m.lost_report_id where r.reporter_id=$1",
             [user.id],
           ),
-          query("select * from claims where claimant_id=$1", [user.id]),
+          query(
+            "select c.*,case when c.status='Approved' and p.used_at is null and p.expires_at>now() then p.display_code end as pickup_code,z.name as pickup_location from claims c left join pickups p on p.claim_id=c.id left join dropoff_zones z on z.id=p.zone_id where c.claimant_id=$1",
+            [user.id],
+          ),
           query(
             "select n.* from report_notes n join reports r on r.id=n.report_id where r.reporter_id=$1 order by n.created_at",
             [user.id],
@@ -88,6 +91,9 @@ export function repository(query: Query) {
             answers: c.answers,
             status: c.status,
             score: 0,
+            code: c.pickup_code,
+            token: c.pickup_code,
+            pickupLocation: c.pickup_location,
           })),
         },
         messages: messages.map((n) => ({

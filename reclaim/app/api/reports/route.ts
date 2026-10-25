@@ -16,5 +16,5 @@ export async function POST(request: Request) {
       data.imageIds,
     );
     return json({ id: data.item.id }, 201);
-  });
+  }, request);
 }

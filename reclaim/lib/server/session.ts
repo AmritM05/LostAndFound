@@ -52,3 +52,11 @@ export async function endSession(request: Request) {
   if (value)
     await query("delete from demo_sessions where token_hash=$1", [hash(value)]);
 }
+
+export async function requirePhotoUser(request: Request) {
+  if (new URL(request.url).searchParams.get("workspace") === "admin") {
+    const { requireAdmin } = await import("./adminSession");
+    return requireAdmin(request);
+  }
+  return requireUser(request);
+}

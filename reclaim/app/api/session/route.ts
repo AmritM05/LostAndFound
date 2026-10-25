@@ -15,7 +15,10 @@ import { universityEmail } from "../../../lib/campus";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
-  return endpoint(async () => json({ user: await currentUser(request) }));
+  return endpoint(
+    async () => json({ user: await currentUser(request) }),
+    request,
+  );
 }
 export async function POST(request: Request) {
   return endpoint(async () => {
@@ -23,7 +26,7 @@ export async function POST(request: Request) {
     const data = await body(request);
     const email =
       typeof data.email === "string" ? data.email.trim().toLowerCase() : "";
-    if (!universityEmail(email) || email.length > 254)
+    if (!universityEmail(email, []) || email.length > 254)
       throw new ApiError("Enter a valid permitted email address.");
     const name =
       typeof data.name === "string" ? data.name.trim().slice(0, 100) : "";
@@ -31,7 +34,7 @@ export async function POST(request: Request) {
     const response = json({ ok: true });
     response.headers.set("Set-Cookie", cookie(token));
     return response;
-  });
+  }, request);
 }
 export async function DELETE(request: Request) {
   return endpoint(async () => {
@@ -40,5 +43,5 @@ export async function DELETE(request: Request) {
     const response = json({ ok: true });
     response.headers.set("Set-Cookie", cookie("", 0));
     return response;
-  });
+  }, request);
 }

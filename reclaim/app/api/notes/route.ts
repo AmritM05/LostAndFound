@@ -27,5 +27,5 @@ export async function POST(request: Request) {
     );
     if (!rows.length) throw new ApiError("Report not found.", 404);
     return json({ ok: true });
-  });
+  }, request);
 }

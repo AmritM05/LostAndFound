@@ -16,10 +16,17 @@ export async function request<T = any>(
     },
   });
   const data = await response.json().catch(() => null);
-  if (!response.ok)
+  if (!response.ok) {
+    if (process.env.NODE_ENV !== "production")
+      console.error("[Magpie request]", {
+        route: path.split("?")[0],
+        action: options.method || "GET",
+        status: response.status,
+      });
     throw new Error(
       data?.error ||
         "Magpie could not complete this request. Please try again.",
     );
+  }
   return data;
 }

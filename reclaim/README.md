@@ -20,6 +20,9 @@ DATABASE_URL=
 BLOB_READ_WRITE_TOKEN=
 NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=
 NEXT_PUBLIC_GOOGLE_MAPS_MAP_ID=
+ADMIN_DEMO_EMAIL=
+ADMIN_DEMO_PASSWORD=
+ALLOWED_ORIGINS=
 NEXT_PUBLIC_ALLOWED_EMAIL_DOMAINS=
 ```
 
@@ -47,11 +50,11 @@ Enable Maps JavaScript API and billing. Restrict the browser key to this API and
 
 Enter an email and press **Continue**. The server creates/retrieves a `users` record with a default student role, stores only a hash of a random session token in Neon, and sets a seven-day HTTP-only SameSite cookie (Secure in production). Refresh preserves the session; Logout deletes it. No password, confirmation email, SSO, or Supabase setup is used. The auth adapter is isolated in `lib/server/session.ts`.
 
-This is intentionally **not production identity verification**: anyone who knows an email can enter as that user. Use sample information. Email-only sessions always receive student privileges even if the underlying user record is manually marked admin. There is no role selector, student Found Item form, or exposed admin interface. Existing `/admin/*` routes return 404 in this release. Real verified identity must replace demo login before private real-world use or staff access.
+This is intentionally **not production identity verification**: anyone who knows an email can enter as that user. Use sample information. Email-only sessions always receive student privileges even if the underlying user record is manually marked admin. There is no role selector or student Found Item form. Staff use the separate `/admin/login/` page and server-verified credentials. Real verified student identity must replace email-only login before private real-world use.
 
 Reports, private descriptions, notes, updates, image associations, and users persist in Neon. Existing reports stored by the earlier browser-only version are left untouched in browser storage and are not silently uploaded. There is no local-storage fallback that claims a failed remote save succeeded.
 
-## Relational model and future staff work
+## Relational model and staff operations
 
 `db/migrations/001_student_backend.sql` defines:
 
@@ -61,7 +64,7 @@ Reports, private descriptions, notes, updates, image associations, and users per
 - `private_report_details`, `report_images`
 - `potential_matches`, `claims`, `pickups`, `updates`, `report_notes`
 
-The reporter email is obtained through the user foreign key rather than copied into every report. Original and preview Blob metadata live in `report_images`; binary data never enters PostgreSQL. Private ownership fields are separate from reports. Future staff intake, drop-off/custody management, matches, claims, verification, and single-use pickup information can use these same tables. No staff interface or automatic matching engine is added in this task. Search interest/claim/pickup actions remain unavailable until those workflows are implemented.
+The reporter email is obtained through the user foreign key rather than copied into every report. Original and preview Blob metadata live in `report_images`; binary data never enters PostgreSQL. Private ownership fields are separate from reports. Staff intake, custody management, automatic matching, claims, verification, and single-use pickup use these same tables through authenticated server routes. No parallel reports/images/claims model is introduced.
 
 `save_student_report` atomically saves the report, ownership details, image links, and initial update. It enforces student lost-only submission, owner-scoped editing, valid active buildings, valid coordinates, and completed owned images. Building coordinates come from the database. Unknown locations clear building and coordinates; a map-only point is valid. The original instant remains in `occurred_at`; `lost_date` and `lost_time` are its UTC components.
 
@@ -73,7 +76,7 @@ JPEG/JPG, PNG, WebP, HEIC, and HEIF are supported, including HEIC/HEIF files wit
 
 The original file is preserved. HEIC conversion runs lazily in the browser using heic2any; compatible previews are resized to a maximum dimension of 1600 pixels and encoded as WebP. Original quality is not destroyed. Some HEIC codecs/devices may fail preview conversion; the file remains accepted with a clear warning and original download. A failed preview upload does not discard the original. Private photo views request compatible previews where present; unsupported HEIC originals are offered as downloads instead of loaded as broken full-size images. Conversion can still require substantial memory for exceptionally large pixel dimensions on older phones.
 
-Search never receives image paths, Blob URLs, private descriptions, brands/models/colors, markings, identities, or staff notes. The `public_found_summaries` database view and `/api/search/` return only ID, found type, broad category, general drop-off building, date, and generic status. Private image responses are streamed through an owner-checked server route with no-store headers. Session privacy is limited by the explicitly unverified demo email login.
+Search never receives image paths, Blob URLs, private descriptions, brands/models/colors, markings, identities, or staff notes. The `public_found_summaries` database view and `/api/search/` return only ID, found type, broad category, general drop-off building, date, and generic status. Private image responses are streamed through a workspace- and owner-checked server route with no-store headers. Student sessions only access student uploads; authenticated staff may view authorized reports through an explicit staff workspace context. Knowing the staff email grants no access to staff photos. Session privacy is limited by the explicitly unverified demo email login.
 
 Unsubmitted uploads can remain as unattached rows/blobs after abandoned forms or failed saves; production lifecycle cleanup and broader abuse controls are future work. Upload reservations are limited per user and tokens expire after 15 minutes. Successful uploads are reused on immediate report-save retries.
 
@@ -97,7 +100,6 @@ Live verification requires valid `DATABASE_URL`, a private store token, and the 
 - `components/AuthForm.tsx`, `PhotoUploader.tsx`, `PrivatePhoto.tsx`, `components/portal/`: existing student UX integration
 - `lib/uploadConfig.ts`, `imagePreview.ts`: upload limits, HEIC compatibility, optimized previews
 
-
 ## Report deletion and upload refinement
 
 `db/migrations/002_report_deletion.sql` adds owner-checked transactional deletion, a shared active-recovery predicate, and a durable Blob cleanup queue. Apply it with `npm run db:migrate` before using the new workspace projection/deletion route.
@@ -113,3 +115,28 @@ npm run blobs:cleanup
 The picker, drag/drop, upload service, reservation route, token route, and completion route share `lib/uploadConfig.ts`. Files travel directly to private Blob storage (multipart for large files); the app request-body cap applies only to small JSON metadata. The 1 MB WebP preview cap is separate from the 25 MB **original per-image** limit. Preview conversion times out with a fallback rather than blocking the original upload or report.
 
 The former 3 MB/JPEG-PNG-WebP restriction still appears only in the archived Supabase bucket SQL, which is not executed by this application. The earlier hosted static browser demo also contains its own historical 3 MB restriction. Local fixes do not update that old deployment: deploy the current Next.js server application to see these fixes live. Do not reapply the archived Supabase schema to Neon.
+
+## Admin Portal and origin/server fixes
+
+Staff sign in at `/admin/login/` using server-only `ADMIN_DEMO_EMAIL` and `ADMIN_DEMO_PASSWORD`. The password is compared on the server using fixed-length digest comparison, never stored in browser storage or a cookie. A separate random opaque token is kept in an HttpOnly, SameSite=Lax cookie (Secure on production); only its SHA-256 hash is stored in `admin_sessions`. Staff sessions expire after eight hours and sign-out revokes the token. A student email session always stays a student, even when its email matches the staff account. Photo reservations are explicitly scoped by workspace and the database rejects attaching staff uploads to student reports or the reverse.
+
+Protected staff pages: `/admin/`, `/admin/found/`, `/admin/reports/`, `/admin/reports/[id]/`, `/admin/matches/`, `/admin/claims/`, `/admin/pickup/`, `/admin/dropoffs/`. The server layout redirects unauthenticated students to staff sign-in. Every staff API also checks the admin session. The staff UI has a separate sidebar, inventory filters, private comparison/details, claim review, custody actions, manual pickup code redemption, drop-off configuration and recent activity. No public messaging is added.
+
+`003_admin_portal.sql` reuses the existing domain tables and adds `admin_sessions`, `admin_login_attempts`, and `staff_activity`; it extends drop-off coordinates, image workspace ownership, and private pickup display codes. A database trigger uses the existing fallback score (attributes, token overlap, time, optional distance) to generate matches atomically when lost reports change or staff intake is saved. This is a similarity heuristic, not image recognition. Claims validate report ownership; approval locks both reports and prevents duplicate assignment; pickup hashes are single-use and expire after seven days. Private student updates follow matches, information requests, approval and return. Plain display codes are intentionally available only to the claimant and authenticated staff; raw session tokens and code hashes never appear in workspace responses.
+
+The origin bug was reproduced in the browser: `Origin: http://localhost:3001` differed from Next.js's internal `http://0.0.0.0:3001` request origin because the development server binds all interfaces. `lib/server/origin.ts` now centralizes CSRF validation: local aliases/ports work only in development against a local binding, current application origins work directly, Vercel deployment/production hosts and its trusted forwarded headers are supported, and custom proxy origins can be explicitly listed in comma-separated `ALLOWED_ORIGINS`. Foreign and absent origins remain rejected. No wildcard CORS headers are used. Frontend requests stay relative. For a local production-mode `npm start` test, explicitly configure its loopback origin in `ALLOWED_ORIGINS`.
+
+The generic 503 was caused by unusable service credentials and an unapplied schema. Connection checks distinguished invalid database configuration, storage token configuration, and missing migrations. The configured Neon connection and private Blob token now pass live checks, and all three migrations have been applied to the configured database. Database failures now distinguish configuration, schema, and connection problems; Blob errors identify storage independently. Safe logs include route, method, status, operation, and a safe code/reason, never raw provider exception messages, connection URLs, tokens, passwords, or private report bodies.
+
+Run internal diagnostics from the terminal (no public debug endpoint):
+
+```sh
+npm run services:check
+npm run db:migrate
+```
+
+`services:check` executes `SELECT 1`, checks migration objects, and makes a minimal Blob read check. Upload writes were separately verified through authenticated app routes with real HEIF and 25 MB HEIC fixtures; a student photo deletion was verified against actual Blob removal. The full live synthetic flow also verified report persistence, automatic matching, private claim review, information requests, approval, pickup, student/admin access isolation, and student refresh persistence. Automated tests use isolated PGlite databases; they do not silently replace Neon at runtime.
+
+For Vercel: set the project root to `reclaim`, choose the Next.js preset and Node.js 22, and configure `DATABASE_URL`, a **private** store `BLOB_READ_WRITE_TOKEN`, `ADMIN_DEMO_EMAIL`, `ADMIN_DEMO_PASSWORD`, and the public Maps variables for each intended environment. The Blob token encodes its store; no separate `BLOB_STORE_ID` is required. Apply migrations to the same database used by that environment. Vercel preview domains work through platform host variables/headers; add custom proxy origins to `ALLOWED_ORIGINS` if necessary. Redeploy after configuration changes. Keep the existing static Site unchanged; it does not host these server APIs.
+
+Demo limitations: student emails are unverified, login throttling is basic (invalid credential throttling is per process), staff workspace lists are unpaginated, and matching has no AI image analysis. Extremely close concurrent cross-type inserts may require a later report update to refresh their match. Expired pickup passes currently need staff follow-up; there is no reissue screen. Abandoned uploads still need lifecycle cleanup. Photos and staff data must remain private during any future deployment.

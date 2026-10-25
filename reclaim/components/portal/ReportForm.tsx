@@ -139,13 +139,21 @@ export default function ReportForm({
     return (
       <section className="panel report-success">
         <CheckCircle2 size={36} />
-        <h2>Your lost report has been saved</h2>
-        <p>You can find your report and its photos in My Reports.</p>
+        <h2>
+          {mode === "found"
+            ? "Found item received"
+            : "Your lost report has been saved"}
+        </h2>
+        <p>
+          {mode === "found"
+            ? "The item is in staff inventory and matching has started."
+            : "You can find your report and its photos in My Reports."}
+        </p>
         <a
           className="button"
           href={mode === "found" ? "/admin/reports" : "/student/reports"}
         >
-          View my reports
+          {mode === "found" ? "View staff reports" : "View my reports"}
           <ArrowRight size={16} />
         </a>
       </section>

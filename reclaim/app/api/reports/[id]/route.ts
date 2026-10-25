@@ -23,7 +23,7 @@ export async function PATCH(
     const data = reportInput(await body(request), id);
     await repository(query).save(user, data.item, data.privateDetail, [], true);
     return json({ ok: true });
-  });
+  }, request);
 }
 
 export async function DELETE(
@@ -39,5 +39,5 @@ export async function DELETE(
       throw new ApiError("Report not found.", 404);
     const { pending } = await cleanupReportPhotos(id, user.id);
     return json({ deleted: true, cleanupPending: pending > 0 });
-  });
+  }, request);
 }

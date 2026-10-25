@@ -1,6 +1,10 @@
+import {
+  blobOperation,
+  requireBlobConfiguration,
+} from "../../../../lib/server/blob";
 import { get } from "@vercel/blob";
 import { endpoint, ApiError, json } from "../../../../lib/server/http";
-import { requireUser } from "../../../../lib/server/session";
+import { requirePhotoUser } from "../../../../lib/server/session";
 import { query } from "../../../../lib/server/db";
 import { uuid } from "../../../../lib/server/validation";
 export const runtime = "nodejs";
@@ -10,12 +14,12 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> },
 ) {
   return endpoint(async () => {
-    const user = await requireUser(request),
+    const user = await requirePhotoUser(request),
       { id } = await params;
     if (!uuid(id)) throw new ApiError("Image not found.", 404);
     const [image] = await query(
-      "select * from report_images where id=$1 and owner_id=$2 and status='uploaded'",
-      [id, user.id],
+      "select * from report_images where id=$1 and ((owner_id=$2 and upload_role='student') or $3::boolean) and status='uploaded'",
+      [id, user.id, user.role === "admin"],
     );
     if (!image) throw new ApiError("Image not found.", 404);
     if (new URL(request.url).searchParams.get("metadata") === "1")
@@ -26,9 +30,11 @@ export async function GET(
       });
     const original = new URL(request.url).searchParams.get("original") === "1";
     const preview = !original && !!image.preview_url;
-    const result = await get(
-      preview ? image.preview_pathname : image.blob_pathname,
-      { access: "private", useCache: false },
+    const result = await blobOperation("storage.read", () =>
+      get(preview ? image.preview_pathname : image.blob_pathname, {
+        access: "private",
+        useCache: false,
+      }),
     );
     if (!result || result.statusCode !== 200)
       throw new ApiError("Image unavailable.", 404);
@@ -53,5 +59,5 @@ export async function GET(
         `attachment; filename*=UTF-8''${encodeURIComponent(image.filename)}`,
       );
     return new Response(result.stream as ReadableStream, { headers });
-  });
+  }, request);
 }

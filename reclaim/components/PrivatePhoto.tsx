@@ -13,7 +13,7 @@ export default function PrivatePhoto({
     [filename, setFilename] = useState("");
   useEffect(() => {
     let cancelled = false;
-    request(`${url}?metadata=1`)
+    request(`${url}${url.includes("?") ? "&" : "?"}metadata=1`)
       .then((data) => {
         if (cancelled) return;
         setFilename(data.filename);
@@ -52,7 +52,11 @@ export default function PrivatePhoto({
       ) : (
         <p>Preview unavailable for {filename || "this image"}.</p>
       )}
-      <a className="text-link" href={`${url}?original=1`} download>
+      <a
+        className="text-link"
+        href={`${url}${url.includes("?") ? "&" : "?"}original=1`}
+        download
+      >
         Download original photo {index + 1}
       </a>
     </div>
