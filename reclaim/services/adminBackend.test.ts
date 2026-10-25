@@ -114,8 +114,13 @@ test("staff intake, automatic matching, private claim review, pickup and student
       "001_student_backend.sql",
       "002_report_deletion.sql",
       "003_admin_portal.sql",
+      "003_admin_portal.sql",
       "004_admin_recovery.sql",
       "004_admin_recovery.sql",
+      "005_matching_engine.sql",
+      "005_matching_engine.sql",
+      "006_pickup_reissue.sql",
+      "007_student_dropoff_visibility.sql",
     ])
       await db.exec(
         await readFile(
