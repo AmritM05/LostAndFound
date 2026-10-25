@@ -191,6 +191,11 @@ export default function Portal({
     setActionError("");
     const close = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        // The nested student delete confirmation handles Escape itself. Its
+        // React handler can unmount the group before this native listener runs,
+        // so inspect the captured event path rather than the current DOM tree.
+        if (!adminPortal && e.composedPath().some(node =>
+          node instanceof HTMLElement && node.classList.contains("delete-confirmation"))) return;
         setSelectedItem(null);
         setSelectedMatch(null);
         setPass(null);
@@ -226,7 +231,7 @@ export default function Portal({
       document.removeEventListener("keydown", trap);
       previous?.focus();
     };
-  }, [selectedItem, selectedMatch, pass, searchCandidate]);
+  }, [selectedItem, selectedMatch, pass, searchCandidate, adminPortal]);
   async function perform(action: () => Promise<void>, success: string) {
     setBusy(true);
     setActionError("");

@@ -5,6 +5,7 @@ import StudentHandoverSteps from "./StudentHandoverSteps";
 import { campus } from "../../lib/campus";
 import {
   configuredDropoffs,
+  publicDropoffResult,
   type StudentDropoffLoader,
   type StudentDropoffResult,
 } from "./studentDropoffs";
@@ -41,18 +42,19 @@ export function DropoffContent({
             <div key={zone.id}>
               <div>
                 <strong>{zone.name}</strong>
+                {zone.building && <p>Campus building: {zone.building}</p>}
                 <p style={{ overflowWrap: "anywhere" }}>
                   {zone.instructions ||
                     "Contact campus staff for opening hours and handover instructions."}
                 </p>
-                <a
+                {zone.lat !== null && zone.lng !== null && <a
                   className="text-link"
                   href={`https://www.google.com/maps/search/?api=1&query=${zone.lat},${zone.lng}`}
                   target="_blank"
                   rel="noreferrer"
                 >
                   Open {zone.name} in Google Maps
-                </a>
+                </a>}
               </div>
             </div>
           ))}
@@ -82,7 +84,9 @@ export default function StudentDropoffGuidance({
     let cancelled = false;
     setLoading(true);
     setError(false);
+    setResult(null);
     load()
+      .then(publicDropoffResult)
       .then((data) => {
         if (!cancelled) setResult(data);
       })
