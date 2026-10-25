@@ -20,3 +20,6 @@
   .recoveryCard > button { width: 100%; }
   .guidance > a { display: flex; white-space: normal; text-align: center; }
 }
+
+/* Contain absolutely positioned accessible labels inside the scrollable table. */
+.reportTable { position: relative; max-width: 100%; }

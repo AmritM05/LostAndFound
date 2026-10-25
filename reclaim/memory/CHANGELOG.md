@@ -1,5 +1,10 @@
 # Verified project changelog
 
+## 2026-10-25 — live deployment verification and video handoff
+
+User authorized the exact disposable target; deployed pending004–008 preserving existing counts and verified001–008 prerequisites/functions. Real Gemini text/image/cross-modal, private Blob upload, full recovery/privacy/expired-renewal/terminal protection, Maps and actual browser rehearsal passed. Final139 automated and36 synthetic browser checks pass; production build/TypeScript pass. Scoped student mobile table fix and test-harness corrections only. Fresh Pending video fixture prepared; no hosted deployment or main merge. See latest VERIFICATION and DEMO_RUNBOOK.
+
+
 ## 2026-10-25 — final integration (Draft PR #2)
 
 Authorized frozen student/admin/matching merges preserving preparation history; resolved Developer1 log by keeping both histories and adminBackend migration fixture by keeping both assertions. Wired student public drop-off API/Maps/retry/empty states, added minimal staff-only stored match classifications/explanations and non-probability ranking labels. Added executable A/B/C TS/SQL/persistence acceptance,007 audit coverage, published-desk browser checks and isolated staff real-component browser harness. Reconciled central memory/runbook/backlog without editing teammates' logs.

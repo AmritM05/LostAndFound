@@ -74,6 +74,13 @@ test(
       provider,
     );
     assert.equal(rejected.reason, "incompatible");
+    const earbudsRejected = await compareWithGemini(
+      report("lost", { name: "Apple AirPods Pro", category: "Electronics", brand: "Apple", model: "AirPods Pro" }),
+      report("found", { name: "Samsung Galaxy Buds", category: "Electronics", brand: "Samsung", model: "Galaxy Buds 2" }),
+      provider,
+    );
+    assert.equal(earbudsRejected.reason, "incompatible");
+    assert.equal(earbudsRejected.mode, "deterministic");
     const unknown = await compareWithGemini(
       report("lost", { brand: "" }),
       report("found"),

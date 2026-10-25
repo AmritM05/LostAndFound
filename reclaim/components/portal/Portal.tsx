@@ -318,7 +318,7 @@ export default function Portal({
   const title = nav.find((n) => n.id === section)?.name || "Overview";
   function reportTable(items: Item[]) {
     return items.length ? (
-      <div className="table-wrap">
+      <div className={`table-wrap ${studentStyles.reportTable}`}>
         <table>
           <thead>
             <tr>

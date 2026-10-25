@@ -1,9 +1,10 @@
 // REAL opt-in acceptance: no route interception, mocked DB or fake Blob upload.
 // Uses a disposable configured server; NEVER imports or changes production code.
 import test from 'node:test';
+import sharp from 'sharp';
 import assert from 'node:assert/strict';
 import { randomUUID } from 'node:crypto';
-import { browserEngine, browserOptions, prepareLostReport, samplePng } from './helpers/student-browser.mjs';
+import { browserEngine, browserOptions, prepareLostReport } from './helpers/student-browser.mjs';
 
 const enabled = process.env.MAGPIE_LIVE_ACCEPTANCE === '1';
 test('REAL services: student photo → private information response → staff pickup', {
@@ -27,6 +28,7 @@ test('REAL services: student photo → private information response → staff pi
   const json = async (...args) => (await call(...args)).json();
   let lost, match, secondMatch, claimId, secondClaimId, imageId, zoneId;
   const evidence = `Synthetic private engraving ${run}`;
+  const samplePng = await sharp({ create: { width: 320, height: 240, channels: 3, background: '#284e80' } }).png().toBuffer();
   const page = await student.newPage();
   async function step(name, optionsOrRun, maybeRun) {
     const options = typeof optionsOrRun === 'function' ? {} : optionsOrRun;
@@ -67,7 +69,7 @@ test('REAL services: student photo → private information response → staff pi
       assert.ok(workspace.buildings.length, 'Reviewed migrations and configured building seed are required');
       const building = workspace.buildings[0];
       zoneId = randomUUID(); resources.zone = zoneId;
-      await call(staff, '/api/admin/dropoffs/', 'POST', { id: zoneId, name: `Synthetic desk ${run}`, buildingId: building.id, instructions: 'Synthetic public handover instructions', lat: Number(building.latitude), lng: Number(building.longitude), active: true });
+      await call(staff, '/api/admin/dropoffs/', 'POST', { id: zoneId, name: `Synthetic desk ${run}`, buildingId: building.id, instructions: 'Synthetic staff-only handling note', studentVisible: true, publicInstructions: 'Synthetic public handover instructions', lat: Number(building.latitude), lng: Number(building.longitude), active: true });
     });
     const makeFound = async (changes = {}) => {
       const item = { ...lost, id: randomUUID(), type: 'found', dropoffZoneId: zoneId, receivedAt: new Date().toISOString(), custodyStatus: 'Received', staffNotes: 'Synthetic private storage note', ...changes };
@@ -92,6 +94,25 @@ test('REAL services: student photo → private information response → staff pi
         assert.ok(!state.matches.some(m => m.lostId === lost.id && m.foundId === contradictory.id && !m.dismissed));
       });
     }
+    await step('published desks are student-safe and Gemini uses real private-photo cross-modal evidence before claims', async () => {
+      const zones = await json(student, '/api/dropoffs/');
+      const desk = zones.find(z => z.id === zoneId);
+      assert.ok(desk && desk.description === 'Synthetic public handover instructions');
+      assert.ok(!JSON.stringify(zones).includes('Synthetic staff-only handling note'));
+      await call(student, '/api/admin/ai-matching/', 'POST', { lostId: lost.id, foundId: match.foundId, confirmSynthetic: true }, 401);
+      const result = await json(staff, '/api/admin/ai-matching/', 'POST', { lostId: lost.id, foundId: match.foundId, confirmSynthetic: true });
+      assert.equal(result.mode, 'gemini', 'Actual configured Gemini must contribute, not deterministic fallback');
+      assert.ok(result.channels.includes('semantic'));
+      assert.ok(result.channels.includes('image-to-text'), 'Real bound private Blob image must reach prepared-image provider path');
+      assert.equal(result.applied, true);
+      const workspace = await json(staff, '/api/admin/workspace/');
+      const reasoning = workspace.matches.find(m => m.id === match.id).staff_reasoning;
+      assert.equal(reasoning.ai.used, true);
+      assert.equal(reasoning.ai.model, 'gemini-embedding-2');
+      const owner = await json(student, '/api/workspace/');
+      assert.ok(!JSON.stringify(owner).includes('staff_reasoning'));
+      assert.ok(!JSON.stringify(owner).includes('gemini-embedding-2'));
+    });
     await step('student submits claim; foreign claims/deletion denied and active recovery blocks deletion', async () => {
       await call(stranger, `/api/reports/${lost.id}/`, 'DELETE', undefined, 404);
       await call(stranger, '/api/claims/', 'POST', { matchId: match.id, answer: evidence }, 400);
@@ -102,6 +123,7 @@ test('REAL services: student photo → private information response → staff pi
       secondClaimId = state.claims.find(c => c.matchId === secondMatch.id).id;
       await call(student, `/api/reports/${lost.id}/`, 'DELETE', undefined, 409);
     });
+    if (process.env.MAGPIE_PREPARE_VIDEO === '1') { console.log('Prepared synthetic video scenario at Pending; Gemini already measured.'); return; }
     await step('staff requests information; student responds privately through real UI; staff sees updated evidence', async () => {
       await call(staff, '/api/admin/actions/', 'POST', { action: 'reviewClaim', id: claimId, status: 'More information', message: `Describe the private hinge engraving ${run}` });
       await page.goto(`${origin}/student/updates/`);
@@ -125,6 +147,23 @@ test('REAL services: student photo → private information response → staff pi
       await call(staff, '/api/admin/actions/', 'POST', { action: 'reviewClaim', id: claimId, status: 'Approved', zoneId, message: 'Collect with university identity at the synthetic desk' });
       const approved = (await json(student, '/api/workspace/')).state.claims.find(c => c.id === claimId);
       assert.ok(approved.code && approved.pickupLocation);
+      // Scoped test-clock setup in the explicitly authorized disposable database.
+      // All renewal/redemption and access decisions still run through real APIs.
+      if (process.env.MAGPIE_TEST_PICKUP_EXPIRY === '1') {
+        const { createHash } = await import('node:crypto');
+        const target = new URL(process.env.DATABASE_URL);
+        assert.equal(createHash('sha256').update(target.hostname + target.pathname).digest('hex').slice(0, 12), process.env.MAGPIE_LIVE_TARGET_FINGERPRINT);
+        const { neon } = await import('@neondatabase/serverless');
+        const sql = neon(process.env.DATABASE_URL);
+        const expired = await sql.query("update pickups set expires_at=now()-interval '1 second' where claim_id=$1 and used_at is null returning id", [claimId]);
+        assert.equal(expired.length, 1);
+        await call(staff, '/api/admin/actions/', 'POST', { action: 'pickup', code: approved.code }, 400);
+        await call(staff, '/api/admin/actions/', 'POST', { action: 'reissuePickup', id: expired[0].id, zoneId });
+        const renewed = (await json(student, '/api/workspace/')).state.claims.find(c => c.id === claimId);
+        assert.ok(renewed.code && renewed.code !== approved.code);
+        await call(staff, '/api/admin/actions/', 'POST', { action: 'pickup', code: approved.code }, 400);
+        approved.code = renewed.code;
+      }
       await call(staff, '/api/admin/actions/', 'POST', { action: 'pickup', code: approved.code });
       await call(staff, '/api/admin/actions/', 'POST', { action: 'pickup', code: approved.code }, 400);
       const workspace = await json(staff, '/api/admin/workspace/');

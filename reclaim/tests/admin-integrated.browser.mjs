@@ -45,7 +45,7 @@ try {
     await page.goto(base);
     await page.getByText('Strong potential match',{exact:true}).waitFor();
     await page.getByText('Same brand · Compatible model',{exact:true}).waitFor();
-    assert.equal(await page.getByText(/ownership probability/i).count(),0);passed++;
+    await page.getByText(/Similarity ranking only; not an ownership probability/).waitFor();passed++;
     if(process.env.STAFF_SCREENSHOT_DIR) await page.screenshot({path:`${process.env.STAFF_SCREENSHOT_DIR}/staff-matches-${width}.png`,fullPage:true});
     if (width===390) assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
     passed++;
