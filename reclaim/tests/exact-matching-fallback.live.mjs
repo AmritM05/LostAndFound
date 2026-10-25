@@ -10,6 +10,6 @@ try{
  const context=await browser.newContext(),headers={Origin:base};
  const login=await context.request.post(base+'/api/admin/session/',{headers,data:{email:process.env.ADMIN_DEMO_EMAIL,password:process.env.ADMIN_DEMO_PASSWORD}});assert.equal(login.status(),200);
  const r=await context.request.post(base+'/api/admin/ai-matching/',{headers,data:{lostId:process.env.MAGPIE_SYNTHETIC_LOST_ID,foundId:process.env.MAGPIE_SYNTHETIC_FOUND_ID,confirmSynthetic:true}});assert.equal(r.status(),200);
- const result=await r.json();assert.equal(result.mode,'deterministic');assert.equal(result.providerReason,'disabled');assert.equal(result.applied,true);assert.equal(result.assessment.eligible,true);assert.ok(result.assessment.score>=35);
+ const result=await r.json();assert.equal(result.mode,'deterministic');assert.equal(result.providerReason,'disabled');assert.equal(result.applied,true);assert.equal(result.assessment.eligible,true);assert.ok(result.assessment.score>=70);
  console.log(JSON.stringify({passed:1,failed:0,verification:'REAL isolated local API + Neon, server Gemini flag disabled; no mocks',loginStatus:login.status(),matchingStatus:r.status(),mode:result.mode,providerReason:result.providerReason,score:result.assessment.score}));
 }finally{await browser.close();}

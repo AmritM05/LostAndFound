@@ -21,7 +21,7 @@ try{
  const workspace=()=>json(staff,'/api/admin/workspace/');
  const before=await workspace();
  const actual=before.matches.find(m=>m.lost_report_id===process.env.MAGPIE_EXISTING_LOST_ID&&m.found_report_id===process.env.MAGPIE_EXISTING_FOUND_ID);
- assert.ok(actual&&actual.score>=35,'D: real existing pair must be persisted after authorized recalculation');passed++;
+ assert.ok(actual&&actual.score>=70,'D: real existing pair must be persisted after authorized recalculation');passed++;
  async function submit(page,mode,model='iPhone 15 Pro Max',brand='Apple',description='Synthetic handset in a plain protective shell'){
   await page.goto(base+(mode==='lost'?'/student/report/':'/admin/found/'));
   await page.getByRole('heading',{name:'Start a report',exact:true}).waitFor();
@@ -34,11 +34,11 @@ try{
   await page.getByRole('button',{name:'Submit report',exact:true}).click();const response=await request;assert.equal(response.status(),201);const result=await response.json();assert.ok(result.id);return result.id;
  }
  const lost=await submit(sp,'lost'),found=await submit(ap,'found');
- let state=await workspace();const pair=state.matches.find(m=>m.lost_report_id===lost&&m.found_report_id===found);assert.ok(pair&&pair.score>=35,'A/E: identical pair must match automatically after found UI intake');passed+=2;
+ let state=await workspace();const pair=state.matches.find(m=>m.lost_report_id===lost&&m.found_report_id===found);assert.ok(pair&&pair.score>=70,'A/E: identical pair must match automatically after found UI intake');passed+=2;
  const moderate=await submit(ap,'found','15 Pro Max','Apple','Plain protective casing around the synthetic mobile handset');
- state=await workspace();assert.ok(state.matches.some(m=>m.lost_report_id===lost&&m.found_report_id===moderate&&m.score>=35),'B: short family alias and different wording');passed++;
+ state=await workspace();assert.ok(state.matches.some(m=>m.lost_report_id===lost&&m.found_report_id===moderate&&m.score>=70),'B: short family alias and different wording');passed++;
  const rejected=await submit(ap,'found','Galaxy S24','Samsung');state=await workspace();assert.ok(!state.matches.some(m=>m.lost_report_id===lost&&m.found_report_id===rejected),'C: known brand mismatch rejected');passed++;
- const laterLost=await submit(sp,'lost','15 Pro Max');state=await workspace();assert.ok(state.matches.some(m=>m.lost_report_id===laterLost&&m.found_report_id===found&&m.score>=35),'F: new lost report matches prior found record');passed++;
+ const laterLost=await submit(sp,'lost','15 Pro Max');state=await workspace();assert.ok(state.matches.some(m=>m.lost_report_id===laterLost&&m.found_report_id===found&&m.score>=70),'F: new lost report matches prior found record');passed++;
  await ap.goto(base+'/admin/matches/');await ap.getByRole('button',{name:'Review Match',exact:true}).first().waitFor();assert.ok((await ap.locator('.staff-confidence').allTextContents()).some(s=>s.includes(`${pair.score}/100`)));assert.ok(await ap.getByText(name,{exact:true}).count());passed++;
  const [stored]=await q.query('select id,score,staff_reasoning from potential_matches where lost_report_id=$1 and found_report_id=$2',[lost,found]);assert.equal(stored.id,pair.id);assert.equal(stored.score,pair.score);assert.notEqual(stored.staff_reasoning?.ai?.used,true,'real automatic matching is deterministic and does not depend on Gemini');passed++;
  const duplicate=await q.query('select count(*)::int n from potential_matches where lost_report_id=$1 and found_report_id=$2',[lost,found]);assert.equal(duplicate[0].n,1);

@@ -34,8 +34,8 @@ try {
     const report = (id,type) => ({id,type,name:`Synthetic ${type} earbuds`,category:'Electronics',location:'Unknown',status:'Matching',description:'Private sample description',image_paths:[],created_at:'2026-10-24T12:00Z'});
     const data = {reports:[report('lost','lost'),report('found','found')],matches:[{id:'match',lost_report_id:'lost',found_report_id:'found',score:98,factors:{Description:100},minutes_difference:15,distance_km:null,staff_reasoning:{eligible:true,classification:'very_strong_match',matchingFactors:['Same brand','Compatible model'],contradictions:[]}}], claims:[{id:'claim',match_id:'match',status:'Pending',display_name:'Synthetic claimant',email:'demo@example.test',answers:'Private ownership sample'}], pickups:[],zones:[{id:'desk',name:'Synthetic desk',active:true}],activity:[],buildings:[],notes:[]};
     data.matches.push(
-      { ...data.matches[0], id: 'boundary-34', score: 34, staff_reasoning: {eligible:true,classification:'weak_match'} },
-      { ...data.matches[0], id: 'boundary-35', score: 35, staff_reasoning: {eligible:true,classification:'weak_match'} },
+      { ...data.matches[0], id: 'boundary-69', score: 69, staff_reasoning: {eligible:true,classification:'possible_match'} },
+      { ...data.matches[0], id: 'boundary-70', score: 70, staff_reasoning: {eligible:true,classification:'possible_match'} },
     );
     await page.route('**/api/**', async route => {
       const path = new URL(route.request().url()).pathname;
@@ -49,8 +49,8 @@ try {
     await page.goto(base);
     await page.getByText('Strong potential match',{exact:true}).waitFor();
     await page.getByText('Same brand · Compatible model',{exact:true}).waitFor();
-    assert.deepEqual((await page.locator('.staff-confidence').allTextContents()).map(s=>s.trim()),['Ranking index 98/100','Ranking index 35/100']);
-    await page.getByText('Weak potential match',{exact:true}).waitFor();passed++;
+    assert.deepEqual((await page.locator('.staff-confidence').allTextContents()).map(s=>s.trim()),['Ranking index 98/100','Ranking index 70/100']);
+    await page.getByText('Possible match',{exact:true}).waitFor();passed++;
     await page.getByRole('button',{name:'Recalculate matches',exact:true}).click();
     await page.getByText('Matches recalculated. Recovery history and student notifications were preserved.',{exact:true}).waitFor();
     assert.equal(actions.at(-1).action,'recalculateMatches');passed++;
