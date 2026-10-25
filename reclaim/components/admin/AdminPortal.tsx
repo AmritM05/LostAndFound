@@ -270,6 +270,8 @@ export default function AdminPortal({
           lat: Number(d.get("lat")),
           lng: Number(d.get("lng")),
           active: d.get("active") === "on",
+          studentVisible: d.get("studentVisible") === "on",
+          publicInstructions: String(d.get("publicInstructions") || ""),
         }),
       });
       setZone(null);
@@ -1049,7 +1051,7 @@ export default function AdminPortal({
                           </label>
                         </div>
                         <label>
-                          Instructions
+                          Staff instructions (not published)
                           <textarea
                             name="instructions"
                             maxLength={2000}
@@ -1057,6 +1059,37 @@ export default function AdminPortal({
                             rows={3}
                           />
                         </label>
+                        <label>
+                          Public handover instructions
+                          <textarea
+                            name="publicInstructions"
+                            required={zone.student_visible === true}
+                            maxLength={2000}
+                            rows={3}
+                            defaultValue={zone.public_instructions || ""}
+                            placeholder="Directions for handing an item to campus staff. Exclude storage rooms, access codes and staff-only details."
+                          />
+                        </label>
+                        <label className="staff-checkbox">
+                          <input
+                            name="studentVisible"
+                            type="checkbox"
+                            checked={zone.student_visible === true}
+                            onChange={(e) =>
+                              setZone({
+                                ...zone,
+                                student_visible: e.target.checked,
+                              })
+                            }
+                          />
+                          Approve student handover and publish this zone's name,
+                          public building and public instructions
+                        </label>
+                        <p className="staff-help">
+                          Review the name and public instructions before
+                          publishing. Existing staff instructions and exact zone
+                          coordinates are excluded from the student directory.
+                        </p>
                         <label className="staff-checkbox">
                           <input
                             name="active"
@@ -1091,6 +1124,12 @@ export default function AdminPortal({
                         </div>
                         <h2>{z.name}</h2>
                         <p>{z.building}</p>
+                        <small>
+                          Student directory:{" "}
+                          {z.active && z.student_visible
+                            ? "Published"
+                            : "Hidden"}
+                        </small>
                         <p className="staff-help">
                           {z.instructions || "No instructions added."}
                         </p>
