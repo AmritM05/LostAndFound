@@ -101,3 +101,9 @@ Use synthetic users/items in a disposable configured environment, and record evi
 12. Both reports remain Returned and cannot reopen through a competing claim; stale approvals/submissions fail without issuing another pass or leaking private data.
 
 Also verify staff zone activation/deactivation reaches students once MAG-003 is implemented, loading/error/empty states, all six student navigation targets, Escape/focus behavior, and narrow/desktop layouts. No final combined acceptance is claimed by this checklist.
+
+### Publication outcome
+
+- Implementation committed as `51fa426` and ordinary non-force push to `origin/feature/student-experience` succeeded. Main was not modified. Only the eight owned paths above were staged.
+- Draft PR creation attempted through the connected GitHub integration; GitHub returned **403 Resource not accessible by integration**. Browser fallback reached the correct compare page but was signed out; no GitHub CLI is installed. **No PR was created.** A maintainer with PR permission can open it from https://github.com/AmritM05/LostAndFound/compare/main...feature/student-experience?expand=1 . PR creation is the remaining publication blocker; branch review is available now.
+- Final follow-up commit updates only this log with the verified publication result. This does not change application behavior or the check results above.
