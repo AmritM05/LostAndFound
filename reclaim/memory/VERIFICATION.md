@@ -1,5 +1,12 @@
 # Verification ledger
 
+## Final integration preparation — 2026-10-25
+
+No feature merges or remote writes: explicit lead hold. Preparation normal suite: 60 pass / 0 fail / 1 intentional skip. Pinned planned-SQL audit (`node scripts/audit-final-migrations.mjs`): 1 pass / 0 fail, in PGlite; tests ordered 001–006/replay, unchanged recovery guards through matching/reissue, three hard contradictions, private response, renewal, return and competing-claim denial. Detached admin `5063106`: 72/72; detached matching `7d831aa`: 65/65. These overlapping branch suites are not an integrated total. Preparation TypeScript/build pass (26 static pages).
+
+Read-only live evidence: Neon connection and Blob read/list token accepted; 005 evaluator/reasoning-column and 006 renewal-function markers absent; all three inspected recovery bodies differ from reviewed 004. No migration ledger, so exact deployment history is unknown. No upload/write/cleanup, login/session creation, report/claim/pickup, migration or deployment was executed. Live full-workflow status is **not run / blocked by authorization and completion gates**. Fresh browser evidence: unchanged student snapshot `a686d21` passed 23 synthetic scenarios (13 recovery/mobile + 10 intake/deletion/search/desktop), zero failures/page errors/unexpected API calls. Production server used its existing student-only build on a separate loopback port; no combined UI claim. Final publication is appended to the lead's log. See [FINAL_INTEGRATION_PLAN](FINAL_INTEGRATION_PLAN.md) for snapshots, reproducible commands and recording gates.
+
+
 ## Fresh checks for this memory task — 2026-10-24
 
 Baseline `6bf17fd`, clean main tracking origin/main; `git pull --ff-only` returned already up to date. The task only adds documentation and a startup pointer, without changing runtime code, credentials, schema or service data.

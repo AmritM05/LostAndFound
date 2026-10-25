@@ -115,3 +115,8 @@ For this documentation-only publication, verify Markdown links, scope and staged
 | Matching MAG-001/002/007; planned MAG-011 proposal | Developer 3 | feature/matching-engine | team-updates/developer-3.md | Assigned; MAG-001 contract before dependent filtering/ranking |
 
 Remaining cross-cutting backlog items are not automatically assigned. Scope changes, takeover of another developer's files and new shared-interface work require explicit coordination recorded by the owners and reconciled by the lead. A reserved branch/migration is preparation, not evidence of implementation.
+
+
+## Final integration hold — 2026-10-25
+
+The lead explicitly requested `integration/final-hackathon` for preparation, then confirmed no feature merges yet and remote services read-only. This is an authorized lead branch exception to the ordinary feature assignment; main/feature branches remain unchanged. See FINAL_INTEGRATION_PLAN for exact reviewed snapshots and known fixture/document overlaps. Completion confirmation and new target-specific write authorization are prerequisites; elapsed time or a passing isolated audit is not permission. Never edit another developer's personal log to record assumed readiness.

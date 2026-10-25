@@ -56,3 +56,8 @@ Foreign-key insert/delete ordering and lock order are part of the contract. Keep
 There are no embeddings, vector index, normalized contradiction provenance, match version, score calibration record, tenant isolation, migration ledger, dedicated custody-history table or retention schedule. Finder metadata is not separately captured. Reports/custody/claims use broad text statuses rather than a universally enforced state machine. Expired approved pickups have no reissue transaction/UI. Campus switching can leave old buildings active because seed conflict updates do not delete/deactivate missing buildings or update campus_id.
 
 Any proposed columns/tables must be reviewed and assigned a new migration with upgrade/backfill/rollback implications. Reuse existing reports/images/matches/updates rather than duplicating domain concepts. See [backlog](TASK_BACKLOG.md) and [coordination](TEAM_COORDINATION.md).
+
+
+## Reviewed final-integration files — not deployed by preparation
+
+As of 2026-10-25, admin snapshot `5063106` contains 004 terminal/information guards and 006 pickup renewal; matching `7d831aa` contains 005 policy/evaluation/trigger/staff_reasoning. Planned sequence is all sorted 001–006. A pinned PGlite audit proves 005/006 retain 004 recovery function bodies and combined return/reissue/contradiction behavior locally. Feature branches are not merged and the lead requires remote read-only access. Remote markers/definitions do not match that planned state; there is no migration ledger. No migration was applied here. See FINAL_INTEGRATION_PLAN before any schema operation.

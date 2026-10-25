@@ -18,6 +18,10 @@ This memory records current implementation separately from requirements. Source,
 6. Confirm the task is not implemented or claimed by another developer. Check dependencies and shared-file ownership. Use a separate feature branch before implementing code.
 7. Only then implement the owned task. Confirmed assignments/branches are in TEAM_COORDINATION; no application implementation is completed by the assignment itself.
 
+## Final integration preparation
+
+See [FINAL_INTEGRATION_PLAN.md](FINAL_INTEGRATION_PLAN.md) for pinned feature heads, the explicit no-merge/read-only hold, planned conflict resolution, isolated SQL audit, deployment gates and recording decision. No feature is merged by this preparation update.
+
 ## Documentation index
 
 | Document | Read it for |

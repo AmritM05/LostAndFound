@@ -223,3 +223,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 - **Likely files:** affected memory documents and repository-root AGENTS.md only when its startup procedure changes.
 - **Acceptance:** Distinguish current/target/status, no secrets, working links, preserved history and exact verification evidence.
 - **Tests:** Markdown file/link/secret scan, current source references and reviewed Git diff; no feature change hidden inside docs PR.
+
+
+## 2026-10-25 — final integration gate (no tasks promoted to Done)
+
+Lead explicitly requires preparation without feature merges and read-only remote access. MAG-001/002 matching, MAG-008 recovery guards and MAG-009 renewal have reviewed remote implementations with independent tests/pinned SQL audit, but are not integrated/deployed here. MAG-005 student/staff integration, MAG-006 live/deployment readiness and MAG-015 complete live acceptance remain blocked on completion confirmation, authorized merges and an explicitly authorized disposable target. MAG-003 live-zone read API remains absent; MAG-004 retains truthful guidance. The new audit/FINAL_INTEGRATION_PLAN advance preparation and MAG-022 memory reconciliation only. Do not infer main is fixed or a live demonstration is ready from these branch tests.

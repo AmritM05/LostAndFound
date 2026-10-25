@@ -1,5 +1,12 @@
 # Current status — start every coding session here
 
+## Latest lead instruction — 2026-10-25
+
+Final integration is **on hold**: the lead explicitly said prepare without merging and keep remote services read-only. `integration/final-hackathon` starts at main `6cc04d2` with preparation tests/docs only. Student `a686d21`, admin `5063106` and matching `7d831aa` are reviewed snapshots, not merged functionality. See [FINAL_INTEGRATION_PLAN](FINAL_INTEGRATION_PLAN.md) for exact evidence and next gates.
+
+The isolated planned 001–006 SQL audit passes contradiction filtering, private response, pass renewal, single-use return and stale competing-claim protection. Admin-only and matching-only suites pass separately. This does not certify a merged application or live recovery. Neon/Blob read connectivity passes; inspected remote function/schema markers do not match the planned 004–006 state. No remote SQL/data/storage mutation was authorized or performed. Complete live workflow, approved-zone API and recording readiness remain blocked. The historical main snapshot below still describes the unintegrated runtime.
+
+
 **Snapshot:** 2026-10-24, inspected baseline `6bf17fd` on main, synchronized with origin/main. The initial memory system was published to origin/main in `a02d102`. The confirmed ownership/log setup is a subsequent documentation-only update; verify your fetched main includes it before starting. Re-read Git status/recent teammate changes and all three personal logs before assuming this snapshot is current.
 
 ## What works, with evidence limits
