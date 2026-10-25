@@ -122,10 +122,9 @@ test("disabled, missing-key and missing-demo gates use exact deterministic fallb
   assert.equal(aiConfig({} as any).enabled, false);
   assert.equal(aiConfig({ GEMINI_API_KEY: "key" } as any).demo, false);
 });
-test("hard brand/model/color contradictions precede all embedding and private image requests", async () => {
+test("hard brand/model contradictions precede all embedding and private image requests", async () => {
   for (const extra of [
     { brand: "Adidas" },
-    { color: "bright yellow" },
     {
       name: "AirPods Pro",
       category: "Electronics",

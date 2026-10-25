@@ -43,7 +43,6 @@ export function assessMatch(lost: MatchingItem, found: MatchingItem, signals: Ma
   for (const key of ["category", "type", "brand"] as const)
     if (a[key] && b[key] && a[key] !== b[key]) contradictions.push(`${key[0].toUpperCase() + key.slice(1)} mismatch: ${a[key]} versus ${b[key]}`);
   if (a.model && b.model && !compatibleModels(a.model, b.model)) contradictions.push(`Model mismatch: ${a.model} versus ${b.model}`);
-  if (a.color && b.color && !compatibleColors(a.color, b.color)) contradictions.push(`Color mismatch: ${a.color} versus ${b.color}`);
   for (const key of Object.keys(a.identifiers).sort())
     if (b.identifiers[key] && a.identifiers[key] !== b.identifiers[key]) contradictions.push(`Conflicting identifier: ${key}`);
   if ([lost.status, found.status].some(s => ["Returned", "Archived", "Ready for Pickup"].includes(s))) contradictions.push("Report is closed or assigned");
@@ -64,7 +63,11 @@ export function assessMatch(lost: MatchingItem, found: MatchingItem, signals: Ma
     matchingFactors.push(key === "model" ? "Compatible model" : `Same ${key}`);
   }
   if (attrs.length) add("Brand & category", attrs.reduce((sum, v) => sum + v, 0) / attrs.length, 20);
-  if (a.color && b.color) { add("Color/details", a.color === b.color ? 100 : 90, 10); matchingFactors.push("Compatible color"); }
+  if (a.color && b.color) {
+    const compatible = compatibleColors(a.color, b.color);
+    add("Color/details", a.color === b.color ? 100 : compatible ? 90 : 0, 10);
+    matchingFactors.push(compatible ? "Compatible color" : "Different reported colors; staff verification required");
+  }
   const validSignal = (v: unknown): v is number => typeof v === "number" && Number.isFinite(v) && v >= 0 && v <= 1;
   const lexical = knownText(lost.description) && knownText(found.description) && tokens(lost.description).size && tokens(found.description).size
     ? textSimilarity(`${lost.name} ${lost.description}`, `${found.name} ${found.description}`) * 100 : null;

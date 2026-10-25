@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
-import { rankPotentialMatches } from "../../lib/matchVisibility";
+import { MIN_MATCH_SCORE, rankPotentialMatches } from "../../lib/matchVisibility";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -614,6 +614,14 @@ export default function AdminPortal({
               )}
               {section === "matches" && (
                 <div className="staff-stack">
+                  <section className="panel staff-panel" aria-label="Recalculate existing matches">
+                    <h2>Review existing reports</h2>
+                    <p className="staff-help">Candidates scoring {MIN_MATCH_SCORE}/100 or higher appear below. Recalculate after changing matching rules or adding older reports. Color differences reduce ranking; confirmed brand/model/category/identifier contradictions still reject. Staff must verify ownership.</p>
+                    <button className="button secondary compact" disabled={busy || loading}
+                      onClick={() => void act({ action: "recalculateMatches" }, "Matches recalculated. Recovery history and student notifications were preserved.")}>
+                      Recalculate matches
+                    </button>
+                  </section>
                   <GeminiComparison reports={data.reports} onApplied={load} />
                   {candidateMatches
                     .map((m: any) => (

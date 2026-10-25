@@ -91,6 +91,10 @@ export function adminRepository(query: Query) {
         notes,
       };
     },
+    async recalculateMatches(staff: string) {
+      const [row] = await query("select recalculate_potential_matches($1) as summary", [staff]);
+      return row.summary;
+    },
     async saveFound(staff: string, data: any) {
       await query("select save_found_report($1,$2::jsonb,$3,$4::uuid[])", [
         staff,

@@ -20,6 +20,10 @@ export async function POST(request: Request) {
       throw new ApiError("Choose a valid staff action.");
     const repo = adminRepository(query);
     switch (data.action) {
+      case "recalculateMatches": {
+        const summary = await repo.recalculateMatches(user.id);
+        return json({ ok: true, summary });
+      }
       case "reviewClaim": {
         if (
           !uuid(data.id) ||

@@ -105,6 +105,7 @@ test(
         unknownEligible: true,
       }),
     );
+    assert.ok(text.assessment.score > (await import("../services/matchingService")).assessMatch(item("lost"), item("found")).score, "Real semantic evidence must improve this synthetic ranking");
     // A swatch proves real image transport/embedding, not object-recognition quality.
   },
 );

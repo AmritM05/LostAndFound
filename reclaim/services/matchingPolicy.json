@@ -1,6 +1,6 @@
 {
-  "version": "compatibility-v1",
-  "unknown": ["", "unknown", "not known", "not sure", "unsure", "uncertain", "n a", "na", "none", "null", "undefined", "other", "generic", "unbranded", "no brand", "not provided", "not specified", "not applicable", "unidentified", "multicolor", "multi color", "mixed", "various"],
+  "version": "compatibility-v2-color-soft",
+  "unknown": ["", "unknown", "not known", "not sure", "unsure", "uncertain", "n a", "na", "none", "null", "undefined", "other", "generic", "unbranded", "no brand", "not provided", "not specified", "not applicable", "unidentified", "multicolor", "multi color", "mixed", "various", "dont know", "do not know", "dont remember", "cannot remember", "cant remember", "cannot recall", "unspecified", "unavailable", "not recorded", "to be determined", "tbd"],
   "brand": {
     "apple inc": "apple", "apple computer": "apple", "appple": "apple",
     "samsung electronics": "samsung", "sam sung": "samsung", "samung": "samsung",

@@ -1,5 +1,5 @@
 // Candidate visibility is separate from student notification strength.
-export const MIN_MATCH_SCORE = 50;
+export const MIN_MATCH_SCORE = 35;
 export const MIN_MATCH_NOTICE_SCORE = 60;
 
 export function isPotentialMatch(match: {

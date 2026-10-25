@@ -87,7 +87,7 @@ test('REAL services: student photo → private information response → staff pi
       const staffState = await json(staff, '/api/admin/workspace/');
       assert.ok(staffState.matches.some(m => m.id === match.id));
     });
-    for (const [attribute, changes] of [['brand', { brand: 'Samsung', model: 'Galaxy Buds' }], ['model', { model: 'AirPods Max' }], ['color', { color: 'White' }]]) {
+    for (const [attribute, changes] of [['brand', { brand: 'Samsung', model: 'Galaxy Buds' }], ['model', { model: 'AirPods Max' }], ['category', { category: 'Clothing' }]]) {
       await step(`hard ${attribute} contradiction rejected`, { skip: process.env.MAGPIE_MATCHING_ACCEPTANCE_READY !== '1' && 'Pending Developer 3 accepted normalization/contradiction contract and deployed matching migration' }, async () => {
         const contradictory = await makeFound(changes);
         const state = (await json(student, '/api/workspace/')).state;

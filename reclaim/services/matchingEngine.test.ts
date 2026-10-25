@@ -26,7 +26,7 @@ const scenarios: { name: string; lost?: Partial<MatchingItem>; found?: Partial<M
   { name: "generation alias and brand punctuation", lost: { brand: "APPLE, Inc.", model: "Air Pods Pro (2nd Gen)" }, eligible: true },
   { name: "generation-first model alias", found: { model: "AirPods Pro Gen 2" }, eligible: true },
   { name: "model family without a generation is uncertain, not contradictory", found: { model: "AirPods Pro" }, eligible: true },
-  { name: "bright yellow versus black", found: { color: "Bright-yellow" }, eligible: false },
+  { name: "bright yellow versus black", found: { color: "Bright-yellow" }, eligible: true },
   { name: "navy versus dark blue", lost: { color: "Navy" }, found: { color: "dark-blue" }, eligible: true },
   { name: "charcoal versus dark gray", lost: { color: "Charcoal" }, found: { color: "Dark grey" }, eligible: true },
   { name: "ambiguous dark colors are not hard contradictions", lost: { color: "Black" }, found: { color: "Navy blue" }, eligible: true },
@@ -95,7 +95,7 @@ test("no embedding/provider is invented by the optional scoring adapter", async 
 test("active SQL and TypeScript agree on normalization, contradictions, ranking and future measured signals", async () => {
   const db = new PGlite();
   try {
-    for (const file of ["001_student_backend.sql", "002_report_deletion.sql", "003_admin_portal.sql", "005_matching_engine.sql", "008_gemini_matching.sql", "009_match_threshold_50.sql"])
+    for (const file of ["001_student_backend.sql", "002_report_deletion.sql", "003_admin_portal.sql", "005_matching_engine.sql", "008_gemini_matching.sql", "009_match_threshold_50.sql", "010_forgiving_match_recalculation.sql"])
       await db.exec(await readFile(new URL("../db/migrations/" + file, import.meta.url), "utf8"));
     assert.deepEqual((await db.query<any>("select matching_policy() p")).rows[0].p, matchingPolicy);
     for (const kind of ["brand", "color", "category"] as const) {
@@ -121,7 +121,7 @@ test("active SQL and TypeScript agree on normalization, contradictions, ranking 
   } finally { await db.close(); }
 });
 
-test("migration upgrades stale matches, preserves claims/dismissals, prevents duplicates and keeps reasoning private", async () => {
+test("historical migration005 upgrades stale matches, preserves claims/dismissals, prevents duplicates and keeps reasoning private", async () => {
   const db = new PGlite();
   const q = async (sql: string, values: any[] = []) => (await db.query(sql, values)).rows as any[];
   const migration = await readFile(new URL("../db/migrations/005_matching_engine.sql", import.meta.url), "utf8");
@@ -152,7 +152,7 @@ test("migration upgrades stale matches, preserves claims/dismissals, prevents du
     const [match] = await q("select * from potential_matches where lost_report_id=$1 and found_report_id=$2", [id(10), id(12)]);
     assert.equal(match.score, assessMatch(item("lost"), item("found", { id: id(12) })).score);
     const staff = await adminRepository(q).workspace();
-    assert.equal(staff.matches.find(m => m.id === match.id).staff_reasoning.policyVersion, matchingPolicy.version);
+    assert.equal(staff.matches.find(m => m.id === match.id).staff_reasoning.policyVersion, "compatibility-v1");
     const own = await repository(q).workspace({ id: id(1) } as any);
     assert.equal("staff_reasoning" in own.state.matches.find(m => m.id === match.id), false);
     assert.ok(!JSON.stringify(own.state.matches).includes("contradictions"));
