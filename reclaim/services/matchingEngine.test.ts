@@ -20,6 +20,10 @@ const scenarios: { name: string; lost?: Partial<MatchingItem>; found?: Partial<M
   { name: "confirmed Nike versus Adidas backpacks", lost: { name: "Backpack", category: "Backpack", brand: "Nike", model: "" }, found: { name: "Backpack", category: "Bags", brand: "Adidas", model: "" }, eligible: false },
   { name: "different confirmed generations", found: { model: "AirPods Pro 1" }, eligible: false },
   { name: "Pro versus standard are not the same model", found: { model: "AirPods 2" }, eligible: false },
+  { name: "short phone model agrees with qualified intake", lost: { name: "Phone", model: "15 Pro Max" }, found: { name: "Phone", model: "iPhone 15 Pro Max" }, eligible: true },
+  { name: "qualified phone agrees with short intake", lost: { name: "Phone", model: "iPhone 15 Pro" }, found: { name: "Phone", model: "15 Pro" }, eligible: true },
+  { name: "short phone variants stay distinct", lost: { name: "Phone", model: "15 Pro" }, found: { name: "Phone", model: "iPhone 15 Pro Max" }, eligible: false },
+  { name: "short phone generations stay distinct", lost: { name: "Phone", model: "14 Pro" }, found: { name: "Phone", model: "iPhone 15 Pro" }, eligible: false },
   { name: "specific iPhone model variants stay distinct", lost: { model: "iPhone 13" }, found: { model: "iPhone 13 Pro" }, eligible: false },
   { name: "different explicit model codes", lost: { model: "SM-G991B" }, found: { model: "SM-G996B" }, eligible: false },
   { name: "model punctuation and whitespace are compatible", lost: { model: "SM-G991B" }, found: { model: "SMG991B" }, eligible: true },
@@ -95,7 +99,7 @@ test("no embedding/provider is invented by the optional scoring adapter", async 
 test("active SQL and TypeScript agree on normalization, contradictions, ranking and future measured signals", async () => {
   const db = new PGlite();
   try {
-    for (const file of ["001_student_backend.sql", "002_report_deletion.sql", "003_admin_portal.sql", "005_matching_engine.sql", "008_gemini_matching.sql", "009_match_threshold_50.sql", "010_forgiving_match_recalculation.sql"])
+    for (const file of ["001_student_backend.sql", "002_report_deletion.sql", "003_admin_portal.sql", "005_matching_engine.sql", "008_gemini_matching.sql", "009_match_threshold_50.sql", "010_forgiving_match_recalculation.sql", "011_phone_model_family.sql"])
       await db.exec(await readFile(new URL("../db/migrations/" + file, import.meta.url), "utf8"));
     assert.deepEqual((await db.query<any>("select matching_policy() p")).rows[0].p, matchingPolicy);
     for (const kind of ["brand", "color", "category"] as const) {

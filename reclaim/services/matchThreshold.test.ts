@@ -14,7 +14,7 @@ const folder=new URL('../db/migrations/',import.meta.url);
 const item=(type:'lost'|'found',extra: Partial<MatchingItem>={}): MatchingItem =>({id:id(type==='lost'?10:11),reporterId:id(1),type,name:'Object',category:'Other',brand:'',model:'',color:'Unknown',description:'',features:'',location:'Unknown',lat:null,lng:null,date:'invalid',status:'Matching',image:'',...extra});
 const setup=async(before010=false)=>{
  const db=new PGlite();
- for(const name of(await readdir(folder)).filter(f=>f.endsWith('.sql')&&(!before010||!f.startsWith('010_'))).sort()) await db.exec(await readFile(new URL(name,folder),'utf8'));
+ for(const name of(await readdir(folder)).filter(f=>f.endsWith('.sql')&&(!before010||f<'010_')).sort()) await db.exec(await readFile(new URL(name,folder),'utf8'));
  const q=async(s:string,args:any[]=[]) =>(await db.query(s,args)).rows as any[];
  await q("insert into users(id,email,display_name,role) values($1,'owner@example.test','Owner','student'),($2,'staff@example.test','Staff','admin'),($3,'other@example.test','Other','student')",[id(1),id(2),id(3)]);
  const insert=async(n:number,type:'lost'|'found',minutes=0,category='Electronics',description=type==='lost'?'crimson threaded fabric':'quartz metallic pebble')=>q("insert into reports(id,reporter_id,report_type,category,item_name,primary_color,description,lost_date,lost_time,occurred_at,status) values($1,$2,$3,$4,$5,'Unknown',$6,'2026-10-24','12:00','2026-10-24T12:00:00Z'::timestamptz+$7::integer*interval '1 minute',$8)",[id(n),type==='lost'?id(1):id(2),type,category,type==='lost'?'Object alpha':'Gadget beta',description,minutes,type==='lost'?'Matching':'Secured']);

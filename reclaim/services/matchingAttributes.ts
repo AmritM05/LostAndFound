@@ -35,6 +35,11 @@ export function normalizeModel(value: unknown, brand?: string, name?: string): s
     .replace(/\b(gen|generation) ?([1-4])\b/g, "$2");
   for (const prefix of [knownText(brand), normalizeAttribute("brand", brand)])
     if (prefix && text.startsWith(prefix + " ")) text = text.slice(prefix.length + 1);
+  // A numeric phone designation may omit its family while intake includes it.
+  // Qualify only with a known Apple brand and an unambiguous phone item type;
+  // keep every generation and variant token for contradiction checks.
+  if (normalizeAttribute("brand", brand) === "apple" && normalizeItemType(name) === "phone" &&
+      /^\d{1,2}( (pro|max|plus|mini|e|air))*$/.test(text)) text = `iphone ${text}`;
   text = lookup(policy.model, text) || text;
   if (policy.genericModels.includes(text)) return null;
   const recognized = policy.modelFamilies.some(f => text === f || text.startsWith(f + " "));
