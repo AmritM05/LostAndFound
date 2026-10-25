@@ -35,6 +35,10 @@ import BuildingSelector from "../BuildingSelector";
 import ReportForm from "./ReportForm";
 import DropoffZones from "./DropoffZones";
 import EditLostReport from "./EditLostReport";
+import StudentClaimStatus from "./StudentClaimStatus";
+import StudentDropoffGuidance from "./StudentHandoverSteps";
+import { studentClaimState } from "./studentClaimState";
+import studentStyles from "./StudentExperience.module.css";
 import { Badge, Empty, PrivacyNote, SectionTitle, dateLabel } from "./ui";
 import { useWorkspace } from "./useWorkspace";
 import { campus } from "../../lib/campus";
@@ -70,7 +74,7 @@ export default function Portal({
   section?: string;
   adminPortal?: boolean;
 }) {
-  const { user, state, messages, loading, error, refresh } =
+  const { user, state, messages, loading, refreshing, lastUpdated, error, refresh } =
     useWorkspace(adminPortal);
   const [menu, setMenu] = useState(false),
     [query, setQuery] = useState(""),
@@ -99,11 +103,12 @@ export default function Portal({
     [dateFrom, setDateFrom] = useState(""),
     [dateTo, setDateTo] = useState("");
   useEffect(() => {
+    if (!adminPortal) return;
     api
       .listDropoffZones()
       .then(setZones)
       .catch(() => {});
-  }, [section]);
+  }, [section, adminPortal]);
   const router = useRouter();
   const nav = adminPortal
       ? user?.role === "admin"
@@ -187,6 +192,7 @@ export default function Portal({
         setSelectedItem(null);
         setSelectedMatch(null);
         setPass(null);
+        setSearchCandidate(null);
       }
     };
     const previous = document.activeElement as HTMLElement;
@@ -234,22 +240,45 @@ export default function Portal({
       setBusy(false);
     }
   }
-  async function showPass(c: Claim) {
-    try {
-      setQr(
-        await QRCode.toDataURL(c.token || c.code || "", {
-          width: 240,
-          margin: 2,
-          color: { dark: "#17191D", light: "#ffffff" },
-        }),
-      );
-      setPass(c);
-    } catch {
-      setToast(
-        "Could not create the QR code. Your pickup code is still available in Updates.",
-      );
+  function showPass(c: Claim) {
+    const match = state.matches.find(m => m.id === c.matchId);
+    const report = state.items.find(i => i.id === match?.lostId);
+    if (!studentClaimState(c, report).canShowPass) {
+      setActionError("No current pickup pass is available. Contact campus staff for help.");
+      return;
     }
+    setQr("");
+    setPass(c);
   }
+  useEffect(() => {
+    if (!pass?.code) return;
+    let cancelled = false;
+    QRCode.toDataURL(pass.code, {
+      width: 240, margin: 2, color: { dark: "#17191D", light: "#ffffff" },
+    }).then(value => { if (!cancelled) setQr(value); })
+      .catch(() => { if (!cancelled) setToast("QR code unavailable. Show the private pickup code instead."); });
+    return () => { cancelled = true; };
+  }, [pass?.code]);
+  useEffect(() => {
+    if (adminPortal || loading) return;
+    if (selectedMatch) {
+      const next = state.matches.find(m => m.id === selectedMatch.id && !m.dismissed);
+      if (!next) setSelectedMatch(null);
+      else if (JSON.stringify(next) !== JSON.stringify(selectedMatch)) setSelectedMatch(next);
+    }
+    if (selectedItem) {
+      const next = state.items.find(i => i.id === selectedItem.id);
+      if (!next) setSelectedItem(null);
+      else if (JSON.stringify(next) !== JSON.stringify(selectedItem)) setSelectedItem(next);
+    }
+    if (pass) {
+      const next = state.claims.find(c => c.id === pass.id);
+      const match = state.matches.find(m => m.id === next?.matchId);
+      const report = state.items.find(i => i.id === match?.lostId);
+      if (!next || !studentClaimState(next, report).canShowPass) { setPass(null); setQr(""); }
+      else if (JSON.stringify(next) !== JSON.stringify(pass)) { setQr(""); setPass(next); }
+    }
+  }, [state, adminPortal, loading, selectedMatch, selectedItem, pass]);
   function reportLink() {
     return user ? "/student/report" : "/login";
   }
@@ -343,8 +372,9 @@ export default function Portal({
         </table>
       </div>
     ) : (
-      <Empty title="No reports yet">
-        Your submitted reports and their current status will appear here.
+      <Empty title={state.items.length ? "No reports match these filters" : "No reports yet"}
+        action={<Link className="button secondary" href={reportLink()}>Report a lost item</Link>}>
+        {state.items.length ? "Try a different search or category to find your report." : "Your submitted reports and their current status will appear here."}
       </Empty>
     );
   }
@@ -487,6 +517,7 @@ export default function Portal({
             <button
               className="mobile-only icon-button"
               aria-label="Open navigation"
+              aria-expanded={menu}
               onClick={() => setMenu(true)}
             >
               <Menu size={20} />
@@ -553,6 +584,15 @@ export default function Portal({
                 <ArrowRight size={16} />
               </Link>
             </div>
+          ) : !adminPortal && error && !lastUpdated && !["search", "map"].includes(section) ? (
+            <section className="panel">
+              <h1>Your workspace is unavailable</h1>
+              <p role="alert">{error}</p>
+              <p>Your reports could not be loaded. Refresh to try again.</p>
+              <button className="button" disabled={refreshing} onClick={() => void refresh()}>
+                {refreshing ? "Retrying…" : "Try again"}
+              </button>
+            </section>
           ) : (
             <>
               {error && (
@@ -561,6 +601,14 @@ export default function Portal({
                   <button className="text-link" onClick={refresh}>
                     Try again
                     <RefreshCw size={13} />
+                  </button>
+                </div>
+              )}
+              {!adminPortal && user && (
+                <div className={studentStyles.refresh}>
+                  <span role="status">{refreshing ? "Refreshing private updates…" : error ? (lastUpdated ? "Refresh failed. Showing the last available data." : "Workspace unavailable. Try refreshing again.") : lastUpdated ? `Last refreshed ${lastUpdated.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}. Updates refresh every 30 seconds while visible.` : "Private workspace"}</span>
+                  <button className="button secondary compact" disabled={refreshing} onClick={() => void refresh()}>
+                    <RefreshCw size={14} className={refreshing ? "spin" : undefined} /> Refresh
                   </button>
                 </div>
               )}
@@ -1016,6 +1064,21 @@ export default function Portal({
                       ) : undefined
                     }
                   />
+                  {!adminPortal && !user && !error && <div className="alert info"><Link className="text-link" href="/login/">Sign in to see your private updates and recovery status.</Link></div>}
+                  {!adminPortal && user && (
+                    <section className="panel" aria-labelledby="student-recovery-heading">
+                      <div className="section-header"><div><h2 id="student-recovery-heading">Your recoveries</h2><p>Private ownership requests and pickup status for your lost reports.</p></div></div>
+                      {state.claims.length ? <div className={studentStyles.recoveryList}>{state.claims.map(claim => {
+                        const match = state.matches.find(m => m.id === claim.matchId);
+                        const report = state.items.find(i => i.id === match?.lostId);
+                        const view = studentClaimState(claim, report);
+                        return <article className={studentStyles.recoveryCard} key={claim.id}>
+                          <div><Badge tone="blue">{view.title}</Badge><h3>{report?.name || "Your ownership claim"}</h3><p>{view.message}</p></div>
+                          {match ? <button className="button secondary compact" onClick={() => setSelectedMatch(match)}>{view.canRespond ? "Respond privately" : "View recovery"}</button> : <p>Contact campus staff for help with this recovery.</p>}
+                        </article>;
+                      })}</div> : <Empty title="No ownership requests yet">When you claim a possible match, its review and pickup status will appear here.</Empty>}
+                    </section>
+                  )}
                   <div className="updates-layout">
                     <div>
                       <section className="panel">
@@ -1159,7 +1222,7 @@ export default function Portal({
                 <>
                   <SectionTitle
                     title="Campus map"
-                    description="Find campus buildings and official lost-and-found drop-off points."
+                    description="Find campus buildings and learn how to hand found items to authorized staff."
                   />
                   <section className="panel map-panel">
                     <div className="section-header">
@@ -1185,7 +1248,7 @@ export default function Portal({
                       </span>
                     </div>
                   </section>
-                  <section className="panel">
+                  {!adminPortal ? <StudentDropoffGuidance /> : <section className="panel">
                     <div className="section-header">
                       <div>
                         <h2>Approved drop-off zones</h2>
@@ -1229,7 +1292,7 @@ export default function Portal({
                         configuration.
                       </Empty>
                     )}
-                  </section>
+                  </section>}
                 </>
               )}
               {adminPortal && section === "matches" && (
@@ -1981,7 +2044,12 @@ export default function Portal({
                   )}
                 </div>
                 {claimFor(selectedMatch) ? (
-                  <div className="claim-status">
+                  !adminPortal ? <StudentClaimStatus
+                    key={`${claimFor(selectedMatch)!.id}-${claimFor(selectedMatch)!.status}`}
+                    claim={claimFor(selectedMatch)!} report={itemFor(selectedMatch)} messages={messages} busy={busy || refreshing || Boolean(error)}
+                    onRespond={answer => perform(() => api.submitClaim(selectedMatch.id, answer), "Your private response was sent for staff review.")}
+                    onShowPass={() => { showPass(claimFor(selectedMatch)!); setSelectedMatch(null); }}
+                  /> : <div className="claim-status">
                     <Badge tone="blue">{claimFor(selectedMatch)!.status}</Badge>
                     <p>
                       {claimFor(selectedMatch)!.status === "More information"
