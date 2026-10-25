@@ -24,7 +24,8 @@ export async function POST(request: Request) {
           !["Approved", "Rejected", "More information"].includes(data.status) ||
           (data.status === "Approved" && !uuid(data.zoneId)) ||
           typeof data.message !== "string" ||
-          data.message.length > 2000
+          data.message.length > 2000 ||
+          (data.status === "More information" && !data.message.trim())
         )
           throw new ApiError("Choose a valid claim decision and pickup zone.");
         const code = randomBytes(6).toString("hex").toUpperCase();

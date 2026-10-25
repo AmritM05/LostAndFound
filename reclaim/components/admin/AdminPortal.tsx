@@ -610,10 +610,14 @@ export default function AdminPortal({
                           <h2>
                             {c.display_name} · {c.email}
                           </h2>
-                          <span className="staff-pill">{c.status}</span>
+                          <span className="staff-pill">
+                            {c.status === "More information"
+                              ? "Awaiting claimant information"
+                              : c.status}
+                          </span>
                         </div>
                         <p className="staff-help">
-                          Submitted {date(c.created_at)} · {m?.score}%
+                          Submitted {date(c.created_at)} · Updated {date(c.updated_at)} · {m?.score}%
                           similarity
                         </p>
                         {comparison(m)}
@@ -623,12 +627,35 @@ export default function AdminPortal({
                           </span>
                           <p>{c.answers}</p>
                         </div>
-                        {["Pending", "More information"].includes(c.status) && (
+                        {data.notes
+                          .filter((n: any) => n.report_id === m?.lost_report_id)
+                          .map((n: any) => (
+                            <div className="staff-history" key={n.id}>
+                              <small>
+                                {n.from_staff ? "Staff message on this report" : "Claimant correspondence / previous answer"}
+                                {" · "}{date(n.created_at)}
+                              </small>
+                              <p>{n.body}</p>
+                            </div>
+                          ))}
+                        {c.status === "More information" && (
+                          <p className="staff-help">
+                            Awaiting an updated answer. New claim evidence returns
+                            this claim to Pending; review private correspondence
+                            above as well.
+                          </p>
+                        )}
+                        {["Pending", "More information"].includes(c.status) &&
+                          active(report(m?.lost_report_id) || {}) && active(report(m?.found_report_id) || {}) && (
                           <form
                             className="form-stack"
                             onSubmit={(e) => {
                               e.preventDefault();
                               const d = new FormData(e.currentTarget);
+                              if (d.get("status") === "More information" && !String(d.get("message") || "").trim()) {
+                                setError("Enter a private request describing the information needed.");
+                                return;
+                              }
                               void act(
                                 {
                                   action: "reviewClaim",
