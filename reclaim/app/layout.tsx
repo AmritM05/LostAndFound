@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import "./globals.css";
 export const metadata: Metadata = {
   title: { default: "Magpie — Campus Lost & Found", template: "%s · Magpie" },
+  icons: {
+    icon: { url: "/brand/magpie.png", type: "image/png" },
+    apple: "/brand/magpie.png",
+  },
   description:
     "A private, secure way to report and recover belongings on campus.",
 };

@@ -534,7 +534,7 @@ export default function Portal({
             >
               <Menu size={20} />
             </button>
-            <span className="mobile-only mobile-wordmark">Magpie</span>
+            <span className="mobile-only mobile-wordmark"><Brand compact /></span>
             <span>{adminPortal ? "Administration" : "Student portal"}</span>
             <ChevronRight size={13} />
             <strong>{title}</strong>
