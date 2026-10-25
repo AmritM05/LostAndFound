@@ -4,7 +4,7 @@
 
 <p><strong>A smarter, privacy-first way to reunite campuses with lost belongings.</strong></p>
 
-<p>Built by a three-person team for HackOHI/O 2026.</p>
+<p>Built by a four-person team for HackOHI/O 2026.</p>
 
 <p>
   <img alt="Next.js 15" src="https://img.shields.io/badge/Next.js-15-000000?logo=nextdotjs&amp;logoColor=white" />
