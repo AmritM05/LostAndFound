@@ -197,3 +197,50 @@ Implementation commit `832adc8` was pushed successfully to `origin/feature/stude
 ### Preparation publication confirmed
 
 Preparation committed as `76fd054`; ordinary push created `origin/integration/final-hackathon` and its tracking upstream. Opened [draft PR #2](https://github.com/AmritM05/LostAndFound/pull/2) against main, explicitly preparation-only and unmerged. Remote verification confirmed main `6cc04d2`, student `a686d21`, admin `5063106` and matching `7d831aa` unchanged; Student PR #1 is still OPEN. No feature merge or remote data mutation occurred. This log-only follow-up records publication; test/build/read-only evidence is unchanged.
+
+
+## 2026-10-25 — authorized final integration and recording preparation
+
+The lead confirmed all teammates frozen and lifted the merge hold. Integrated student a686d21 (merge d0b8247), admin 3e8b18d (c6cfd3e), matching cefd1c5 (c90f65f) in the existing isolated integration/final-hackathon worktree, preserving preparation history. Resolved this log by preserving both histories; resolved adminBackend migration fixture by retaining all assertions and repeated003/004/005 plus006/007. Full suite/TypeScript after each merge passed (87,106,113 passing respectively; obsolete placeholders removed only after integration).
+
+Completed integration: student GET /api/dropoffs/ adapter maps only reviewed public instructions/building coordinates, no static fallback, safe loading/empty/error/retry and Maps links. Staff Matches/Claims/history render stored private classification/factors/contradictions with ranking-index labels and historical unavailable state. No private reasoning entered owner/public DTOs. No matching algorithm, migration, auth/session or global CSS change. Minimal React review: stable loader, cancelled async effects, no added waterfall, text-only escaped explanations, retry/status semantics; phone screenshot reviewed for matching-card fit.
+
+Verification actually executed: npm test119 passed/0failed/0skip/0TODO; TypeScript and final production build passed. Frozen001–007 PGlite migration audit separately passed1/1 (overlaps suite). A/B/C executable demo cases compare actual TS/SQL and save-trigger persistence; brand/model/color rejection and full private response→Pending→approval→expiry/renewal→single return→stale competing denial pass locally. Security suites verify student FOUND denial, role/image separation, six-field public summaries, foreign deletion/active-claim safeguards and correspondence/URL isolation. Browser16 student recovery/drop-off +10 intake/deletion/search +10 real staff-component scenarios =36 synthetic passes, no page errors/unexpected APIs. Staff desktop/mobile includes private reasoning/request, closed controls and expired-pass renewal. Synthetic APIs/router, not live auth/Blob/Neon. Real opt-in driver default mode executed:1 explicitly skipped,0 live passed; never enabled write flags.
+
+Read-only live checks: Neon SELECT connected, Blob list token accepted, staff credential names configured.005 evaluator/reasoning column,006 renewal function,007 visibility/public-instructions columns absent; three recovery bodies differ from reviewed004. No remote migration/session/report/photo/claim/pickup/deletion writes or deployment promotion. Remote writes remain explicitly unauthorized. No final live recovery or private-byte upload claim. Full local SQL replay is not independent PostgreSQL concurrency evidence.
+
+Dependencies/next steps: owner explicitly authorizes a disposable target; quiesce writes and run sorted001–007 normal runner (per-file commits/no ledger), inspect markers, staff publishes active desk with public instructions, run real opt-in privacy/upload/recovery acceptance and actual staff UI rehearsal, then record. Main and PR#1 remain unmerged; publish integration branch and retain Draft PR#2 while live gates remain. Teammate code is integrated; no unfinished branch dependency remains. Demo fallback must be clearly labelled synthetic. Central memory/runbook reconciled under lead authority, no other developer log edited.
+
+Exact integration-fix/documentation files (merge-introduced teammate files are recorded by merge history):
+- `components/admin/StaffMatchAssessment.tsx`
+- `reclaim/components/admin/AdminPortal.tsx`
+- `reclaim/components/portal/Portal.tsx`
+- `reclaim/components/portal/StudentDropoffGuidance.tsx`
+- `reclaim/components/portal/studentDropoffs.ts`
+- `reclaim/memory/AI_MATCHING.md`
+- `reclaim/memory/API_CONTRACTS.md`
+- `reclaim/memory/ARCHITECTURE.md`
+- `reclaim/memory/AUTH_AND_SECURITY.md`
+- `reclaim/memory/CHANGELOG.md`
+- `reclaim/memory/CURRENT_STATUS.md`
+- `reclaim/memory/DATABASE.md`
+- `reclaim/memory/DEMO_RUNBOOK.md`
+- `reclaim/memory/FEATURE_INVENTORY.md`
+- `reclaim/memory/FINAL_INTEGRATION_PLAN.md`
+- `reclaim/memory/KNOWN_BUGS.md`
+- `reclaim/memory/MATCHING_DEMO_CASES.md`
+- `reclaim/memory/README.md`
+- `reclaim/memory/TASK_BACKLOG.md`
+- `reclaim/memory/TEAM_COORDINATION.md`
+- `reclaim/memory/VERIFICATION.md`
+- `reclaim/memory/team-updates/developer-1.md`
+- `reclaim/scripts/audit-final-migrations.mjs`
+- `reclaim/services/finalMigrationSequence.test.ts`
+- `reclaim/services/studentDropoffs.test.ts`
+- `reclaim/services/studentIntegration.test.ts`
+- `reclaim/tests/final-integration-snapshots.json`
+- `reclaim/tests/student-intake.browser.mjs`
+- `reclaim/tests/student-portal.browser.mjs`
+- `services/matchingDemoAcceptance.test.ts`
+- `services/staffMatchPresentation.test.ts`
+- `tests/admin-integrated.browser.mjs`

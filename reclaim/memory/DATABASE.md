@@ -1,5 +1,19 @@
 # Neon database and data ownership
 
+## Integrated migration additions — 2026-10-25
+
+| File | Integrated behavior |
+| --- | --- |
+| 004_admin_recovery.sql | Terminal/assigned recovery guards; private request/previous answer; safe competing decisions and pickup |
+| 005_matching_engine.sql | Compatibility-first evaluator/trigger, private staff_reasoning, normalization, available-factor ranking |
+| 006_pickup_reissue.sql | Atomic expired/missing-deadline pass renewal, old-code invalidation, history retention |
+| 007_student_dropoff_visibility.sql | student_visible DEFAULT false and public_instructions DEFAULT ''; no automatic publication/private instruction copy |
+
+Full ordered001–007 migration and replay pass local PGlite with real repositories. Files are unchanged by integration. Remote SELECT checks show 005 evaluator/reasoning,006 renewal and both007 columns absent; recovery bodies differ from004. No remote migration applied/authorized. Quiesce writes before authorized runner replay:003 temporarily recreates old definitions before004/005, and each file commits independently with no ledger/global rollback. Staff must publish desks explicitly after007 and matching admin writers deploy. No Supabase runtime/migration switch.
+
+Historical baseline follows.
+
+
 ## Provider and migration mechanism
 
 The desired runtime is Neon PostgreSQL, accessed through `lib/server/db.ts` with parameterized HTTP queries. There is no runtime Supabase client or ORM. `scripts/migrate.mts` executes sorted `db/migrations/*.sql` using the Neon WebSocket Pool, then seeds/upserts configured buildings. Each current migration contains its own transaction. A later migration failure does not undo earlier committed files. There is no migration-version table or automatic rollback. Re-running old files also re-creates functions/views/triggers: final ordering matters.

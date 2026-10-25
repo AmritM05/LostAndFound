@@ -1,5 +1,12 @@
 # Verified project changelog
 
+## 2026-10-25 — final integration (Draft PR #2)
+
+Authorized frozen student/admin/matching merges preserving preparation history; resolved Developer1 log by keeping both histories and adminBackend migration fixture by keeping both assertions. Wired student public drop-off API/Maps/retry/empty states, added minimal staff-only stored match classifications/explanations and non-probability ranking labels. Added executable A/B/C TS/SQL/persistence acceptance,007 audit coverage, published-desk browser checks and isolated staff real-component browser harness. Reconciled central memory/runbook/backlog without editing teammates' logs.
+
+Verification:119 automated pass/0fail/0skip/0TODO; TypeScript/build pass;36 synthetic browser scenarios pass; separate frozen001–007 SQL audit pass. Remote read-only schema incompatible (004 bodies differ;005–007 absent). No remote writes or final live acceptance; complete live recording awaits authorized migration/deployment and rehearsal. Main/PR#1 remain unmerged; integration PR#2 stays draft.
+
+
 Dates below come from Git author timestamps shown in America/New_York offset. Commit messages are preserved as evidence, not inferred product milestones. For exact historical diffs use `git show <commit>` from the repository root. Later source supersedes earlier release descriptions.
 
 ## 2026-10-24 — repository history

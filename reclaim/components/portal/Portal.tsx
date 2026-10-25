@@ -404,7 +404,7 @@ export default function Portal({
               <div className="match-row-content">
                 <div className="match-row-title">
                   <h3>{item?.name || "Possible item match"}</h3>
-                  <Badge tone="blue">{m.score}% similarity</Badge>
+                  <Badge tone="blue">Ranking index {m.score}/100</Badge>
                 </div>
                 <p>
                   A {item?.category.toLowerCase() || "reported item"} may match
@@ -415,7 +415,7 @@ export default function Portal({
                   {claim
                     ? `Claim ${claim.status.toLowerCase()}`
                     : m.score >= 90
-                      ? "Very likely match"
+                      ? "Strong potential match"
                       : m.score >= 75
                         ? "Strong possible match"
                         : "Possible match"}
@@ -1340,7 +1340,7 @@ export default function Portal({
                               <h2>{l?.name || "Ownership claim"}</h2>
                               <p>
                                 Claim reference {c.id.slice(0, 8).toUpperCase()}{" "}
-                                · Match similarity {m?.score}%
+                                · Match ranking {m?.score}/100
                               </p>
                             </div>
                             <Badge

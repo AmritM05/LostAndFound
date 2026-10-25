@@ -32,3 +32,14 @@ test("explicit inactive, unapproved or student-hidden flags never render as inta
   for (const flag of ["active", "approved", "studentVisible"])
     assert.deepEqual(publicDropoffResult({ source: "approved-api", zones: [{ ...zone, [flag]: false }] }).zones, []);
 });
+
+test("published API adapter maps public instructions and rejects inactive/other-campus desks", async () => {
+  const { approvedDropoffResult } = await import("../components/portal/studentDropoffs");
+  const zone = { id: "desk", campusId: campus.id, name: "Published desk", building: "Library", description: "Public entrance", lat: 40, lng: -83, active: true, instructions: "PRIVATE", staffNotes: "PRIVATE" };
+  const result = approvedDropoffResult([zone, { ...zone, active: false }, { ...zone, campusId: "other-campus" }]);
+  assert.equal(result.zones.length, 1);
+  assert.equal(result.zones[0].instructions, "Public entrance");
+  assert.ok(!JSON.stringify(result).includes("PRIVATE"));
+  assert.deepEqual(approvedDropoffResult([]), { source: "approved-api", zones: [] });
+  assert.throws(() => approvedDropoffResult({ zones: [zone] }));
+});

@@ -110,5 +110,4 @@ test("isolated student integration: private evidence through information request
     });
   } finally { await db.close(); }
 });
-for (const attribute of ["brand", "model", "color"])
-  test.todo(`hard ${attribute} contradiction persistence acceptance: pending Developer 3 MAG-001/002 contract and approved matching migration`);
+// Persisted brand/model/color rejection is covered by finalMigrationSequence.test.ts.

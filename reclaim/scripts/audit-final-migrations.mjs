@@ -15,12 +15,13 @@ try {
     ['001_student_backend.sql', 'main'], ['002_report_deletion.sql', 'main'],
     ['003_admin_portal.sql', 'main'], ['004_admin_recovery.sql', 'admin'],
     ['005_matching_engine.sql', 'matching'], ['006_pickup_reissue.sql', 'admin'],
+    ['007_student_dropoff_visibility.sql', 'admin'],
   ];
   for (const [name, key] of sequence) {
     const sql = execFileSync('git', ['show', `${refs[key]}:reclaim/db/migrations/${name}`], { cwd: app });
     writeFileSync(join(directory, name), sql);
   }
-  console.log('ISOLATED planned-snapshot SQL audit; no feature merge or live services.');
+  console.log('ISOLATED frozen-snapshot SQL audit; no live services.');
   const result = spawnSync(process.execPath, ['--conditions=react-server', '--import', 'tsx', '--test', 'services/finalMigrationSequence.test.ts'], {
     cwd: app, stdio: 'inherit', env: { ...process.env, MAGPIE_SQL_AUDIT_DIRECTORY: directory },
   });

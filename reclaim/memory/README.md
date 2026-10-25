@@ -1,5 +1,14 @@
 # Magpie project memory
 
+## Integrated snapshot — 2026-10-25 (supersedes historical baseline below)
+
+All frozen branches are merged into `integration/final-hackathon`: student `a686d21`, admin `3e8b18d`, matching `cefd1c5`. The lead lifted the merge hold. Main remains unchanged and Draft PR #2 remains unmerged. Student drop-off guidance consumes the authenticated published-desk API; staff views show private matching classification/reasoning and ranking indices. Compatible/contradictory/unknown demo scenarios and recovery terminal guards pass local acceptance.
+
+Final verification: **119 automated tests passed, zero failures/skips/TODO**, TypeScript and production build passed; **36 synthetic browser scenarios** passed (16 student recovery/drop-off, 10 intake/deletion/search, 10 staff desktop/mobile). Frozen ordered **001–007** local SQL audit also passes separately (overlaps full-suite coverage). No real photo upload/auth/recovery run occurred. Read-only Neon/Blob checks pass, but 005/006/007 schema markers are missing and recovery bodies differ from 004. **Remote migration writes remain unauthorized; complete live recording is blocked.** See [FINAL_INTEGRATION_PLAN](FINAL_INTEGRATION_PLAN.md), [VERIFICATION](VERIFICATION.md) and [DEMO_RUNBOOK](DEMO_RUNBOOK.md).
+
+### Historical baseline (not current integrated behavior)
+
+
 Magpie is a privacy-first campus lost-and-found application for HackOHI/O 2026. Students describe lost items privately; authorized campus staff receive physical found items, compare reports, verify claims, and complete pickup.
 
 ## Scope and evidence

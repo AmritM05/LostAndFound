@@ -1,5 +1,16 @@
 # API contracts and integration boundaries
 
+## Integrated contract changes — 2026-10-25
+
+- **GET `/api/dropoffs/`** requires the student session (admin-only cookie does not suffice), returns an array of exactly `{id,campusId,name,buildingId,building,description,lat,lng,active}`. `active:true`; only `student_visible=true`/active desks, with valid active campus buildings if linked. `description` is reviewed `public_instructions`, never staff instructions; coordinates are public building coordinates or null/null. No building yields null ID, empty building, no coordinates. Private/no-store, Vary Cookie; 401 unauthenticated, safe 503 unavailable/schema failure; [] means no published desks. Student adapter maps description to instructions and whitelists fields. No fallback to static desks.
+- Staff zone writes accept `studentVisible`/`publicInstructions`; hidden/blank defaults fail closed. SQL007 does not auto-publish or copy private fields. All admin writers must deploy with007.
+- Staff workspace includes private `staff_reasoning` assessment: eligible, classification, contradictions, matchingFactors, policyVersion plus numeric evaluation. Classes: very_strong_match/strong_match, possible_match, weak_match, no_match. New rejected pairs are not persisted. Student/direct-match/public DTOs omit reasoning. UI renders it in staff workspace only; rankings are not probabilities.
+- Existing student POST claims `{matchId,answer}` remains unchanged;004 preserves previous evidence privately and moves More information to Pending. Correspondence is report-scoped, not claim/request-linked.
+- Staff action `{action:"reissuePickup",id,zoneId}` renews eligible expired/missing-deadline passes atomically through006, invalidates old code, retains pickup ID/history and requires active zone/current eligible recovery. Returned/closed state cannot renew.
+
+These contracts are merged and locally verified; current remote schema is incompatible until authorized001–007 deployment. Historical baseline follows.
+
+
 ## Conventions
 
 This inventory describes **implemented** interfaces at baseline `6bf17fd`, not proposed REST resources. Source files are under `app/api/<path>/route.ts`. Use relative browser URLs and the trailing-slash form. No Server Actions or middleware were found. All application APIs use Node runtime.

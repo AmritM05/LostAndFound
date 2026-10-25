@@ -28,6 +28,7 @@ try {
       reports.splice(reports.findIndex(x => path.includes(x.item.id)), 1);
       return json({ deleted: true, cleanupPending: false });
     }
+    if (path === '/api/dropoffs/') return json([]);
     if (path === '/api/search/') return json([{ id: 'public-found', type: 'found', category: 'Electronics', location: 'Sample Library', date: '2026-10-23', status: 'Secured' }]);
     unexpected.push(`${request.method()} ${path}`);
     return json({ error: 'Unexpected synthetic test request' }, 500);

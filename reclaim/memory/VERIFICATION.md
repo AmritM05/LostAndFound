@@ -1,5 +1,14 @@
 # Verification ledger
 
+## Integrated snapshot — 2026-10-25 (supersedes historical baseline below)
+
+All frozen branches are merged into `integration/final-hackathon`: student `a686d21`, admin `3e8b18d`, matching `cefd1c5`. The lead lifted the merge hold. Main remains unchanged and Draft PR #2 remains unmerged. Student drop-off guidance consumes the authenticated published-desk API; staff views show private matching classification/reasoning and ranking indices. Compatible/contradictory/unknown demo scenarios and recovery terminal guards pass local acceptance.
+
+Final verification: **119 automated tests passed, zero failures/skips/TODO**, TypeScript and production build passed; **36 synthetic browser scenarios** passed (16 student recovery/drop-off, 10 intake/deletion/search, 10 staff desktop/mobile). Frozen ordered **001–007** local SQL audit also passes separately (overlaps full-suite coverage). No real photo upload/auth/recovery run occurred. Read-only Neon/Blob checks pass, but 005/006/007 schema markers are missing and recovery bodies differ from 004. **Remote migration writes remain unauthorized; complete live recording is blocked.** See [FINAL_INTEGRATION_PLAN](FINAL_INTEGRATION_PLAN.md), [VERIFICATION](VERIFICATION.md) and [DEMO_RUNBOOK](DEMO_RUNBOOK.md).
+
+### Historical baseline (not current integrated behavior)
+
+
 ## Final integration preparation — 2026-10-25
 
 No feature merges or remote writes: explicit lead hold. Preparation normal suite: 60 pass / 0 fail / 1 intentional skip. Pinned planned-SQL audit (`node scripts/audit-final-migrations.mjs`): 1 pass / 0 fail, in PGlite; tests ordered 001–006/replay, unchanged recovery guards through matching/reissue, three hard contradictions, private response, renewal, return and competing-claim denial. Detached admin `5063106`: 72/72; detached matching `7d831aa`: 65/65. These overlapping branch suites are not an integrated total. Preparation TypeScript/build pass (26 static pages).

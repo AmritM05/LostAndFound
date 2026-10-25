@@ -31,7 +31,7 @@ Use the words **potential match**, **compatible candidate**, and **staff verific
 
 **Reproduce in the app:** Student creates the lost report; staff receives the found report with the exact fields and an active desk. Refresh student Updates and admin Matches. Staff sees numeric factors/private report comparison. Continue with real information request, student response and approval if rehearsing recovery; only actual pickup marks Returned. Use synthetic private ownership detail separately, such as a concealed blue thread on the sleeve, without exposing found evidence to unrelated students.
 
-**Limitations:** identical observations do not establish ownership. Current Admin UI does not render the engine's classification/reasoning fields; it displays similarity with a warning that similarity is not proof. Narrate this as a strong *potential* match, not a verified identity or probability. The local SQL workflow is verified; the final hosted UI flow still needs a lead-run rehearsal.
+**Integration update:** staff Matches/Claims/history now render stored private classifications and reasons with ranking-index labels. Identical observations do not establish ownership. All three cases are maintained in `services/matchingDemoAcceptance.test.ts` with actual TS/SQL/save-trigger checks. Final live hosted rehearsal remains blocked by migration authorization/deployment.
 
 ## Scenario B - Hard contradiction
 

@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import Brand from "../Brand";
 import PickupRecord from "./PickupRecord";
+import StaffMatchAssessment from "./StaffMatchAssessment";
 import { claimReviewable, pickupState, renewablePickup } from "./recoveryState";
 import ReportForm from "../portal/ReportForm";
 import PrivatePhoto from "../PrivatePhoto";
@@ -624,9 +625,10 @@ export default function AdminPortal({
                         <div className="staff-panel-title">
                           <h2>Potential lost ↔ found match</h2>
                           <span className="staff-confidence">
-                            {m.score}% similarity
+                            Ranking index {m.score}/100
                           </span>
                         </div>
+                        <StaffMatchAssessment reasoning={m?.staff_reasoning} />
                         {comparison(m)}
                         <div className="staff-factors">
                           {Object.entries(m.factors).map(([key, value]) => (
@@ -729,8 +731,9 @@ export default function AdminPortal({
                         <p className="staff-help">Claim reference: {c.id}</p>
                         <p className="staff-help">
                           Submitted {date(c.created_at)} · Updated{" "}
-                          {date(c.updated_at)} · {m?.score}% similarity
+                          {date(c.updated_at)} · Ranking index {m?.score}/100
                         </p>
+                        <StaffMatchAssessment reasoning={m?.staff_reasoning} />
                         {comparison(m)}
                         <div className="staff-evidence">
                           <span className="eyebrow">
@@ -1312,9 +1315,10 @@ export default function AdminPortal({
               .map((m: any) => (
                 <div className="staff-history" key={m.id}>
                   <strong>
-                    {m.score}% similarity ·{" "}
+                    Ranking index {m.score}/100 ·{" "}
                     {m.dismissed ? "Dismissed" : "Potential match"}
                   </strong>
+                  <StaffMatchAssessment reasoning={m?.staff_reasoning} />
                   <small>{date(m.created_at)}</small>
                   {data.claims
                     .filter((c: any) => c.match_id === m.id)

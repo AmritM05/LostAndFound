@@ -1,7 +1,7 @@
 {
   "main": "6cc04d2a756bc038b3933dd16a2727099aedba9e",
   "student": "a686d212026b7fc1f99465951e7c327d255512ed",
-  "admin": "50631066c209d6ebe2169a811ac21769962cc2e9",
-  "matching": "7d831aa6d09ddfe56727be20144e0e2c84f137f3",
-  "status": "Preparation only. Feature branches are not merged; user requires teammate completion confirmation."
+  "admin": "3e8b18d4c59d7a3bb00fae41f7ae87670560e0b9",
+  "matching": "cefd1c5949c0c9fe39f99ee6734896f09769c184",
+  "status": "All three frozen feature snapshots merged into integration/final-hackathon; remote migration deployment remains unauthorized."
 }

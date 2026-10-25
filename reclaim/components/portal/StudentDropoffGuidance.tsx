@@ -4,7 +4,7 @@ import Link from "next/link";
 import StudentHandoverSteps from "./StudentHandoverSteps";
 import { campus } from "../../lib/campus";
 import {
-  configuredDropoffs,
+  loadApprovedDropoffs,
   publicDropoffResult,
   type StudentDropoffLoader,
   type StudentDropoffResult,
@@ -70,7 +70,7 @@ export function DropoffContent({
 }
 export default function StudentDropoffGuidance({
   compact = false,
-  load = configuredDropoffs,
+  load = loadApprovedDropoffs,
 }: {
   compact?: boolean;
   load?: StudentDropoffLoader;
@@ -122,7 +122,7 @@ export default function StudentDropoffGuidance({
             Map markers identify campus buildings. A building marker alone does
             not mean it accepts found items.
           </p>
-          <StudentHandoverSteps directoryConnected={result?.source === "approved-api"} />
+          <StudentHandoverSteps directoryConnected />
           <DropoffContent loading={loading} error={error} result={result} />
           {error && (
             <button

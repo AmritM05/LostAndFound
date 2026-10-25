@@ -1,7 +1,8 @@
 import { campus, type CampusConfig } from "../../lib/campus";
 
-// Frontend-only integration boundary. MAG-003 must publish its actual endpoint,
-// response mapping and auth policy before a backend loader is supplied here.
+import { request } from "../../services/apiClient";
+
+// The authenticated API enforces publication and public-building coordinates.
 // Only approved public intake guidance belongs in this projection.
 export interface StudentDropoff {
   id: string;
@@ -33,8 +34,7 @@ export async function configuredDropoffs(
   };
 }
 
-// Defend the student UI boundary without inventing a backend endpoint. Only a
-// reviewed loader may label its data approved-api; production still uses config.
+// Retain only the student-safe presentation fields at the UI boundary.
 export function publicDropoffResult(value: unknown): StudentDropoffResult {
   const data = value as StudentDropoffResult;
   if (!data || !["campus-config", "approved-api"].includes(data.source) || !Array.isArray(data.zones))
@@ -60,3 +60,14 @@ export function publicDropoffResult(value: unknown): StudentDropoffResult {
     }),
   };
 }
+
+// No configuration fallback: an empty directory or service error must stay truthful.
+export function approvedDropoffResult(value: unknown): StudentDropoffResult {
+  if (!Array.isArray(value)) throw new Error("Invalid approved drop-off directory");
+  return publicDropoffResult({ source: "approved-api", zones: value
+    .filter(zone => zone && zone.active === true && zone.campusId === campus.id)
+    .map(zone => ({ id: zone.id, name: zone.name, building: zone.building,
+      instructions: zone.description, lat: zone.lat, lng: zone.lng })) });
+}
+export const loadApprovedDropoffs: StudentDropoffLoader = async () =>
+  approvedDropoffResult(await request<unknown>("/api/dropoffs/"));

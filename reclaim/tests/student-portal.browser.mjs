@@ -32,6 +32,7 @@ try {
   let session = { id: 'student-1', name: 'Sample Student', email: 'synthetic@example.com', role: 'student', verified: false };
   let workspaceFails = false, claimFails = false, sessionFails = false;
   let workspaceReads = 0;
+  let dropoffFails = false, dropoffs = [];
   const submissions = [], unexpected = [];
   await context.route('**/api/**', async route => {
     const request = route.request(), path = new URL(request.url()).pathname;
@@ -48,6 +49,7 @@ try {
       claim.status = 'Pending';
       return respond({ ok: true }, 201);
     }
+    if (path === '/api/dropoffs/') return dropoffFails ? respond({ error: 'Directory unavailable' }, 503) : respond(dropoffs);
     if (path === '/api/search/') return respond([]);
     unexpected.push(`${request.method()} ${path}`);
     return respond({ error: 'Unexpected test API call' }, 500);
@@ -137,7 +139,18 @@ try {
   session = { id: 'student-1', name: 'Sample Student', email: 'synthetic@example.com', role: 'student', verified: false };
   await page.goto(`${base}/student/map/`);
   await page.getByRole('heading', { name: 'Hand it to authorized campus staff' }).waitFor();
-  await page.getByText(/approved drop-off directory is not connected/).waitFor();
+  await page.getByText(/No confirmed intake locations are listed/).waitFor();
+  checks++;
+  dropoffFails = true;
+  await page.reload();
+  await page.getByRole('alert').filter({ hasText: 'Drop-off guidance could not be loaded' }).waitFor();
+  checks++;
+  dropoffFails = false;
+  dropoffs = [{ id: 'synthetic-desk', campusId: 'osu-columbus', name: 'Synthetic published desk', building: 'Synthetic Library', description: 'Use the public entrance', lat: 40, lng: -83, active: true }];
+  await page.getByRole('button', { name: 'Try again', exact: true }).click();
+  await page.getByText('Use the public entrance', { exact: true }).waitFor();
+  assert.match(await page.getByRole('link', { name: 'Open Synthetic published desk in Google Maps' }).getAttribute('href'), /query=40,-83/);
+  checks++;
   assert.equal(await page.getByRole('button', { name: /submit.*found/i }).count(), 0);
   assert.equal(await page.getByText('Staff tools are not available yet.', { exact: true }).count(), 0);
   for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 1000 }]) {

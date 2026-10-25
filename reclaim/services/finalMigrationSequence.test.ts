@@ -9,7 +9,7 @@ import { PGlite } from "@electric-sql/pglite";
 import { repository } from "../lib/server/repository";
 const id = (n: number) => `77777777-7777-4777-8777-${String(n).padStart(12, "0")}`;
 const hash = (s: string) => createHash("sha256").update(s).digest("hex");
-const names = ["001_student_backend.sql", "002_report_deletion.sql", "003_admin_portal.sql", "004_admin_recovery.sql", "005_matching_engine.sql", "006_pickup_reissue.sql"];
+const names = ["001_student_backend.sql", "002_report_deletion.sql", "003_admin_portal.sql", "004_admin_recovery.sql", "005_matching_engine.sql", "006_pickup_reissue.sql", "007_student_dropoff_visibility.sql"];
 const folder = process.env.MAGPIE_SQL_AUDIT_DIRECTORY
   ? resolve(process.env.MAGPIE_SQL_AUDIT_DIRECTORY)
   : new URL("../db/migrations/", import.meta.url);
@@ -17,7 +17,7 @@ const read = (name: string) => readFile(typeof folder === "string" ? resolve(fol
 
 test("final ordered SQL: contradiction rejection, private response, renewal, return and competing-claim protection", async t => {
   const existing = await readdir(folder);
-  if (!names.every(name => existing.includes(name))) { t.skip("Final integration requires reviewed migrations 001–006"); return; }
+  if (!names.every(name => existing.includes(name))) { t.skip("Final integration requires reviewed migrations 001–007"); return; }
   const db = new PGlite();
   const q = async (s: string, values: any[] = []) => (await db.query(s, values)).rows as any[];
   const definitions = () => q("select proname,prosrc from pg_proc where proname in ('submit_ownership_claim','review_ownership_claim','redeem_pickup') order by proname");
@@ -25,7 +25,7 @@ test("final ordered SQL: contradiction rejection, private response, renewal, ret
     for (const name of names.slice(0, 4)) await db.exec(await read(name));
     const guardDefinitions = await definitions();
     for (const name of names.slice(4)) await db.exec(await read(name));
-    assert.deepEqual(await definitions(), guardDefinitions, "005/006 must not replace 004 recovery guards");
+    assert.deepEqual(await definitions(), guardDefinitions, "005/006/007 must not replace 004 recovery guards");
     for (const [n, role] of [[1, "student"], [2, "admin"], [3, "student"]])
       await q("insert into users(id,email,display_name,role) values($1,$2,'Synthetic participant',$3)", [id(Number(n)), `audit-${n}@example.test`, role]);
     await q("insert into buildings(id,campus_id,name,latitude,longitude) values('audit-library','audit','Audit Library',40,-83)");

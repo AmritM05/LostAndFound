@@ -1,5 +1,14 @@
 # Matching: current heuristic and target design
 
+## Integrated matching policy — 2026-10-25
+
+Authoritative current implementations: services/matchingAttributes.ts, services/matchingService.ts and db/migrations/005_matching_engine.sql. The baseline003 discussion below is historical. Versioned canonical attributes/aliases and known-data rules reject hard category/type/brand/model/color/identifier contradictions before ranking; unknown/ambiguous attributes omit evidence rather than imply mismatch. Closed/assigned reports are ineligible. Manual dismissals remain preserved. Pure TS and SQL parity plus persistence/adversarial tests pass.
+
+Available-factor heuristic weights: brand/category20, color/details10, description20, optional measured image30, location10, time10. Missing factors are omitted; identity-poor evidence is capped below candidate threshold. No actual image/embedding/semantic provider is integrated: optional measured signals in tests are synthetic inputs, never model output. Candidate score>=60, capped99. Staff-only explanations/classifications are now displayed; student/public fields remain whitelisted. Historical assessments without reasoning say unavailable. Rejected new pairs create no card. A/B/C documented demo cases are executable in services/matchingDemoAcceptance.test.ts.
+
+Remote005 is absent, so these are locally verified integrated capabilities pending authorized deployment. Independent multi-connection PostgreSQL matching races remain outside local PGlite evidence.
+
+
 ## Status and authoritative implementation
 
 **Current:** automatic heuristic matching is implemented and tested. **No AI model is integrated.** `services/imageAnalysisService.ts` is a placeholder: `extractItemAttributes` returns manual/default attributes with confidence zero; `generateImageEmbedding` returns null. There is no provider SDK, AI API call, OCR, embedding storage or vector index in the active pipeline. Photos are private evidence for humans, not current scoring inputs.
