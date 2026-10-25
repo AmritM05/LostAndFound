@@ -1,3 +1,4 @@
+import { invalidateAIReport } from "../../../../lib/server/ai/embeddings";
 import { cleanupReportPhotos } from "../../../../lib/server/blobCleanup";
 import {
   endpoint,
@@ -22,6 +23,7 @@ export async function PATCH(
     if (!uuid(id)) throw new ApiError("Report not found.", 404);
     const data = reportInput(await body(request), id);
     await repository(query).save(user, data.item, data.privateDetail, [], true);
+    invalidateAIReport(id);
     return json({ ok: true });
   }, request);
 }
@@ -37,6 +39,7 @@ export async function DELETE(
     if (!uuid(id)) throw new ApiError("Report not found.", 404);
     if (!(await repository(query).deleteReport(user, id)))
       throw new ApiError("Report not found.", 404);
+    invalidateAIReport(id);
     const { pending } = await cleanupReportPhotos(id, user.id);
     return json({ deleted: true, cleanupPending: pending > 0 });
   }, request);

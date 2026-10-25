@@ -1,5 +1,9 @@
 # Current status — start every coding session here
 
+## Gemini addition — 2026-10-25
+
+Code now supports optional staff-confirmed synthetic Gemini Embedding 2 comparisons (768 dimensions), semantic/image/cross-modal signals, private provenance, caching and deterministic failure fallback. Setup includes .env.example server variables, migration 008 and an opt-in live test. Existing deterministic trigger and contradiction rules remain intact. New local verification: **139 tests pass**, TypeScript and production build pass. The separate live command reports one explicit skip. **Live inference deliberately not run at the user's request; key/configuration and authorized migrations are required on the other laptop before a video rehearsal.** Real-user processing is unsupported pending consent/data-handling controls. See [GEMINI_MATCHING](GEMINI_MATCHING.md) for actual verification and privacy limits; historical no-provider entries below are superseded only as code status, not live provider evidence.
+
 ## Integrated snapshot — 2026-10-25 (supersedes historical baseline below)
 
 All frozen branches are merged into `integration/final-hackathon`: student `a686d21`, admin `3e8b18d`, matching `cefd1c5`. The lead lifted the merge hold. Main remains unchanged and Draft PR #2 remains unmerged. Student drop-off guidance consumes the authenticated published-desk API; staff views show private matching classification/reasoning and ranking indices. Compatible/contradictory/unknown demo scenarios and recovery terminal guards pass local acceptance.

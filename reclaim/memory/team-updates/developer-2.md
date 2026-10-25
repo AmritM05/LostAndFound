@@ -219,3 +219,49 @@ Freeze implementation committed as **ef811d2** and successfully pushed to origin
 Draft Admin PR creation was retried through GitHub and returned **403 Resource not accessible by integration**; no Admin PR was created in this environment. This is a publication-access limitation, not a failing code/test check. The pushed branch remains reviewable at https://github.com/AmritM05/LostAndFound/compare/main...feature/admin-recovery?expand=1 . The lead can create the PR or consume the frozen branch in the authorized integration process. This log-only follow-up records the verified outcome; no additional feature changes follow.
 
 **Admin Recovery branch is frozen and ready for final integration**
+
+
+## 2026-10-25 — user-assigned Gemini addition on integration/final-hackathon
+
+The user explicitly superseded the prior Admin-only freeze with a focused real Gemini integration assignment on the already merged integration branch. Started clean at 559b54b in isolated work/gemini-integration, fetched and pulled its tracked upstream safely; original main checkout and its untracked lockfile preserved. Read root instructions, relevant integrated memory/current matching source and official Google SDK/embedding docs. No main merge or remote database migration.
+
+Implemented official @google/genai Gemini Embedding 2 (fixed 768 dimensions), authorized server-only text/image/cross-modal inference, validation/normalization/cosine, bounded timeout/retry/concurrency, bounded content/model-version cache with edit/delete/in-flight invalidation, actual measured-factor provenance, configurable available weights and exact deterministic fallback. Hard contradictions precede provider/private image access and are rechecked under SQL locks. New migration 008 adds only revision/persistence functions on existing tables; no vector DB or claims/pickup replacement. Staff can explicitly compare selected synthetic pairs, including compatible pairs below the existing candidate threshold. Creation/intake remain immediate deterministic operations.
+
+Privacy: both server AI/demo flags and explicit staff synthetic confirmation required; .env.example defaults false. Arbitrary client URLs/vectors/descriptions rejected. Internal workflow additionally verifies the staff role before loading reports. Private Blob paths are derived from bound authorized metadata, never sent to Google; resized metadata-free JPEG bytes and name/item-description only are permitted. Previous answers, identities, coordinates and staff notes are excluded. Forms and staff controls show Google-processing notices. Real-user consent/storage policy is not implemented: real-user AI remains unsupported, not silently authorized by demo attestation. The old unscoped imageAnalysisService stays a fallback and is not a client provider endpoint.
+
+Images: use one uploaded photo per report, private preview first; JPEG/PNG/WebP and HEIC/HEIF conversion via sharp/heic-decode with size/pixel limits. Unsupported/corrupt preparation gracefully omits that modality. Existing original HEIC/25 MB upload policy unchanged. HEIC branch covered with a mocked decoder; no fresh real-device codec/object-recognition/angle-quality evidence claimed.
+
+Tests: final npm test **139 passed / 0 failed / 0 skipped** (119 preserved + 20 Gemini-focused tests); npm run typecheck passed; production build passed, 27 generated pages plus APIs. Tests cover official SDK-shaped mocked responses, numeric validation, dimensions/zero norms, semantic/visual/cross-modal input paths, absence/failure/key/demo gates, timeout/retry/concurrency/cache, conversion/privacy, server role denial, stale reports, stored provenance/weight/fallback behavior, rejection before provider and in SQL, owner isolation and terminal/dismissed/active recovery guards. **No mocked response is live provider evidence.** npm run test:gemini:live reports **0 passed / 0 failed / 1 skipped**; the user explicitly answered “skip that just push ... other laptop ... env example” when asked about a key. No key is configured here and no live Google calls were attempted.
+
+Deployment/video handoff: npm ci, retain existing .env.local, add GEMINI_API_KEY locally, model gemini-embedding-2, set MAGPIE_AI_MATCHING_ENABLED=true and MAGPIE_AI_DEMO_MODE=true for synthetic demo only, apply reviewed ordered 001–008 to the authorized disposable database, then use staff Matches. Explicit opt-in command: MAGPIE_RUN_LIVE_GEMINI_TEST=true npm run test:gemini:live. The live test uses authored synthetic descriptions/generated swatches, logs measured values and whether semantic ranking actually improves; a swatch only proves image transport. Video is not live-verified here. MATCHING_DEMO_CASES distinguishes mock A improvement, pre-provider hard rejection B and eligible unknown-brand C. See memory/GEMINI_MATCHING.md for limits/actual setup, remote migration caveats and consent requirements.
+
+Exact changed files:
+- `app/api/admin/ai-matching/route.ts`
+- `components/admin/GeminiComparison.tsx`
+- `db/migrations/008_gemini_matching.sql`
+- `lib/server/ai/embeddings.ts`
+- `lib/server/ai/images.ts`
+- `lib/server/ai/matching.ts`
+- `lib/server/ai/workflow.ts`
+- `memory/GEMINI_MATCHING.md`
+- `reclaim/.env.example`
+- `reclaim/README.md`
+- `reclaim/app/api/reports/[id]/route.ts`
+- `reclaim/components/admin/AdminPortal.tsx`
+- `reclaim/components/admin/StaffMatchAssessment.tsx`
+- `reclaim/components/portal/ReportForm.tsx`
+- `reclaim/memory/AI_MATCHING.md`
+- `reclaim/memory/API_CONTRACTS.md`
+- `reclaim/memory/ARCHITECTURE.md`
+- `reclaim/memory/CHANGELOG.md`
+- `reclaim/memory/CURRENT_STATUS.md`
+- `reclaim/memory/DATABASE.md`
+- `reclaim/memory/MATCHING_DEMO_CASES.md`
+- `reclaim/memory/team-updates/developer-2.md`
+- `reclaim/package-lock.json`
+- `reclaim/package.json`
+- `services/geminiEmbeddings.test.ts`
+- `services/geminiPersistence.test.ts`
+- `tests/gemini.live.mts`
+
+Publication: user requested ordinary push to integration/final-hackathon only; status recorded by execution after push. No force/main merge or live migration.

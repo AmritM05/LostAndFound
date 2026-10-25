@@ -1,5 +1,9 @@
 # Architecture
 
+## Optional Gemini stage — 2026-10-25
+
+The existing SQL trigger remains the immediate deterministic creation/intake path. A separate admin-only confirmed synthetic-pair action loads authorized report/image metadata, checks compatibility, retrieves private Blob bytes server-side, prepares bounded JPEGs and calls the official Google SDK. Bounded in-memory normalized embedding cache, timeout/retry/concurrency controls and a revision-checked 008 persistence function add measured signals to existing rankings. No public image URL, vector database, scheduler or real-user consent bypass. Details and live-test status: [GEMINI_MATCHING](GEMINI_MATCHING.md).
+
 ## Integrated snapshot — 2026-10-25 (supersedes historical baseline below)
 
 All frozen branches are merged into `integration/final-hackathon`: student `a686d21`, admin `3e8b18d`, matching `cefd1c5`. The lead lifted the merge hold. Main remains unchanged and Draft PR #2 remains unmerged. Student drop-off guidance consumes the authenticated published-desk API; staff views show private matching classification/reasoning and ranking indices. Compatible/contradictory/unknown demo scenarios and recovery terminal guards pass local acceptance.

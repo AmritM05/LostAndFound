@@ -1,5 +1,9 @@
 # Neon database and data ownership
 
+## Optional AI persistence — 2026-10-25
+
+Migration `008_gemini_matching.sql` adds only `ai_report_revision` and `apply_ai_match`; no vector table/columns, claims/pickup rewrite or backfill. It depends on reviewed 001–007, rechecks current reports under locks, rejects stale/dismissed/active/terminal pairs, uses the existing SQL compatibility evaluator, and stores only measured-factor provenance in existing staff_reasoning. No embedding/image/prompt/key is stored in SQL. Replays are supported; later deterministic report refresh may replace AI reasoning. No remote migration ran. See [GEMINI_MATCHING](GEMINI_MATCHING.md).
+
 ## Integrated migration additions — 2026-10-25
 
 | File | Integrated behavior |

@@ -1,5 +1,9 @@
 # Matching: current heuristic and target design
 
+## Gemini integration — 2026-10-25 (supersedes no-provider statements below)
+
+Optional server-only Gemini Embedding 2 integration now supplies real 768-dimensional semantic/visual/cross-modal vectors through the official SDK, behind explicit synthetic-demo flags and a staff-confirmed pair action. Existing contradiction rules and deterministic report triggers are unchanged. Migration 008 rechecks compatibility/revisions/lifecycle before persisting measured ranking and private provenance. Missing inputs/key or failed inference fall back; no real-provider test was run (user requested skip). Read [GEMINI_MATCHING](GEMINI_MATCHING.md) for exact setup, limits, consent, tests and video readiness. No remote migration or real-user processing is authorized by this implementation.
+
 ## Integrated matching policy — 2026-10-25
 
 Authoritative current implementations: services/matchingAttributes.ts, services/matchingService.ts and db/migrations/005_matching_engine.sql. The baseline003 discussion below is historical. Versioned canonical attributes/aliases and known-data rules reject hard category/type/brand/model/color/identifier contradictions before ranking; unknown/ambiguous attributes omit evidence rather than imply mismatch. Closed/assigned reports are ineligible. Manual dismissals remain preserved. Pure TS and SQL parity plus persistence/adversarial tests pass.

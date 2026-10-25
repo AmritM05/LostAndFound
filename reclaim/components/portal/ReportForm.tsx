@@ -177,6 +177,9 @@ export default function ReportForm({
             </span>
           ))}
         </div>
+        <PrivacyNote>
+          Synthetic demo AI notice: optional staff-confirmed comparisons can send item descriptions and photographs to Google. Use sample data only. Real-user AI processing requires a separate consent workflow and is not enabled by this demo.
+        </PrivacyNote>
         <form onSubmit={submit} className="form-stack">
           <div className="form-section-heading">
             <span className="eyebrow">STEP {step + 1} OF 4</span>

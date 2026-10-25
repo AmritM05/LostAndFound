@@ -16,6 +16,7 @@ import {
   X,
 } from "lucide-react";
 import Brand from "../Brand";
+import GeminiComparison from "./GeminiComparison";
 import PickupRecord from "./PickupRecord";
 import StaffMatchAssessment from "./StaffMatchAssessment";
 import { claimReviewable, pickupState, renewablePickup } from "./recoveryState";
@@ -613,6 +614,7 @@ export default function AdminPortal({
               )}
               {section === "matches" && (
                 <div className="staff-stack">
+                  <GeminiComparison reports={data.reports} onApplied={load} />
                   {data.matches
                     .filter(
                       (m: any) =>

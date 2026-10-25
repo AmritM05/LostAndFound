@@ -48,3 +48,8 @@ Developers append actual dated evidence/proposals to their own team update logs.
 ## 2026-10-25 — final integration preparation, no feature merge
 
 Created `integration/final-hackathon` from main `6cc04d2`; preserved original checkouts/feature branches. Reviewed student/admin/matching handoffs and pinned heads. Lead explicitly withheld merge and remote-write authorization. Added reproducible temporary-fixture PGlite audit for planned ordered 001–006, conflict/deployment/recording plan and reconciled this preparation status in central memory. Independent admin/matching suites, preparation typecheck/build and read-only service checks passed; no integrated/live workflow is claimed. Details/results/publication belong in VERIFICATION and Developer 1's log.
+
+
+## 2026-10-25 — optional Gemini synthetic-demo integration
+
+On integration/final-hackathon from 559b54b: official Gemini Embedding 2 SDK/768-dimensional server vectors, semantic/private-image/cross-modal similarity, explicit demo consent gates and notices, compatibility-first/failure-safe ranking, cache/invalidation/timeouts and private staff provenance. Additive 008 revision/write functions use existing tables; no claims/pickup rewrite or vector DB. Environment example, setup and A/B/C evidence notes updated. Full local suite: 139 passes; TypeScript/build pass. Live provider test skipped at user request; video remains pending configured live synthetic validation and authorized migrations on the recording laptop. No main merge or remote deployment performed.

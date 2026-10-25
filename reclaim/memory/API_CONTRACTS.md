@@ -1,5 +1,9 @@
 # API contracts and integration boundaries
 
+## Gemini staff action — 2026-10-25
+
+POST `/api/admin/ai-matching/` requires admin session, allowed Origin and exactly `{lostId:uuid,foundId:uuid,confirmSynthetic:true}`. No arbitrary URLs, vectors or client evidence accepted. Returns a private/no-store result with mode (`gemini` or `deterministic`), applied flag, safe reason/channels and optional private assessment. Students cannot call it. Both server AI/demo gates and a key are required for egress; otherwise deterministic fallback. Report creation is unaffected. 008 and [GEMINI_MATCHING](GEMINI_MATCHING.md) define optimistic persistence and private provenance; owner/public response shapes remain unchanged.
+
 ## Integrated contract changes — 2026-10-25
 
 - **GET `/api/dropoffs/`** requires the student session (admin-only cookie does not suffice), returns an array of exactly `{id,campusId,name,buildingId,building,description,lat,lng,active}`. `active:true`; only `student_visible=true`/active desks, with valid active campus buildings if linked. `description` is reviewed `public_instructions`, never staff instructions; coordinates are public building coordinates or null/null. No building yields null ID, empty building, no coordinates. Private/no-store, Vary Cookie; 401 unauthenticated, safe 503 unavailable/schema failure; [] means no published desks. Student adapter maps description to instructions and whitelists fields. No fallback to static desks.

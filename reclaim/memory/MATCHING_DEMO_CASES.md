@@ -1,5 +1,15 @@
 # Matching demo cases and final QA
 
+## Optional Gemini A/B/C demo — 2026-10-25
+
+The previous cases below remain valid deterministic checks. Real Gemini integration is now implemented behind staff-only synthetic-demo confirmation; **no live Gemini cases were run here**, as the user requested push-only for validation on another laptop. Setup and exact opt-in command: [GEMINI_MATCHING](GEMINI_MATCHING.md).
+
+- **A: compatible semantic paraphrase.** Nike/black backpack; lost description `Crimson fabric loop on a nylon rucksack`; found `A red carrying tab on a travel bag`. Mocked SDK-shaped vectors improved the persisted ranking in `geminiPersistence.test.ts`. This is mock-verified pipeline behavior, not a measured real model score. On the recording laptop, choose the pair in staff Matches, confirm synthetic processing, run Gemini and show the actual index/channels. Record whether it improves; do not promise an unmeasured increase.
+- **B: brand contradiction.** Same descriptive evidence with Nike versus Adidas, or Apple AirPods versus Samsung Galaxy Buds. Remains NO MATCH before any provider/image call; direct SQL also rejects even synthetic signals of 1. No actual Gemini similarity for this rejected pair is generated, intentionally. Never fabricate an AI score to explain this case.
+- **C: unknown brand.** Leave the lost brand blank; compatible known found attributes remain eligible. Mock/provider workflow tests cover text and one-photo/opposite-text paths. Live unknown-brand comparison is in the opt-in test but was not run here. Show the real result without inferring a missing brand or ownership probability.
+
+Private object-photo comparison is supported, but the opt-in automated live fixture uses generated swatches only to verify actual multimodal transport. Different-angle/object recognition requires real permitted synthetic object photos in the app; mocked decoders/swatch similarity are not that evidence. Migration 008 and AI/demo configuration must be deployed before recording. Existing claims/pickup acceptance remains mandatory.
+
 Verified 2026-10-25 in isolated in-memory PGlite and the real TypeScript matcher. Matching source: `aa22744` / handoff `7d831aa`; admin source inspected read-only at `origin/feature/admin-recovery` `3e8b18d`. Main remained `6cc04d2`. No production records, HTTP responses, credentials, images or remote migrations were fabricated or changed. These results verify engine/persistence behavior and a combined local SQL/repository workflow, not a hosted/browser acceptance run.
 
 Use the words **potential match**, **compatible candidate**, and **staff verification required**. Classification and numeric indices are heuristic rankings, never ownership probabilities. There is no image/embedding model in this demo.
