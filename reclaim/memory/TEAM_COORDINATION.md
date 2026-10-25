@@ -1,5 +1,14 @@
 # Three-developer coordination
 
+## Integrated snapshot — 2026-10-25 (supersedes historical baseline below)
+
+All frozen branches are merged into `integration/final-hackathon`: student `a686d21`, admin `3e8b18d`, matching `cefd1c5`. The lead lifted the merge hold. Main remains unchanged and Draft PR #2 remains unmerged. Student drop-off guidance consumes the authenticated published-desk API; staff views show private matching classification/reasoning and ranking indices. Compatible/contradictory/unknown demo scenarios and recovery terminal guards pass local acceptance.
+
+Final verification: **119 automated tests passed, zero failures/skips/TODO**, TypeScript and production build passed; **36 synthetic browser scenarios** passed (16 student recovery/drop-off, 10 intake/deletion/search, 10 staff desktop/mobile). Frozen ordered **001–007** local SQL audit also passes separately (overlaps full-suite coverage). No real photo upload/auth/recovery run occurred. Read-only Neon/Blob checks pass, but 005/006/007 schema markers are missing and recovery bodies differ from 004. **Remote migration writes remain unauthorized; complete live recording is blocked.** See [FINAL_INTEGRATION_PLAN](FINAL_INTEGRATION_PLAN.md), [VERIFICATION](VERIFICATION.md) and [DEMO_RUNBOOK](DEMO_RUNBOOK.md).
+
+### Historical baseline (not current integrated behavior)
+
+
 ## Confirmed assignments and branches
 
 These assignments are confirmed by the project lead's publication request. Developer numbers identify roles; personal names have not been supplied. Assignment does not mean an implementation has started or passed tests. Existing backlog IDs, priorities, acceptance criteria and unresolved defects remain in force.
@@ -115,3 +124,8 @@ For this documentation-only publication, verify Markdown links, scope and staged
 | Matching MAG-001/002/007; planned MAG-011 proposal | Developer 3 | feature/matching-engine | team-updates/developer-3.md | Assigned; MAG-001 contract before dependent filtering/ranking |
 
 Remaining cross-cutting backlog items are not automatically assigned. Scope changes, takeover of another developer's files and new shared-interface work require explicit coordination recorded by the owners and reconciled by the lead. A reserved branch/migration is preparation, not evidence of implementation.
+
+
+## Final integration hold — 2026-10-25
+
+The lead explicitly requested `integration/final-hackathon` for preparation, then confirmed no feature merges yet and remote services read-only. This is an authorized lead branch exception to the ordinary feature assignment; main/feature branches remain unchanged. See FINAL_INTEGRATION_PLAN for exact reviewed snapshots and known fixture/document overlaps. Completion confirmation and new target-specific write authorization are prerequisites; elapsed time or a passing isolated audit is not permission. Never edit another developer's personal log to record assumed readiness.

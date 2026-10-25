@@ -1,5 +1,36 @@
 # Neon database and data ownership
 
+## Final live verification — 2026-10-25 (supersedes earlier blocked/skipped status)
+
+The user explicitly authorized disposable Neon target fingerprint `76581ecb9b0b` and synthetic uploads/workflows in the configured private Blob store after reviewing existing aggregate counts. Applied **004–008** in order;001–003 were already present and were not blindly replayed. Existing core record counts were preserved during migration. Read-only verification matches production function bodies from001/002/003/004/005/006/008 and confirms007 publication fields;16 base tables,31 indexes,157 constraints inspected. No historical ledger was invented. Synthetic test sessions/records were then intentionally created; unrelated records/Blob objects were not deleted.
+
+**Live Gemini PASS:** authentic `gemini-embedding-2`,768 dimensions; text similarity about0.870, generated-image visual similarity about1.0, image-to-text about0.278. Actual semantic evidence improved test ranking. Generated swatches prove transport, not object recognition. Apple AirPods Pro versus Samsung Galaxy Buds is rejected before provider inference. Actual application comparison consumed a bound private Blob photograph through server-side preparation and persisted semantic/cross-modal provenance; owner/public DTOs omit it. No real student evidence was sent to Google. HEIC decoding remains mock-tested; no valid synthetic HEIC fixture was available for a live codec test.
+
+**Verification executed:**139 automated passed/0failed/0skipped; TypeScript and final production build passed. Real recovery driver14 passed/0failed/0skipped including13 workflow/privacy subtests. Real browser rehearsal14 passed/0failed: UI sign-in, staff routes/forms, private request/response, mobile navigation, published desks, Google Maps SDK ready with no unavailable overlay. Synthetic browser suites36 passed (16+10+10), kept separate from live evidence. Expired-code setup altered only the current synthetic pickup's deadline, pinned to the authorized target; expired/old/reused codes failed, renewal worked, pickup marked Returned, competing approval failed. Default unavailable/disabled provider fallback is covered by automated tests; ordinary real report creation never calls Gemini.
+
+Fixed one recording blocker: a scrollable student report table's absolute accessible labels escaped its scroll container on phones. A scoped CSS-module positioning rule fixes the real390px overflow without global CSS changes. Fixed stale harness assertions for the explicit probability disclaimer and separated external Maps from mocked application APIs; replaced invalid tiny live PNG fixture with a valid generated PNG. No new product feature or auth/matching policy change.
+
+**Ready for the verified local synthetic video.** Local HTTP rehearsal uses documented Next development mode; production compilation passed separately. Secure production cookies were not weakened. Exact loopback origins were configured for the rehearsal. No hosted deployment/HTTPS smoke test or independent PostgreSQL contention guarantee is claimed. Demo identity and synthetic-only Google-processing restrictions remain.
+
+
+## Optional AI persistence — 2026-10-25
+
+Migration `008_gemini_matching.sql` adds only `ai_report_revision` and `apply_ai_match`; no vector table/columns, claims/pickup rewrite or backfill. It depends on reviewed 001–007, rechecks current reports under locks, rejects stale/dismissed/active/terminal pairs, uses the existing SQL compatibility evaluator, and stores only measured-factor provenance in existing staff_reasoning. No embedding/image/prompt/key is stored in SQL. Replays are supported; later deterministic report refresh may replace AI reasoning. No remote migration ran. See [GEMINI_MATCHING](GEMINI_MATCHING.md).
+
+## Integrated migration additions — 2026-10-25
+
+| File | Integrated behavior |
+| --- | --- |
+| 004_admin_recovery.sql | Terminal/assigned recovery guards; private request/previous answer; safe competing decisions and pickup |
+| 005_matching_engine.sql | Compatibility-first evaluator/trigger, private staff_reasoning, normalization, available-factor ranking |
+| 006_pickup_reissue.sql | Atomic expired/missing-deadline pass renewal, old-code invalidation, history retention |
+| 007_student_dropoff_visibility.sql | student_visible DEFAULT false and public_instructions DEFAULT ''; no automatic publication/private instruction copy |
+
+Full ordered001–007 migration and replay pass local PGlite with real repositories. Files are unchanged by integration. Remote SELECT checks show 005 evaluator/reasoning,006 renewal and both007 columns absent; recovery bodies differ from004. No remote migration applied/authorized. Quiesce writes before authorized runner replay:003 temporarily recreates old definitions before004/005, and each file commits independently with no ledger/global rollback. Staff must publish desks explicitly after007 and matching admin writers deploy. No Supabase runtime/migration switch.
+
+Historical baseline follows.
+
+
 ## Provider and migration mechanism
 
 The desired runtime is Neon PostgreSQL, accessed through `lib/server/db.ts` with parameterized HTTP queries. There is no runtime Supabase client or ORM. `scripts/migrate.mts` executes sorted `db/migrations/*.sql` using the Neon WebSocket Pool, then seeds/upserts configured buildings. Each current migration contains its own transaction. A later migration failure does not undo earlier committed files. There is no migration-version table or automatic rollback. Re-running old files also re-creates functions/views/triggers: final ordering matters.
@@ -56,3 +87,8 @@ Foreign-key insert/delete ordering and lock order are part of the contract. Keep
 There are no embeddings, vector index, normalized contradiction provenance, match version, score calibration record, tenant isolation, migration ledger, dedicated custody-history table or retention schedule. Finder metadata is not separately captured. Reports/custody/claims use broad text statuses rather than a universally enforced state machine. Expired approved pickups have no reissue transaction/UI. Campus switching can leave old buildings active because seed conflict updates do not delete/deactivate missing buildings or update campus_id.
 
 Any proposed columns/tables must be reviewed and assigned a new migration with upgrade/backfill/rollback implications. Reuse existing reports/images/matches/updates rather than duplicating domain concepts. See [backlog](TASK_BACKLOG.md) and [coordination](TEAM_COORDINATION.md).
+
+
+## Reviewed final-integration files — not deployed by preparation
+
+As of 2026-10-25, admin snapshot `5063106` contains 004 terminal/information guards and 006 pickup renewal; matching `7d831aa` contains 005 policy/evaluation/trigger/staff_reasoning. Planned sequence is all sorted 001–006. A pinned PGlite audit proves 005/006 retain 004 recovery function bodies and combined return/reissue/contradiction behavior locally. Feature branches are not merged and the lead requires remote read-only access. Remote markers/definitions do not match that planned state; there is no migration ledger. No migration was applied here. See FINAL_INTEGRATION_PLAN before any schema operation.

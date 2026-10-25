@@ -1,5 +1,10 @@
 # Prioritized task backlog
 
+## Integration reconciliation — 2026-10-25
+
+Statuses below are scoped to integration/final-hackathon/Draft PR#2, not main or deployed Neon. MAG-001/002/003/004/005/008/009/012 implemented and locally verified; deployment/live acceptance still blocked by remote authorization/schema. MAG-006 remains open. MAG-007 concurrency, MAG-013 cleanup operations, MAG-014 CI, MAG-017 intake idempotency and production identity are not silently completed. MAG-015 local/synthetic harnesses complete; real driver awaits authorized target. Definitions/acceptance requirements are preserved.
+
+
 Baseline 2026-10-24, source `6bf17fd`. Task definitions remain unchanged; selected ownership assignments are now confirmed in TEAM_COORDINATION. Assignment is not implementation or completion. Developers record progress/evidence in their own logs; Developer 1 alone reconciles this central backlog during integration. Ready means no known prerequisite prevents starting; Blocked means a dependency must be resolved first. Complexity: Small / Medium / Large. P0 is necessary for a trustworthy hackathon demonstration; P1 important functionality; P2 polish/optional. Do not fix tasks during this documentation-only phase.
 
 Each task records description, status/priority/complexity, dependencies, likely files, ownership area, acceptance criteria and testing requirements. Move a task to Done only with commit/PR and scoped verification evidence.
@@ -8,8 +13,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-001 — Agree the two-stage matching contract
 
-- **Confirmed owner:** Developer 3; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
-- **Status / priority / complexity:** Ready, assigned Developer 3 / P0 / Small.
+- **Confirmed owner:** Developer 3; integrated; see final evidence. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Implemented/integrated policy; local parity/demo tests passed / P0 / Small.
 - **Description:** Define canonical category/type/brand/model/color/identifier values, unknown/provenance rules, contradiction decisions, available-factor weighting, labels and compatibility between SQL/TypeScript/UI. Confirm which target ranking signals are feasible without AI.
 - **Dependencies / proposed area:** Team product agreement; backend/matching developer with both UI reviewers.
 - **Likely files:** `memory/AI_MATCHING.md`, `API_CONTRACTS.md`, `TEAM_COORDINATION.md`; proposed shared matcher types require review before code.
@@ -18,8 +23,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-002 — Implement contradiction-first candidate filtering
 
-- **Confirmed owner:** Developer 3; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
-- **Status / priority / complexity:** Blocked by MAG-001, assigned Developer 3 / P0 / Large.
+- **Confirmed owner:** Developer 3; integrated; see final evidence. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Implemented/integrated SQL005 + TS; remote rollout pending / P0 / Large.
 - **Description:** Add hard rejection for confirmed high-confidence contradictions before scoring; align active SQL matcher with TS helper and preserve unknown data as non-rejection. Fix K-01.
 - **Dependencies / proposed area:** MAG-001; backend/matching, coordinated migration review.
 - **Likely files:** `services/matchingService.ts`, a new `db/migrations/` file replacing relevant functions/trigger policy, `services/matchingService.test.ts`, `services/adminBackend.test.ts`.
@@ -28,8 +33,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-003 — Expose a privacy-safe active drop-off read contract
 
-- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
-- **Status / priority / complexity:** Ready for contract review, assigned Developer 1 / P0 / Small.
+- **Confirmed owner:** Developer 1; integrated; see final evidence. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Implemented by Developer 2/integrated; SQL007 remote deployment pending / P0 / Small.
 - **Description:** Add a safe read projection/API for approved active desks, separate from building data. Current listDropoffZones is a stub. Agree fields/auth/cache policy before frontend work.
 - **Dependencies / proposed area:** Agreement in API_CONTRACTS; backend/API owner, student reviewer. Existing zones/buildings schema can be reused.
 - **Likely files:** Proposed `app/api/dropoffs/route.ts`, server repository/projection tests, `memory/API_CONTRACTS.md`.
@@ -38,8 +43,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-004 — Connect student drop-off guidance and correct empty copy
 
-- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
-- **Status / priority / complexity:** Blocked by MAG-003, assigned Developer 1 / P0 / Small.
+- **Confirmed owner:** Developer 1; integrated; see final evidence. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Implemented/integrated student API adapter and browser checks / P0 / Small.
 - **Description:** Wire listDropoffZones to the agreed read API and show real desks/instructions on the student map page. Distinguish buildings from staffed intake; fix K-02.
 - **Dependencies / proposed area:** MAG-003 accepted payload; student UI developer with shared map coordination.
 - **Likely files:** `services/workspaceService.ts`, `components/portal/Portal.tsx`; shared CampusMap only if explicitly needed/agreed.
@@ -58,8 +63,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-008 — Guard terminal recoveries and stale competing claim decisions
 
-- **Confirmed owner:** Developer 2; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
-- **Status / priority / complexity:** Ready for policy/SQL coordination, assigned Developer 2 / P0 / Medium.
+- **Confirmed owner:** Developer 2; integrated; see final evidence. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Implemented/integrated SQL004; remote deployment pending /SQL coordination, assigned Developer 2 / P0 / Medium.
 - **Description:** Fix K-03: returned/archived lost reports must not reopen through a pending claim on another found report. Define competing claims/matches cleanup/closure and notices; enforce both reports' terminal states under locks.
 - **Dependencies / proposed area:** Admin recovery-state agreement; staff workflow developer with database integrator review. Reserve a distinct migration filename before edits.
 - **Likely files:** New migration replacing `review_ownership_claim` and related transitions, `services/adminBackend.test.ts`, admin action/UI only as needed.
@@ -70,8 +75,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-005 — Complete the student more-information response loop
 
-- **Confirmed owner:** Developer 1; implementation remains open. Developer 2 owns the administration counterpart; shared contract changes require coordination.
-- **Status / priority / complexity:** Ready, assigned Developer 1 / P1 / Medium.
+- **Confirmed owner:** Developer 1; integrated; see final evidence. Developer 2 owns the administration counterpart; shared contract changes require coordination.
+- **Status / priority / complexity:** Implemented/integrated private response loop; live rehearsal pending / P1 / Medium.
 - **Description:** Present More information claims with actionable private answer resubmission or an explicitly agreed notes workflow. Use the existing resubmission API where appropriate, and make staff evidence/state clear.
 - **Dependencies / proposed area:** Existing claim/notes contracts; student developer with staff reviewer. No new endpoint assumed.
 - **Likely files:** `components/portal/Portal.tsx`, workspaceService if required; admin evidence rendering only with staff owner agreement.
@@ -90,8 +95,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-009 — Reissue/revoke expired pickup passes safely
 
-- **Confirmed owner:** Developer 2; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
-- **Status / priority / complexity:** Blocked on recovery-state contract/MAG-008, assigned Developer 2 / P1 / Medium.
+- **Confirmed owner:** Developer 2; integrated; see final evidence. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Implemented/integrated SQL006 renewal; remote deployment pending /MAG-008, assigned Developer 2 / P1 / Medium.
 - **Description:** Define a protected replacement-pass transition and UI for expired approvals, invalidating old credentials and recording activity/notices.
 - **Dependencies / proposed area:** MAG-008, reviewed new API/function contract; staff workflow with DB reviewer and student pass consumer.
 - **Likely files:** Admin actions, new migration, AdminPortal, student pass dialog, owner projection.
@@ -109,8 +114,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-012 — Refresh private state after remote staff changes
 
-- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
-- **Status / priority / complexity:** Ready for refresh policy agreement, assigned Developer 1 / P1 / Medium.
+- **Confirmed owner:** Developer 1; integrated; see final evidence. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Implemented bounded refresh/error-safe snapshots; synthetic browser verified / P1 / Medium.
 - **Description:** Add a bounded refresh/focus/poll strategy or approved push approach; prevent selected-dialog stale state and misleading identity loss on transient failures.
 - **Dependencies / proposed area:** Current workspace APIs; student owner and staff reviewer, no new notification provider presumed.
 - **Likely files:** useWorkspace, Portal, AdminPortal, apiClient if errors require typed status.
@@ -138,8 +143,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-015 — Commit repeatable browser recovery/privacy tests
 
-- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
-- **Status / priority / complexity:** Open; test-environment strategy required / P1 / Large.
+- **Confirmed owner:** Developer 1; integrated; see final evidence. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Repeatable local SQL and36 synthetic browser scenarios implemented; real opt-in driver not run / P1 / Large.
 - **Description:** Add a maintained E2E harness for both portals, mixed sessions, private images, deletion, matching, claims and pickup. Avoid a hidden runtime fake-success fallback.
 - **Dependencies / proposed area:** MAG-008 and agreed isolated backend/storage strategy; integration/testing with all owners.
 - **Likely files:** Proposed E2E tests/config; package dev tooling only when chosen, active fixtures, CI integration.
@@ -216,10 +221,15 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-022 — Keep this memory system current
 
-- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
-- **Status / priority / complexity:** Ongoing; initial documentation created in this task / P1 / Small per change.
+- **Confirmed owner:** Developer 1; integrated; see final evidence. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Central memory reconciled for final integration; ongoing / P1 / Small per change.
 - **Description:** Collect each developer’s own log evidence for every feature PR; the lead reconciles central source/evidence/contracts/backlog/status and maintains the startup pointer/assignment register.
 - **Dependencies / proposed area:** Every developer owns their own log; Developer 1 reconciles central files and verifies completion.
 - **Likely files:** affected memory documents and repository-root AGENTS.md only when its startup procedure changes.
 - **Acceptance:** Distinguish current/target/status, no secrets, working links, preserved history and exact verification evidence.
 - **Tests:** Markdown file/link/secret scan, current source references and reviewed Git diff; no feature change hidden inside docs PR.
+
+
+## 2026-10-25 — final integration gate (no tasks promoted to Done)
+
+Lead explicitly requires preparation without feature merges and read-only remote access. MAG-001/002 matching, MAG-008 recovery guards and MAG-009 renewal have reviewed remote implementations with independent tests/pinned SQL audit, but are not integrated/deployed here. MAG-005 student/staff integration, MAG-006 live/deployment readiness and MAG-015 complete live acceptance remain blocked on completion confirmation, authorized merges and an explicitly authorized disposable target. MAG-003 live-zone read API remains absent; MAG-004 retains truthful guidance. The new audit/FINAL_INTEGRATION_PLAN advance preparation and MAG-022 memory reconciliation only. Do not infer main is fixed or a live demonstration is ready from these branch tests.

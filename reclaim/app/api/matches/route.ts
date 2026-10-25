@@ -1,3 +1,4 @@
+import { findOwnedPotentialMatch } from "../../../lib/server/matchCandidates";
 import {
   endpoint,
   json,
@@ -30,10 +31,7 @@ export async function POST(request: Request) {
       d = await body(request);
     if (!uuid(d.foundId) || !uuid(d.lostId))
       throw new ApiError("Match unavailable");
-    const [m] = await query(
-      "select m.id,m.lost_report_id as \"lostId\",m.found_report_id as \"foundId\",m.score,m.factors,m.distance_km as distance,m.minutes_difference as minutes from potential_matches m join reports l on l.id=m.lost_report_id join reports f on f.id=m.found_report_id where l.id=$1 and f.id=$2 and l.reporter_id=$3 and not m.dismissed and l.status not in ('Returned','Archived') and f.status not in ('Returned','Archived')",
-      [d.lostId, d.foundId, u.id],
-    );
+    const m = await findOwnedPotentialMatch(query, d.lostId, d.foundId, u.id);
     if (!m)
       throw new ApiError(
         "No compatible match was found. Staff will review new reports as they arrive.",

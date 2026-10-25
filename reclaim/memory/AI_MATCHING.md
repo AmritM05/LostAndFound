@@ -1,5 +1,31 @@
 # Matching: current heuristic and target design
 
+## Final live verification — 2026-10-25 (supersedes earlier blocked/skipped status)
+
+The user explicitly authorized disposable Neon target fingerprint `76581ecb9b0b` and synthetic uploads/workflows in the configured private Blob store after reviewing existing aggregate counts. Applied **004–008** in order;001–003 were already present and were not blindly replayed. Existing core record counts were preserved during migration. Read-only verification matches production function bodies from001/002/003/004/005/006/008 and confirms007 publication fields;16 base tables,31 indexes,157 constraints inspected. No historical ledger was invented. Synthetic test sessions/records were then intentionally created; unrelated records/Blob objects were not deleted.
+
+**Live Gemini PASS:** authentic `gemini-embedding-2`,768 dimensions; text similarity about0.870, generated-image visual similarity about1.0, image-to-text about0.278. Actual semantic evidence improved test ranking. Generated swatches prove transport, not object recognition. Apple AirPods Pro versus Samsung Galaxy Buds is rejected before provider inference. Actual application comparison consumed a bound private Blob photograph through server-side preparation and persisted semantic/cross-modal provenance; owner/public DTOs omit it. No real student evidence was sent to Google. HEIC decoding remains mock-tested; no valid synthetic HEIC fixture was available for a live codec test.
+
+**Verification executed:**139 automated passed/0failed/0skipped; TypeScript and final production build passed. Real recovery driver14 passed/0failed/0skipped including13 workflow/privacy subtests. Real browser rehearsal14 passed/0failed: UI sign-in, staff routes/forms, private request/response, mobile navigation, published desks, Google Maps SDK ready with no unavailable overlay. Synthetic browser suites36 passed (16+10+10), kept separate from live evidence. Expired-code setup altered only the current synthetic pickup's deadline, pinned to the authorized target; expired/old/reused codes failed, renewal worked, pickup marked Returned, competing approval failed. Default unavailable/disabled provider fallback is covered by automated tests; ordinary real report creation never calls Gemini.
+
+Fixed one recording blocker: a scrollable student report table's absolute accessible labels escaped its scroll container on phones. A scoped CSS-module positioning rule fixes the real390px overflow without global CSS changes. Fixed stale harness assertions for the explicit probability disclaimer and separated external Maps from mocked application APIs; replaced invalid tiny live PNG fixture with a valid generated PNG. No new product feature or auth/matching policy change.
+
+**Ready for the verified local synthetic video.** Local HTTP rehearsal uses documented Next development mode; production compilation passed separately. Secure production cookies were not weakened. Exact loopback origins were configured for the rehearsal. No hosted deployment/HTTPS smoke test or independent PostgreSQL contention guarantee is claimed. Demo identity and synthetic-only Google-processing restrictions remain.
+
+
+## Gemini integration — 2026-10-25 (supersedes no-provider statements below)
+
+Optional server-only Gemini Embedding 2 integration now supplies real 768-dimensional semantic/visual/cross-modal vectors through the official SDK, behind explicit synthetic-demo flags and a staff-confirmed pair action. Existing contradiction rules and deterministic report triggers are unchanged. Migration 008 rechecks compatibility/revisions/lifecycle before persisting measured ranking and private provenance. Missing inputs/key or failed inference fall back; no real-provider test was run (user requested skip). Read [GEMINI_MATCHING](GEMINI_MATCHING.md) for exact setup, limits, consent, tests and video readiness. No remote migration or real-user processing is authorized by this implementation.
+
+## Integrated matching policy — 2026-10-25
+
+Authoritative current implementations: services/matchingAttributes.ts, services/matchingService.ts and db/migrations/005_matching_engine.sql. The baseline003 discussion below is historical. Versioned canonical attributes/aliases and known-data rules reject hard category/type/brand/model/color/identifier contradictions before ranking; unknown/ambiguous attributes omit evidence rather than imply mismatch. Closed/assigned reports are ineligible. Manual dismissals remain preserved. Pure TS and SQL parity plus persistence/adversarial tests pass.
+
+Available-factor heuristic weights: brand/category20, color/details10, description20, optional measured image30, location10, time10. Missing factors are omitted; identity-poor evidence is capped below candidate threshold. No actual image/embedding/semantic provider is integrated: optional measured signals in tests are synthetic inputs, never model output. Candidate score>=60, capped99. Staff-only explanations/classifications are now displayed; student/public fields remain whitelisted. Historical assessments without reasoning say unavailable. Rejected new pairs create no card. A/B/C documented demo cases are executable in services/matchingDemoAcceptance.test.ts.
+
+Remote005 is absent, so these are locally verified integrated capabilities pending authorized deployment. Independent multi-connection PostgreSQL matching races remain outside local PGlite evidence.
+
+
 ## Status and authoritative implementation
 
 **Current:** automatic heuristic matching is implemented and tested. **No AI model is integrated.** `services/imageAnalysisService.ts` is a placeholder: `extractItemAttributes` returns manual/default attributes with confidence zero; `generateImageEmbedding` returns null. There is no provider SDK, AI API call, OCR, embedding storage or vector index in the active pipeline. Photos are private evidence for humans, not current scoring inputs.

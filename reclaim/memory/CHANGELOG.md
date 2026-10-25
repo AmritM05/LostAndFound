@@ -1,5 +1,17 @@
 # Verified project changelog
 
+## 2026-10-25 — live deployment verification and video handoff
+
+User authorized the exact disposable target; deployed pending004–008 preserving existing counts and verified001–008 prerequisites/functions. Real Gemini text/image/cross-modal, private Blob upload, full recovery/privacy/expired-renewal/terminal protection, Maps and actual browser rehearsal passed. Final139 automated and36 synthetic browser checks pass; production build/TypeScript pass. Scoped student mobile table fix and test-harness corrections only. Fresh Pending video fixture prepared; no hosted deployment or main merge. See latest VERIFICATION and DEMO_RUNBOOK.
+
+
+## 2026-10-25 — final integration (Draft PR #2)
+
+Authorized frozen student/admin/matching merges preserving preparation history; resolved Developer1 log by keeping both histories and adminBackend migration fixture by keeping both assertions. Wired student public drop-off API/Maps/retry/empty states, added minimal staff-only stored match classifications/explanations and non-probability ranking labels. Added executable A/B/C TS/SQL/persistence acceptance,007 audit coverage, published-desk browser checks and isolated staff real-component browser harness. Reconciled central memory/runbook/backlog without editing teammates' logs.
+
+Verification:119 automated pass/0fail/0skip/0TODO; TypeScript/build pass;36 synthetic browser scenarios pass; separate frozen001–007 SQL audit pass. Remote read-only schema incompatible (004 bodies differ;005–007 absent). No remote writes or final live acceptance; complete live recording awaits authorized migration/deployment and rehearsal. Main/PR#1 remain unmerged; integration PR#2 stays draft.
+
+
 Dates below come from Git author timestamps shown in America/New_York offset. Commit messages are preserved as evidence, not inferred product milestones. For exact historical diffs use `git show <commit>` from the repository root. Later source supersedes earlier release descriptions.
 
 ## 2026-10-24 — repository history
@@ -36,3 +48,13 @@ Earlier README/session reports describe successful local/live synthetic checks; 
 ## Rules for future entries
 
 Developers append actual dated evidence/proposals to their own team update logs. Developer 1 alone reconciles dated central entries here during integration, including task, commit/PR or explicit uncommitted status, changed behavior/contracts/schema, scoped tests and unresolved limitations. Preserve previous entries; annotate corrections with source evidence. Never invent implementation dates from a UI screenshot or assume a test against archived SQL proves the active runtime.
+
+
+## 2026-10-25 — final integration preparation, no feature merge
+
+Created `integration/final-hackathon` from main `6cc04d2`; preserved original checkouts/feature branches. Reviewed student/admin/matching handoffs and pinned heads. Lead explicitly withheld merge and remote-write authorization. Added reproducible temporary-fixture PGlite audit for planned ordered 001–006, conflict/deployment/recording plan and reconciled this preparation status in central memory. Independent admin/matching suites, preparation typecheck/build and read-only service checks passed; no integrated/live workflow is claimed. Details/results/publication belong in VERIFICATION and Developer 1's log.
+
+
+## 2026-10-25 — optional Gemini synthetic-demo integration
+
+On integration/final-hackathon from 559b54b: official Gemini Embedding 2 SDK/768-dimensional server vectors, semantic/private-image/cross-modal similarity, explicit demo consent gates and notices, compatibility-first/failure-safe ranking, cache/invalidation/timeouts and private staff provenance. Additive 008 revision/write functions use existing tables; no claims/pickup rewrite or vector DB. Environment example, setup and A/B/C evidence notes updated. Full local suite: 139 passes; TypeScript/build pass. Live provider test skipped at user request; video remains pending configured live synthetic validation and authorized migrations on the recording laptop. No main merge or remote deployment performed.

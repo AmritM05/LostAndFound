@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useId, useRef, useState } from "react";
+import controls from "./InputControls.module.css";
 import { Search, X, Check } from "lucide-react";
 import { CampusLocation, campus, searchBuildings } from "../lib/campus";
 export default function BuildingSelector({
@@ -39,12 +40,12 @@ export default function BuildingSelector({
     input.current?.focus();
   }
   return (
-    <div className="building-selector">
+    <div className={`building-selector ${controls.buildingControl}`}>
       <label htmlFor={id}>
         {label}
         {optional && <small>Optional</small>}
       </label>
-      <div className="building-search">
+      <div className={`building-search ${controls.inputWrap}`}>
         <Search size={16} />
         <input
           ref={input}
@@ -58,7 +59,7 @@ export default function BuildingSelector({
           }
           autoComplete="off"
           value={selected && !open ? selected.name : query}
-          placeholder="Search campus buildings..."
+          placeholder="Search campus buildings…"
           onFocus={() => {
             setQuery(selected?.name || query);
             setOpen(true);

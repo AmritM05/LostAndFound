@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { rankPotentialMatches } from "../../lib/matchVisibility";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -31,10 +32,17 @@ import {
 import QRCode from "qrcode";
 import Brand from "../Brand";
 import CampusMap from "../CampusMap";
+import controls from "../InputControls.module.css";
 import BuildingSelector from "../BuildingSelector";
 import ReportForm from "./ReportForm";
 import DropoffZones from "./DropoffZones";
+import StudentClaim from "./StudentClaim";
+import StudentDropoffGuidance from "./StudentDropoffGuidance";
+import { claimContext, claimStatusText } from "./studentExperience";
 import EditLostReport from "./EditLostReport";
+import StudentClaimStatus from "./StudentClaimStatus";
+import { studentClaimState } from "./studentClaimState";
+import studentStyles from "./StudentExperience.module.css";
 import { Badge, Empty, PrivacyNote, SectionTitle, dateLabel } from "./ui";
 import { useWorkspace } from "./useWorkspace";
 import { campus } from "../../lib/campus";
@@ -70,7 +78,7 @@ export default function Portal({
   section?: string;
   adminPortal?: boolean;
 }) {
-  const { user, state, messages, loading, error, refresh } =
+  const { user, state, messages, loading, refreshing, lastUpdated, error, refresh } =
     useWorkspace(adminPortal);
   const [menu, setMenu] = useState(false),
     [query, setQuery] = useState(""),
@@ -99,11 +107,12 @@ export default function Portal({
     [dateFrom, setDateFrom] = useState(""),
     [dateTo, setDateTo] = useState("");
   useEffect(() => {
+    if (!adminPortal) return;
     api
       .listDropoffZones()
       .then(setZones)
       .catch(() => {});
-  }, [section]);
+  }, [section, adminPortal]);
   const router = useRouter();
   const nav = adminPortal
       ? user?.role === "admin"
@@ -114,9 +123,10 @@ export default function Portal({
   const active = state.items.filter(
       (i) => !["Returned", "Archived"].includes(i.status),
     ),
-    matches = state.matches.filter(
+    matches = rankPotentialMatches(state.matches).filter(
       (m) =>
         !m.dismissed &&
+        state.items.some((item) => item.id === m.lostId && !["Returned", "Archived", "Ready for Pickup"].includes(item.status)) &&
         !state.claims.some(
           (c) =>
             c.matchId === m.id && ["Rejected", "Returned"].includes(c.status),
@@ -184,9 +194,15 @@ export default function Portal({
     setActionError("");
     const close = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
+        // The nested student delete confirmation handles Escape itself. Its
+        // React handler can unmount the group before this native listener runs,
+        // so inspect the captured event path rather than the current DOM tree.
+        if (!adminPortal && e.composedPath().some(node =>
+          node instanceof HTMLElement && node.classList.contains("delete-confirmation"))) return;
         setSelectedItem(null);
         setSelectedMatch(null);
         setPass(null);
+        setSearchCandidate(null);
       }
     };
     const previous = document.activeElement as HTMLElement;
@@ -218,7 +234,7 @@ export default function Portal({
       document.removeEventListener("keydown", trap);
       previous?.focus();
     };
-  }, [selectedItem, selectedMatch, pass, searchCandidate]);
+  }, [selectedItem, selectedMatch, pass, searchCandidate, adminPortal]);
   async function perform(action: () => Promise<void>, success: string) {
     setBusy(true);
     setActionError("");
@@ -234,22 +250,45 @@ export default function Portal({
       setBusy(false);
     }
   }
-  async function showPass(c: Claim) {
-    try {
-      setQr(
-        await QRCode.toDataURL(c.token || c.code || "", {
-          width: 240,
-          margin: 2,
-          color: { dark: "#17191D", light: "#ffffff" },
-        }),
-      );
-      setPass(c);
-    } catch {
-      setToast(
-        "Could not create the QR code. Your pickup code is still available in Updates.",
-      );
+  function showPass(c: Claim) {
+    const match = state.matches.find(m => m.id === c.matchId);
+    const report = state.items.find(i => i.id === match?.lostId);
+    if (!studentClaimState(c, report).canShowPass) {
+      setActionError("No current pickup pass is available. Contact campus staff for help.");
+      return;
     }
+    setQr("");
+    setPass(c);
   }
+  useEffect(() => {
+    if (!pass?.code) return;
+    let cancelled = false;
+    QRCode.toDataURL(pass.code, {
+      width: 240, margin: 2, color: { dark: "#17191D", light: "#ffffff" },
+    }).then(value => { if (!cancelled) setQr(value); })
+      .catch(() => { if (!cancelled) setToast("QR code unavailable. Show the private pickup code instead."); });
+    return () => { cancelled = true; };
+  }, [pass?.code]);
+  useEffect(() => {
+    if (adminPortal || loading) return;
+    if (selectedMatch) {
+      const next = state.matches.find(m => m.id === selectedMatch.id && !m.dismissed);
+      if (!next) setSelectedMatch(null);
+      else if (JSON.stringify(next) !== JSON.stringify(selectedMatch)) setSelectedMatch(next);
+    }
+    if (selectedItem) {
+      const next = state.items.find(i => i.id === selectedItem.id);
+      if (!next) setSelectedItem(null);
+      else if (JSON.stringify(next) !== JSON.stringify(selectedItem)) setSelectedItem(next);
+    }
+    if (pass) {
+      const next = state.claims.find(c => c.id === pass.id);
+      const match = state.matches.find(m => m.id === next?.matchId);
+      const report = state.items.find(i => i.id === match?.lostId);
+      if (!next || !studentClaimState(next, report).canShowPass) { setPass(null); setQr(""); }
+      else if (JSON.stringify(next) !== JSON.stringify(pass)) { setQr(""); setPass(next); }
+    }
+  }, [state, adminPortal, loading, selectedMatch, selectedItem, pass]);
   function reportLink() {
     return user ? "/student/report" : "/login";
   }
@@ -274,10 +313,15 @@ export default function Portal({
   );
   const itemFor = (m: Match) => state.items.find((i) => i.id === m.lostId);
   const claimFor = (m: Match) => state.claims.find((c) => c.matchId === m.id);
+  const attentionClaims = state.claims.filter((c) => c.status === "More information");
+  async function respondToClaim(matchId: string, answer: string) {
+    await api.submitClaim(matchId, answer);
+    await refresh();
+  }
   const title = nav.find((n) => n.id === section)?.name || "Overview";
   function reportTable(items: Item[]) {
     return items.length ? (
-      <div className="table-wrap">
+      <div className={`table-wrap ${studentStyles.reportTable}`}>
         <table>
           <thead>
             <tr>
@@ -343,8 +387,9 @@ export default function Portal({
         </table>
       </div>
     ) : (
-      <Empty title="No reports yet">
-        Your submitted reports and their current status will appear here.
+      <Empty title={state.items.length ? "No reports match these filters" : "No reports yet"}
+        action={<Link className="button secondary" href={reportLink()}>Report a lost item</Link>}>
+        {state.items.length ? "Try a different search or category to find your report." : "Your submitted reports and their current status will appear here."}
       </Empty>
     );
   }
@@ -362,7 +407,7 @@ export default function Portal({
               <div className="match-row-content">
                 <div className="match-row-title">
                   <h3>{item?.name || "Possible item match"}</h3>
-                  <Badge tone="blue">{m.score}% similarity</Badge>
+                  <Badge tone="blue">Ranking index {m.score}/100</Badge>
                 </div>
                 <p>
                   A {item?.category.toLowerCase() || "reported item"} may match
@@ -373,10 +418,10 @@ export default function Portal({
                   {claim
                     ? `Claim ${claim.status.toLowerCase()}`
                     : m.score >= 90
-                      ? "Very likely match"
+                      ? "Strong potential match"
                       : m.score >= 75
                         ? "Strong possible match"
-                        : "Possible match"}
+                        : m.score >= 60 ? "Possible match" : "Weak potential match"}
                 </small>
               </div>
               <button
@@ -487,11 +532,12 @@ export default function Portal({
             <button
               className="mobile-only icon-button"
               aria-label="Open navigation"
+              aria-expanded={menu}
               onClick={() => setMenu(true)}
             >
               <Menu size={20} />
             </button>
-            <span className="mobile-only mobile-wordmark">Magpie</span>
+            <span className="mobile-only mobile-wordmark"><Brand compact /></span>
             <span>{adminPortal ? "Administration" : "Student portal"}</span>
             <ChevronRight size={13} />
             <strong>{title}</strong>
@@ -553,6 +599,15 @@ export default function Portal({
                 <ArrowRight size={16} />
               </Link>
             </div>
+          ) : !adminPortal && error && !lastUpdated && !["search", "map"].includes(section) ? (
+            <section className="panel">
+              <h1>Your workspace is unavailable</h1>
+              <p role="alert">{error}</p>
+              <p>Your reports could not be loaded. Refresh to try again.</p>
+              <button className="button" disabled={refreshing} onClick={() => void refresh()}>
+                {refreshing ? "Retrying…" : "Try again"}
+              </button>
+            </section>
           ) : (
             <>
               {error && (
@@ -564,6 +619,21 @@ export default function Portal({
                   </button>
                 </div>
               )}
+              {!adminPortal && user && (
+                <div className={studentStyles.refresh}>
+                  <span role="status">{refreshing ? "Refreshing private updates…" : error ? (lastUpdated ? "Refresh failed. Showing the last available data." : "Workspace unavailable. Try refreshing again.") : lastUpdated ? `Last refreshed ${lastUpdated.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}. Updates refresh every 30 seconds while visible.` : "Private workspace"}</span>
+                  <button className="button secondary compact" disabled={refreshing} onClick={() => void refresh()}>
+                    <RefreshCw size={14} className={refreshing ? "spin" : undefined} /> Refresh
+                  </button>
+                </div>
+              )}
+              {!adminPortal && attentionClaims.length > 0 && section !== "updates" && (
+                <div className="alert info" role="status">
+                  <span>{attentionClaims.length} ownership {attentionClaims.length === 1 ? "claim needs" : "claims need"} more information.</span>
+                  <Link className="text-link" href="/student/updates#ownership-claims">Review private requests</Link>
+                </div>
+              )}
+              {!adminPortal && section === "overview" && <StudentDropoffGuidance compact />}
               {section === "overview" && (
                 <>
                   <SectionTitle
@@ -772,10 +842,11 @@ export default function Portal({
                     description="Browse limited summaries. Item photos and identifying details are always private."
                   />
                   <div className="panel search-panel">
-                    <div className="search-toolbar">
-                      <label className="search-input">
+                    <div className={`search-toolbar ${controls.toolbar}`}>
+                      <label className={`search-input ${controls.search}`}>
                         <Search size={18} />
                         <input
+                          aria-label="Search campus items"
                           placeholder="Search by category or campus location"
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
@@ -885,13 +956,12 @@ export default function Portal({
                         title={
                           query ||
                           category !== "All categories" ||
-                          type !== "All types"
+                          type !== "All types" || locationFilter !== "All locations" || dateFrom || dateTo
                             ? "No matching summaries"
                             : "No public reports available"
                         }
                       >
-                        No found-item summaries are available yet. You can save
-                        and review your own lost reports in My Reports.
+                        {publicReports.length ? "Try changing your search, category, location, or date filters." : "No found-item summaries are available yet. You can save and review your own lost reports in My Reports."}
                       </Empty>
                     )}
                   </div>
@@ -926,6 +996,7 @@ export default function Portal({
                       </Link>
                     </div>
                   )}
+                  {!adminPortal && <StudentDropoffGuidance compact />}
                   <ReportForm
                     mode={adminPortal ? "found" : "lost"}
                     zones={zones}
@@ -957,12 +1028,13 @@ export default function Portal({
                     }
                   />
                   <section className="panel">
-                    <div className="search-toolbar">
-                      <label className="search-input">
+                    <div className={`search-toolbar ${controls.toolbar}`}>
+                      <label className={`search-input ${controls.search}`}>
                         <Search size={17} />
                         <input
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
+                          aria-label="Search your reports"
                           placeholder="Search your reports"
                         />
                       </label>
@@ -1016,6 +1088,20 @@ export default function Portal({
                       ) : undefined
                     }
                   />
+                  {!adminPortal && !user && !error && <div className="alert info"><Link className="text-link" href="/login/">Sign in to see your private updates and recovery status.</Link></div>}
+                  {!adminPortal && user && (
+                    <section id="ownership-claims" aria-labelledby="student-recovery-heading">
+                      <div className="section-header"><div><h2 id="student-recovery-heading">Your recoveries</h2><p>Private ownership requests and pickup status for your lost reports.</p></div></div>
+                      {state.claims.length ? <div className={studentStyles.recoveryList}>{state.claims.map(claim => {
+                        const match = state.matches.find(m => m.id === claim.matchId);
+                        const report = claimContext(state, claim);
+                        return <StudentClaim key={claim.id} claim={claim} report={report}
+                          messages={messages} submit={respondToClaim} showPass={showPass}
+                          disabled={busy || refreshing || Boolean(error)}
+                          onReview={match ? () => setSelectedMatch(match) : undefined} />;
+                      })}</div> : <Empty title="No ownership requests yet">When you claim a possible match, its review and pickup status will appear here.</Empty>}
+                    </section>
+                  )}
                   <div className="updates-layout">
                     <div>
                       <section className="panel">
@@ -1064,7 +1150,7 @@ export default function Portal({
                       <div className="section-header">
                         <div>
                           <h2>Report notes</h2>
-                          <p>Notes saved with your report in Magpie.</p>
+                          <p>Notes saved with your report. To answer an ownership information request, use Your ownership claims above.</p>
                         </div>
                         <LockKeyhole size={16} />
                       </div>
@@ -1159,10 +1245,10 @@ export default function Portal({
                 <>
                   <SectionTitle
                     title="Campus map"
-                    description="Find campus buildings and official lost-and-found drop-off points."
+                    description="Find campus buildings and learn how to hand found items to authorized staff."
                   />
                   <section className="panel map-panel">
-                    <div className="section-header">
+                    <div className={`section-header ${controls.mapToolbar}`}>
                       <BuildingSelector
                         label="Find a campus building"
                         value={mapBuildingId}
@@ -1185,7 +1271,7 @@ export default function Portal({
                       </span>
                     </div>
                   </section>
-                  <section className="panel">
+                  {!adminPortal ? <StudentDropoffGuidance /> : <section className="panel">
                     <div className="section-header">
                       <div>
                         <h2>Approved drop-off zones</h2>
@@ -1229,7 +1315,7 @@ export default function Portal({
                         configuration.
                       </Empty>
                     )}
-                  </section>
+                  </section>}
                 </>
               )}
               {adminPortal && section === "matches" && (
@@ -1259,7 +1345,7 @@ export default function Portal({
                               <h2>{l?.name || "Ownership claim"}</h2>
                               <p>
                                 Claim reference {c.id.slice(0, 8).toUpperCase()}{" "}
-                                · Match similarity {m?.score}%
+                                · Match ranking {m?.score}/100
                               </p>
                             </div>
                             <Badge
@@ -1981,16 +2067,20 @@ export default function Portal({
                   )}
                 </div>
                 {claimFor(selectedMatch) ? (
-                  <div className="claim-status">
+                  !adminPortal ? <StudentClaimStatus
+                    key={`${claimFor(selectedMatch)!.id}-${claimFor(selectedMatch)!.status}`}
+                    claim={claimFor(selectedMatch)!} report={itemFor(selectedMatch)} messages={messages} busy={busy || refreshing || Boolean(error)}
+                    onRespond={answer => perform(() => api.submitClaim(selectedMatch.id, answer), "Your private response was sent for staff review.")}
+                    onShowPass={() => { showPass(claimFor(selectedMatch)!); setSelectedMatch(null); }}
+                  /> : <div className="claim-status">
                     <Badge tone="blue">{claimFor(selectedMatch)!.status}</Badge>
                     <p>
-                      {claimFor(selectedMatch)!.status === "More information"
-                        ? "The campus team needs additional details. Reply through private correspondence."
-                        : claimFor(selectedMatch)!.status === "Approved"
-                          ? "Your claim has been approved. Bring your pickup pass to the campus desk."
-                          : "Your ownership claim is being handled by the campus team."}
+                      {claimStatusText(claimFor(selectedMatch)!)}
                     </p>
-                    {claimFor(selectedMatch)!.status === "Approved" && (
+                    {!adminPortal && claimFor(selectedMatch)!.status === "More information" && (
+                      <Link className="button secondary" href={`/student/updates#claim-${claimFor(selectedMatch)!.id}`} onClick={() => setSelectedMatch(null)}>Respond privately</Link>
+                    )}
+                    {claimFor(selectedMatch)!.status === "Approved" && claimFor(selectedMatch)!.code && (
                       <button
                         className="button"
                         onClick={() => {

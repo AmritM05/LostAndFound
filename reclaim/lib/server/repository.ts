@@ -1,3 +1,4 @@
+import { MIN_MATCH_SCORE } from "../matchVisibility";
 import type { Item, Profile, PublicReport } from "../types";
 export type Query = (sql: string, values?: any[]) => Promise<any[]>;
 export function repository(query: Query) {
@@ -22,8 +23,8 @@ export function repository(query: Query) {
             [user.id],
           ),
           query(
-            "select m.* from potential_matches m join reports r on r.id=m.lost_report_id where r.reporter_id=$1",
-            [user.id],
+            "select m.* from potential_matches m join reports r on r.id=m.lost_report_id join reports f on f.id=m.found_report_id where r.reporter_id=$1 and ((not m.dismissed and m.score >= $2 and coalesce(to_jsonb(m)->'staff_reasoning'->>'eligible','true')='true' and r.status not in ('Returned','Archived','Ready for Pickup') and f.status not in ('Returned','Archived','Ready for Pickup')) or exists(select 1 from claims c where c.match_id=m.id and c.claimant_id=$1)) order by m.score desc,m.id",
+            [user.id, MIN_MATCH_SCORE],
           ),
           query(
             "select c.*,case when c.status='Approved' and p.used_at is null and p.expires_at>now() then p.display_code end as pickup_code,z.name as pickup_location from claims c left join pickups p on p.claim_id=c.id left join dropoff_zones z on z.id=p.zone_id where c.claimant_id=$1",

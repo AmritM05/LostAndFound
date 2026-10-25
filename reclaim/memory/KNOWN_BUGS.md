@@ -1,5 +1,14 @@
 # Known bugs, gaps and historical fixes
 
+## Integrated resolution status — 2026-10-25
+
+The defect descriptions below preserve the original main baseline; they do not describe the merged integration branch. K-01: fixed by compatibility-first TS/SQL005, A/B/C and brand/model/color persistence tests. K-02: fixed by staff publication SQL007, authenticated public projection and wired student adapter/Maps links. K-03: guarded by SQL004 and competing/terminal acceptance. K-04: private response UI and previous-evidence preservation integrated. K-05: SQL006 renewal and staff UI integrated. K-06: bounded 30-second refresh/manual retry implemented; no realtime guarantee. All are locally verified, **not remotely deployed**. K-07 campus generalization, K-08 legacy cleanup, K-09 operations/CI/live acceptance and K-10 intake idempotency remain limitations unless separately accepted.
+
+Connected remote database lacks 005–007 markers and current recovery definitions differ from004; writes are unauthorized. No final live upload/auth/pickup run. Demo identity and independent PostgreSQL concurrency risks remain. See FINAL_INTEGRATION_PLAN for exact recording gates.
+
+## Historical baseline findings
+
+
 Baseline `6bf17fd`; inspected 2026-10-24. This file records findings, not fixes performed by the memory task. “Confirmed” means inspected executable behavior or a reproducible isolated probe; “risk” means source-derived and needs further reproduction. All references are relative to application root. See [backlog](TASK_BACKLOG.md) and [verification](VERIFICATION.md).
 
 ## Confirmed current defects and incomplete flows

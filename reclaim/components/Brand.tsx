@@ -1,24 +1,18 @@
 import Link from "next/link";
-export default function Brand() {
+import Image from "next/image";
+import styles from "./Brand.module.css";
+
+export default function Brand({ compact = false }: { compact?: boolean }) {
   return (
-    <Link className="brand" href="/" aria-label="Magpie home">
-      <svg
-        width="29"
-        height="29"
-        viewBox="0 0 32 32"
-        fill="none"
-        aria-hidden="true"
-      >
-        <path
-          d="M5 25 12 9l7 10 8-14v21"
-          stroke="currentColor"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <circle cx="26.5" cy="5.5" r="3.5" fill="#3973C6" />
-      </svg>
-      <span>Magpie</span>
+    <Link className={`brand ${styles.link}`} href="/" aria-label="Magpie home">
+      <Image
+        className={`${styles.image} ${compact ? styles.compact : ""}`}
+        src="/brand/magpie.png"
+        alt="Magpie — Lost & Found"
+        width={144}
+        height={144}
+        priority
+      />
     </Link>
   );
 }

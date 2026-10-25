@@ -1,0 +1,25 @@
+.claim { min-width: 0; }
+.claim h3 { margin: 12px 0 6px; }
+.claim textarea { width: 100%; box-sizing: border-box; resize: vertical; }
+.claim button { white-space: normal; }
+.request { margin: 16px 0; padding: 16px; background: #f7f9fc; border: 1px solid #e4e8ef; border-radius: 12px; }
+.request h4 { margin: 0 0 8px; }
+.request article + article { border-top: 1px solid #e4e8ef; margin-top: 12px; padding-top: 12px; }
+.request time, .help { color: #707988; font-size: 13px; line-height: 1.6; }
+.preserveText { white-space: pre-wrap; overflow-wrap: anywhere; }
+.guidance { min-width: 0; }
+.guidance ol { padding-left: 22px; line-height: 1.75; }
+.guidance li + li { margin-top: 8px; }
+.recoveryList { display: grid; gap: 12px; }
+.recoveryCard { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px; padding: 16px; border: 1px solid #e4e8ef; border-radius: 12px; }
+.recoveryCard > div { flex: 1 1 220px; min-width: 0; overflow-wrap: anywhere; }
+.recoveryCard h3 { margin: 8px 0; }
+.refresh { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 20px; font-size: 13px; color: #707988; }
+@media (max-width: 600px) {
+  .recoveryCard { padding: 12px; }
+  .recoveryCard > button { width: 100%; }
+  .guidance > a { display: flex; white-space: normal; text-align: center; }
+}
+
+/* Contain absolutely positioned accessible labels inside the scrollable table. */
+.reportTable { position: relative; max-width: 100%; }

@@ -1,0 +1,7 @@
+.link { flex-shrink: 0; }
+.image { display: block; width: 144px; height: 144px; object-fit: contain; }
+.compact { width: 60px; height: 60px; }
+@media (max-width: 760px) {
+  .image { width: 112px; height: 112px; }
+  .compact { width: 60px; height: 60px; }
+}
