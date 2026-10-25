@@ -36,6 +36,8 @@ try {
   const submissions = [], unexpected = [];
   await context.route('**/api/**', async route => {
     const request = route.request(), path = new URL(request.url()).pathname;
+    // External Maps SDK is outside synthetic application API fixtures.
+    if (new URL(request.url()).origin !== new URL(base).origin) return route.abort();
     const respond = (data, status = 200) => route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(data) });
     if (path === '/api/session/') return sessionFails ? respond({ error: 'Temporary session service outage' }, 503) : respond({ user: session });
     if (path === '/api/workspace/') {

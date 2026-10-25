@@ -1,5 +1,47 @@
 # Magpie — three-minute demonstration runbook
 
+## Ready-to-record local take — 2026-10-25
+
+All required live service boundaries passed on the explicitly authorized disposable target. Earlier blocked/read-only statements below are historical. **Stop coding and start recording the synthetic local demonstration.** No hosted deployment is claimed. The server is running at **http://127.0.0.1:3011**. Use separate student/staff browser profiles; keep developer tools/passwords/pass codes off a public screen.
+
+If restarting (do not rerun migrations;004–008 are deployed):
+
+```sh
+cd /Users/amritm/Documents/LostAndFound/reclaim
+ALLOWED_ORIGINS=http://127.0.0.1:3011,http://localhost:3011 MAGPIE_NEXT_DIST_DIR=.next-live-rehearsal npm run dev -- --hostname 127.0.0.1 --port 3011
+```
+
+Keep the existing ignored `.env.local`. Server Gemini settings are `GEMINI_API_KEY`, `GEMINI_EMBEDDING_MODEL=gemini-embedding-2`, `MAGPIE_AI_MATCHING_ENABLED=true`, `MAGPIE_AI_DEMO_MODE=true`; only authored synthetic evidence is approved for Google processing. Staff signs in at `/admin/login/` with the privately configured `ADMIN_DEMO_EMAIL`/`ADMIN_DEMO_PASSWORD`; do not put their values in the recording or documentation.
+
+Clean prepared take **69edc914**:
+
+- Student `/login/`: `magpie-demo-69edc914@example.com` (demo email identity, no password). Own report `Synthetic earbuds 69edc914` / `cb0727cf-b330-45c8-bfd8-39876d42ea8b` has a valid generated private PNG.
+- Compatible found report `8031c3ad-942a-4c58-89ff-172187afd439` has measured Gemini semantic/image-to-text provenance before claims; second compatible `475add9b-4a8b-4655-a2d7-0d0123a86939` supplies the competing pending claim.
+- Brand/model contradiction `8d20825d-69b5-4249-8b0a-8ee83326b3b7`, model-only `f00277af-3c81-4b35-8d4f-13f7ae911a21`, color-only `e5f58b69-29e5-41a0-8350-6b09172f4a08` have no eligible pair with this lost report. Never infer that the whole shared queue must be empty.
+- Published desk `Synthetic desk 69edc914` / `655b1d8e-04e6-4bc2-9f40-4a9591ca59e5` exposes reviewed public instructions and public building coordinates, never staff notes.
+- Both claims are **Pending**. Open this student's claim in staff Claims, request private details, respond in student Updates, approve at this take's desk, view student instructions/pass, redeem through staff Pickup, then refresh Returned. The full run was already verified on separate synthetic takes.
+
+For the three-minute sequence below, show already-persisted AI explanation instead of rerunning inference after a claim starts: active-recovery protection intentionally prevents changing the match. To demonstrate a new Gemini call, select a separate fresh synthetic pair **before** making any claim and confirm synthetic processing. Do not enable Google processing on old unrelated reports.
+
+### Safe retake / reset
+
+Never reset Returned statuses, reuse a redeemed pass or delete unrelated records/Blob objects. Prepare a fresh uniquely named take through real endpoints (bounded real Gemini usage), leaving the old take intact:
+
+```sh
+MAGPIE_PREPARE_VIDEO=1 MAGPIE_LIVE_ACCEPTANCE=1 MAGPIE_DISPOSABLE_ENVIRONMENT=yes \
+MAGPIE_MATCHING_ACCEPTANCE_READY=1 MAGPIE_RECOVERY_ACCEPTANCE_READY=1 \
+MAGPIE_LIVE_BASE_URL=http://127.0.0.1:3011 PLAYWRIGHT_CHANNEL=chrome \
+node --env-file-if-exists=.env.local --test tests/live-recovery.integration.mjs
+```
+
+Requires installed Playwright; `PLAYWRIGHT_MODULE_PATH` may select an existing installation. Preparation mode explicitly stops at Pending and is not a full-flow pass. The full driver without this flag executes through Returned. Optional expiry acceptance uses `MAGPIE_TEST_PICKUP_EXPIRY=1` plus the exact authorized `MAGPIE_LIVE_TARGET_FINGERPRINT`; it updates only its own synthetic pickup deadline to test real API renewal/old-code denial. Do not run these against another target without authorization.
+
+Actual UI rehearsal: set `MAGPIE_REHEARSAL_RUN` to the prepared8-character run ID and the same disposable/live flags, then run `node --env-file-if-exists=.env.local tests/live-browser.rehearsal.mjs`. It signs in through real UI, checks staff sections, requests/responds privately and leaves the claim Pending. It uses no intercepted APIs.
+
+Evidence:139 automated tests,1 real Gemini suite,14 real recovery tests,14 real browser checks and36 separate synthetic browser scenarios passed. Real Maps ready; live private image upload/read/isolation passed. Production build/TypeScript passed; HTTP recording server is documented development mode. HEIC live codec/object-recognition quality and hosted HTTPS deployment are not certified.
+
+## Historical setup and sequence (current take above supersedes old readiness gates)
+
 Integrated source is ready for local/synthetic rehearsal. A **complete live recording is blocked** by remote migration authorization/deployment and real end-to-end acceptance. No live recovery is claimed. Use synthetic accounts, evidence and sample photos only; keep passwords, pickup codes and private evidence off public recordings.
 
 ## Setup before recording

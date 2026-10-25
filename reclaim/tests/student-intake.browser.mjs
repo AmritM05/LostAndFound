@@ -13,6 +13,8 @@ try {
   page.on('pageerror', error => errors.push(error.message));
   await page.route('**/api/**', async route => {
     const request = route.request(), path = new URL(request.url()).pathname;
+    // External Maps SDK is outside synthetic application API fixtures.
+    if (new URL(request.url()).origin !== new URL(base).origin) return route.abort();
     const json = (body, status = 200) => route.fulfill({ status, contentType: 'application/json', body: JSON.stringify(body) });
     if (path === '/api/session/') return json({ user: { id: 'student-1', email: 'synthetic@example.com', name: 'Sample Student', role: 'student', verified: false } });
     if (path === '/api/workspace/') return json({ state: { items: reports.map(x => ({ ...x.item, reporterId: 'student-1', image: '', imagePaths: [], status: 'Matching' })), privateDetails: {}, matches: [], claims: [], notices: [] }, messages: [] });
