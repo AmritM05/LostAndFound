@@ -44,10 +44,12 @@ export function useWorkspace(adminPortal = false) {
     };
     window.addEventListener(WORKSPACE_CHANGE_EVENT, update);
     window.addEventListener("storage", update);
+    window.addEventListener("focus", update);
     return () => {
       generation.current++;
       window.removeEventListener(WORKSPACE_CHANGE_EVENT, update);
       window.removeEventListener("storage", update);
+      window.removeEventListener("focus", update);
     };
   }, [refresh]);
   return { user, state, messages, loading, error, refresh };

@@ -34,6 +34,9 @@ import CampusMap from "../CampusMap";
 import BuildingSelector from "../BuildingSelector";
 import ReportForm from "./ReportForm";
 import DropoffZones from "./DropoffZones";
+import StudentClaim from "./StudentClaim";
+import StudentDropoffGuidance from "./StudentDropoffGuidance";
+import { claimContext, claimStatusText } from "./studentExperience";
 import EditLostReport from "./EditLostReport";
 import { Badge, Empty, PrivacyNote, SectionTitle, dateLabel } from "./ui";
 import { useWorkspace } from "./useWorkspace";
@@ -187,6 +190,7 @@ export default function Portal({
         setSelectedItem(null);
         setSelectedMatch(null);
         setPass(null);
+        setSearchCandidate(null);
       }
     };
     const previous = document.activeElement as HTMLElement;
@@ -235,6 +239,10 @@ export default function Portal({
     }
   }
   async function showPass(c: Claim) {
+    if (!c.code || c.status !== "Approved") {
+      setToast("No current pickup pass is available. Contact campus staff.");
+      return;
+    }
     try {
       setQr(
         await QRCode.toDataURL(c.token || c.code || "", {
@@ -274,6 +282,11 @@ export default function Portal({
   );
   const itemFor = (m: Match) => state.items.find((i) => i.id === m.lostId);
   const claimFor = (m: Match) => state.claims.find((c) => c.matchId === m.id);
+  const attentionClaims = state.claims.filter((c) => c.status === "More information");
+  async function respondToClaim(matchId: string, answer: string) {
+    await api.submitClaim(matchId, answer);
+    await refresh();
+  }
   const title = nav.find((n) => n.id === section)?.name || "Overview";
   function reportTable(items: Item[]) {
     return items.length ? (
@@ -343,8 +356,8 @@ export default function Portal({
         </table>
       </div>
     ) : (
-      <Empty title="No reports yet">
-        Your submitted reports and their current status will appear here.
+      <Empty title={state.items.length ? "No reports match these filters" : "No reports yet"}>
+        {state.items.length ? "Try changing your search or filters." : "Your submitted reports and their current status will appear here."}
       </Empty>
     );
   }
@@ -564,6 +577,13 @@ export default function Portal({
                   </button>
                 </div>
               )}
+              {!adminPortal && attentionClaims.length > 0 && section !== "updates" && (
+                <div className="alert info" role="status">
+                  <span>{attentionClaims.length} ownership {attentionClaims.length === 1 ? "claim needs" : "claims need"} more information.</span>
+                  <Link className="text-link" href="/student/updates#ownership-claims">Review private requests</Link>
+                </div>
+              )}
+              {!adminPortal && section === "overview" && <StudentDropoffGuidance compact />}
               {section === "overview" && (
                 <>
                   <SectionTitle
@@ -885,13 +905,12 @@ export default function Portal({
                         title={
                           query ||
                           category !== "All categories" ||
-                          type !== "All types"
+                          type !== "All types" || locationFilter !== "All locations" || dateFrom || dateTo
                             ? "No matching summaries"
                             : "No public reports available"
                         }
                       >
-                        No found-item summaries are available yet. You can save
-                        and review your own lost reports in My Reports.
+                        {publicReports.length ? "Try changing your search, category, location, or date filters." : "No found-item summaries are available yet. You can save and review your own lost reports in My Reports."}
                       </Empty>
                     )}
                   </div>
@@ -926,6 +945,7 @@ export default function Portal({
                       </Link>
                     </div>
                   )}
+                  {!adminPortal && <StudentDropoffGuidance compact />}
                   <ReportForm
                     mode={adminPortal ? "found" : "lost"}
                     zones={zones}
@@ -1016,6 +1036,14 @@ export default function Portal({
                       ) : undefined
                     }
                   />
+                  {!adminPortal && <button className="button secondary compact" onClick={refresh}>Refresh claim status</button>}
+                  {!adminPortal && <section id="ownership-claims" aria-label="Your ownership claims">
+                    <h2>Your ownership claims</h2>
+                    {!user ? <Empty title="Sign in to view your claims" action={<Link className="button secondary" href="/login">Sign in</Link>}>Your ownership requests and responses are private.</Empty> : state.claims.length ? state.claims.map((claim) => <StudentClaim
+                      key={claim.id} claim={claim} report={claimContext(state, claim)}
+                      messages={messages} submit={respondToClaim} showPass={showPass} />)
+                      : <Empty title="No ownership claims yet">Review a potential match to submit a private ownership claim.</Empty>}
+                  </section>}
                   <div className="updates-layout">
                     <div>
                       <section className="panel">
@@ -1064,7 +1092,7 @@ export default function Portal({
                       <div className="section-header">
                         <div>
                           <h2>Report notes</h2>
-                          <p>Notes saved with your report in Magpie.</p>
+                          <p>Notes saved with your report. To answer an ownership information request, use Your ownership claims above.</p>
                         </div>
                         <LockKeyhole size={16} />
                       </div>
@@ -1159,7 +1187,7 @@ export default function Portal({
                 <>
                   <SectionTitle
                     title="Campus map"
-                    description="Find campus buildings and official lost-and-found drop-off points."
+                    description="Find campus buildings and read guidance for handing found items to authorized staff."
                   />
                   <section className="panel map-panel">
                     <div className="section-header">
@@ -1185,51 +1213,7 @@ export default function Portal({
                       </span>
                     </div>
                   </section>
-                  <section className="panel">
-                    <div className="section-header">
-                      <div>
-                        <h2>Approved drop-off zones</h2>
-                        <p>
-                          Only these active staffed zones accept found items.
-                        </p>
-                      </div>
-                    </div>
-                    {zones.some((z) => z.active) ? (
-                      <div className="location-list">
-                        {zones
-                          .filter((z) => z.active)
-                          .map((l) => (
-                            <div key={l.id}>
-                              <span className="category-icon">
-                                <MapPin size={18} />
-                              </span>
-                              <div>
-                                <strong>{l.name}</strong>
-                                <p>
-                                  {l.building} · {l.description}
-                                </p>
-                              </div>
-                              <Badge>Approved intake</Badge>
-                              <a
-                                className="icon-button"
-                                aria-label={`Open ${l.name} in Google Maps`}
-                                href={`https://www.google.com/maps/search/?api=1&query=${l.lat},${l.lng}`}
-                                target="_blank"
-                                rel="noreferrer"
-                              >
-                                <ArrowUpRight size={17} />
-                              </a>
-                            </div>
-                          ))}
-                      </div>
-                    ) : (
-                      <Empty title="No approved drop-off zones yet">
-                        Staff tools are not available yet. Campus staff can add
-                        buildings and official drop-off points in the campus
-                        configuration.
-                      </Empty>
-                    )}
-                  </section>
+                  <StudentDropoffGuidance />
                 </>
               )}
               {adminPortal && section === "matches" && (
@@ -1984,13 +1968,12 @@ export default function Portal({
                   <div className="claim-status">
                     <Badge tone="blue">{claimFor(selectedMatch)!.status}</Badge>
                     <p>
-                      {claimFor(selectedMatch)!.status === "More information"
-                        ? "The campus team needs additional details. Reply through private correspondence."
-                        : claimFor(selectedMatch)!.status === "Approved"
-                          ? "Your claim has been approved. Bring your pickup pass to the campus desk."
-                          : "Your ownership claim is being handled by the campus team."}
+                      {claimStatusText(claimFor(selectedMatch)!)}
                     </p>
-                    {claimFor(selectedMatch)!.status === "Approved" && (
+                    {!adminPortal && claimFor(selectedMatch)!.status === "More information" && (
+                      <Link className="button secondary" href={`/student/updates#claim-${claimFor(selectedMatch)!.id}`} onClick={() => setSelectedMatch(null)}>Respond privately</Link>
+                    )}
+                    {claimFor(selectedMatch)!.status === "Approved" && claimFor(selectedMatch)!.code && (
                       <button
                         className="button"
                         onClick={() => {
