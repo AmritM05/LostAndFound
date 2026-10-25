@@ -16,6 +16,8 @@ export async function POST(request: Request) {
     sameOrigin(request);
     const user = await requireAdmin(request),
       data = await body(request);
+    if (!data || typeof data !== "object" || Array.isArray(data))
+      throw new ApiError("Choose a valid staff action.");
     const repo = adminRepository(query);
     switch (data.action) {
       case "reviewClaim": {
@@ -24,11 +26,39 @@ export async function POST(request: Request) {
           !["Approved", "Rejected", "More information"].includes(data.status) ||
           (data.status === "Approved" && !uuid(data.zoneId)) ||
           typeof data.message !== "string" ||
-          data.message.length > 2000
+          data.message.length > 2000 ||
+          (data.status === "More information" && !data.message.trim())
         )
           throw new ApiError("Choose a valid claim decision and pickup zone.");
         const code = randomBytes(6).toString("hex").toUpperCase();
         await repo.review(user.id, data, code, tokenHash(code));
+        break;
+      }
+      case "reissuePickup": {
+        if (!uuid(data.id) || !uuid(data.zoneId))
+          throw new ApiError(
+            "Choose a pickup record and an active pickup location.",
+          );
+        const code = randomBytes(6).toString("hex").toUpperCase();
+        try {
+          await repo.reissue(
+            user.id,
+            data.id,
+            data.zoneId,
+            code,
+            tokenHash(code),
+          );
+        } catch (error) {
+          if (
+            (error as any).code === "P0001" &&
+            (error as Error).message === "Pickup cannot be reissued"
+          )
+            throw new ApiError(
+              "This pickup cannot be renewed. Refresh the records and check its current status.",
+              409,
+            );
+          throw error;
+        }
         break;
       }
       case "pickup": {

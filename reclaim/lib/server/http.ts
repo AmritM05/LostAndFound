@@ -36,6 +36,7 @@ export async function endpoint(
         "Claim already submitted",
         "Claim not found",
         "Claim cannot be changed",
+        "Provide a private information request",
         "Item already assigned",
         "Pickup code is invalid or expired",
         "Students may only create lost reports",

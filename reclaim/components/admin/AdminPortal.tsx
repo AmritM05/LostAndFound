@@ -16,11 +16,14 @@ import {
   X,
 } from "lucide-react";
 import Brand from "../Brand";
+import PickupRecord from "./PickupRecord";
+import { claimReviewable, pickupState, renewablePickup } from "./recoveryState";
 import ReportForm from "../portal/ReportForm";
 import PrivatePhoto from "../PrivatePhoto";
 import { request } from "../../services/apiClient";
 import { uploadReportImages } from "../../services/storageService";
 import { categories } from "../../lib/reportFields";
+import { campus } from "../../lib/campus";
 import type { Profile } from "../../lib/types";
 const nav = [
   ["overview", "Overview", LayoutDashboard],
@@ -56,6 +59,10 @@ export default function AdminPortal({
     [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [toast, setToast] = useState("");
+  const [now, setNow] = useState(() => Date.now());
+  const [pickupFilter, setPickupFilter] = useState("All");
+  const [claimFilter, setClaimFilter] = useState("All");
+  const [decisions, setDecisions] = useState<Record<string, string>>({});
   const [filter, setFilter] = useState({
       type: "",
       category: "",
@@ -77,6 +84,7 @@ export default function AdminPortal({
       }
       setUser(user);
       setData(next);
+      setNow(Date.now());
       setError("");
     } catch (e) {
       setError((e as Error).message);
@@ -86,6 +94,16 @@ export default function AdminPortal({
   }, [router]);
   useEffect(() => {
     void load();
+    const focus = () => {
+      void load();
+    };
+    window.addEventListener("focus", focus);
+    // Presentation only: no scheduled database writes or automatic expiration.
+    const timer = setInterval(() => setNow(Date.now()), 30000);
+    return () => {
+      window.removeEventListener("focus", focus);
+      clearInterval(timer);
+    };
   }, [load]);
   async function perform(action: () => Promise<any>, message: string) {
     setBusy(true);
@@ -95,8 +113,10 @@ export default function AdminPortal({
       await action();
       await load();
       setToast(message);
+      return true;
     } catch (e) {
       setError((e as Error).message);
+      return false;
     } finally {
       setBusy(false);
     }
@@ -113,6 +133,31 @@ export default function AdminPortal({
   const report = (id: string) => data.reports.find((r: any) => r.id === id);
   const detail = report(reportId || selected);
   const active = (r: any) => !["Returned", "Archived"].includes(r.status);
+  const recoveryFor = (c: any) =>
+    data.matches.find((m: any) => m.id === c.match_id);
+  const statusForPickup = (p: any) => {
+    const c = data.claims.find((c: any) => c.id === p.claim_id);
+    return pickupState(p, c, c && recoveryFor(c), data.reports, now);
+  };
+  const actionPickups = data.pickups.filter((p: any) =>
+    renewablePickup(statusForPickup(p)),
+  );
+  const visiblePickups = data.pickups.filter(
+    (p: any) =>
+      pickupFilter === "All" ||
+      (pickupFilter === "Action needed"
+        ? ["Expired", "Deadline unavailable", "Needs review"].includes(
+            statusForPickup(p),
+          )
+        : statusForPickup(p) === pickupFilter),
+  );
+  const visibleClaims = data.claims.filter(
+    (c: any) =>
+      claimFilter === "All" ||
+      (claimFilter === "Action needed"
+        ? claimReviewable(c, recoveryFor(c), data.reports)
+        : c.status === claimFilter),
+  );
   const counts = [
     [
       "Found Items in Custody",
@@ -133,13 +178,25 @@ export default function AdminPortal({
     ],
     [
       "Pending Claims",
-      data.claims.filter((c: any) =>
-        ["Pending", "More information"].includes(c.status),
+      data.claims.filter(
+        (c: any) =>
+          c.status === "Pending" &&
+          claimReviewable(c, recoveryFor(c), data.reports),
       ).length,
     ],
     [
       "Ready for Pickup",
-      data.claims.filter((c: any) => c.status === "Approved").length,
+      data.pickups.filter((p: any) => statusForPickup(p) === "Ready for Pickup")
+        .length,
+    ],
+    ["Pickup Deadlines Requiring Action", actionPickups.length],
+    [
+      "Awaiting Claimant Information",
+      data.claims.filter(
+        (c: any) =>
+          c.status === "More information" &&
+          claimReviewable(c, recoveryFor(c), data.reports),
+      ).length,
     ],
     [
       "Returned Items",
@@ -152,7 +209,7 @@ export default function AdminPortal({
     .filter((z: any) => z.active)
     .map((z: any) => ({
       id: z.id,
-      campusId: "osu-columbus",
+      campusId: campus.id,
       name: z.name,
       buildingId: z.building_id,
       building: z.building,
@@ -213,6 +270,8 @@ export default function AdminPortal({
           lat: Number(d.get("lat")),
           lng: Number(d.get("lng")),
           active: d.get("active") === "on",
+          studentVisible: d.get("studentVisible") === "on",
+          publicInstructions: String(d.get("publicInstructions") || ""),
         }),
       });
       setZone(null);
@@ -319,6 +378,20 @@ export default function AdminPortal({
                       </article>
                     ))}
                   </div>
+                  {actionPickups.length > 0 && (
+                    <div className="alert info" role="status">
+                      <span>
+                        {actionPickups.length} pickup{" "}
+                        {actionPickups.length === 1
+                          ? "deadline needs"
+                          : "deadlines need"}{" "}
+                        staff action. Items remain in custody.
+                      </span>
+                      <Link className="text-link" href="/admin/pickup/">
+                        Review pickup deadlines
+                      </Link>
+                    </div>
+                  )}
                   <div className="staff-two-col">
                     <section className="panel staff-panel">
                       <div className="staff-panel-title">
@@ -371,28 +444,42 @@ export default function AdminPortal({
               )}
               {section === "found" &&
                 (zones.length ? (
-                  <ReportForm
-                    user={user}
-                    mode="found"
-                    zones={zones}
-                    onSubmit={async (
-                      item,
-                      privateDetail,
-                      files,
-                      onProgress,
-                    ) => {
-                      const imageIds = await uploadReportImages(
+                  <>
+                    <section className="panel staff-panel">
+                      <h2>Authorized staff intake</h2>
+                      <p className="staff-help">
+                        Record items physically handed to campus staff. Select
+                        an active intake desk and check the found and received
+                        times. Photographs and ownership details stay private.
+                      </p>
+                    </section>
+                    <ReportForm
+                      user={user}
+                      mode="found"
+                      zones={zones}
+                      onSubmit={async (
+                        item,
+                        privateDetail,
                         files,
                         onProgress,
-                        "admin",
-                      );
-                      await request("/api/admin/reports/", {
-                        method: "POST",
-                        body: JSON.stringify({ item, privateDetail, imageIds }),
-                      });
-                      await load();
-                    }}
-                  />
+                      ) => {
+                        const imageIds = await uploadReportImages(
+                          files,
+                          onProgress,
+                          "admin",
+                        );
+                        await request("/api/admin/reports/", {
+                          method: "POST",
+                          body: JSON.stringify({
+                            item,
+                            privateDetail,
+                            imageIds,
+                          }),
+                        });
+                        await load();
+                      }}
+                    />
+                  </>
                 ) : (
                   <section className="panel staff-panel">
                     <h2>Set up an intake desk first</h2>
@@ -600,7 +687,30 @@ export default function AdminPortal({
               )}
               {section === "claims" && (
                 <div className="staff-stack">
-                  {data.claims.map((c: any) => {
+                  <label>
+                    Claim queue
+                    <select
+                      value={claimFilter}
+                      onChange={(e) => setClaimFilter(e.target.value)}
+                    >
+                      {[
+                        "All",
+                        "Action needed",
+                        "Pending",
+                        "More information",
+                        "Approved",
+                        "Rejected",
+                        "Returned",
+                      ].map((s) => (
+                        <option key={s} value={s}>
+                          {s === "More information"
+                            ? "Awaiting claimant information"
+                            : s}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  {visibleClaims.map((c: any) => {
                     const m = data.matches.find(
                       (m: any) => m.id === c.match_id,
                     );
@@ -610,11 +720,16 @@ export default function AdminPortal({
                           <h2>
                             {c.display_name} · {c.email}
                           </h2>
-                          <span className="staff-pill">{c.status}</span>
+                          <span className="staff-pill">
+                            {c.status === "More information"
+                              ? "Awaiting claimant information"
+                              : c.status}
+                          </span>
                         </div>
+                        <p className="staff-help">Claim reference: {c.id}</p>
                         <p className="staff-help">
-                          Submitted {date(c.created_at)} · {m?.score}%
-                          similarity
+                          Submitted {date(c.created_at)} · Updated{" "}
+                          {date(c.updated_at)} · {m?.score}% similarity
                         </p>
                         {comparison(m)}
                         <div className="staff-evidence">
@@ -623,12 +738,50 @@ export default function AdminPortal({
                           </span>
                           <p>{c.answers}</p>
                         </div>
-                        {["Pending", "More information"].includes(c.status) && (
+                        {data.notes
+                          .filter((n: any) => n.report_id === m?.lost_report_id)
+                          .map((n: any) => (
+                            <div className="staff-history" key={n.id}>
+                              <small>
+                                {n.from_staff
+                                  ? "Staff message on this report"
+                                  : "Claimant correspondence / previous answer"}
+                                {" · "}
+                                {date(n.created_at)}
+                              </small>
+                              <p>{n.body}</p>
+                            </div>
+                          ))}
+                        {c.status === "More information" && (
+                          <p className="staff-help">
+                            Awaiting an updated answer. New claim evidence
+                            returns this claim to Pending; review private
+                            correspondence above as well.
+                          </p>
+                        )}
+                        {["Pending", "More information"].includes(c.status) &&
+                          !claimReviewable(c, m, data.reports) && (
+                            <p className="staff-help">
+                              This linked recovery is assigned, dismissed or
+                              closed. No new claim decision is available; the
+                              history is retained.
+                            </p>
+                          )}
+                        {claimReviewable(c, m, data.reports) && (
                           <form
                             className="form-stack"
                             onSubmit={(e) => {
                               e.preventDefault();
                               const d = new FormData(e.currentTarget);
+                              if (
+                                d.get("status") === "More information" &&
+                                !String(d.get("message") || "").trim()
+                              ) {
+                                setError(
+                                  "Enter a private request describing the information needed.",
+                                );
+                                return;
+                              }
                               void act(
                                 {
                                   action: "reviewClaim",
@@ -646,7 +799,13 @@ export default function AdminPortal({
                                 Decision
                                 <select
                                   name="status"
-                                  defaultValue="More information"
+                                  value={decisions[c.id] || "More information"}
+                                  onChange={(e) =>
+                                    setDecisions((old) => ({
+                                      ...old,
+                                      [c.id]: e.target.value,
+                                    }))
+                                  }
                                 >
                                   <option value="More information">
                                     Request More Information
@@ -659,7 +818,14 @@ export default function AdminPortal({
                               </label>
                               <label>
                                 Pickup location
-                                <select name="zoneId">
+                                <select
+                                  name="zoneId"
+                                  required={decisions[c.id] === "Approved"}
+                                  disabled={
+                                    (decisions[c.id] || "More information") !==
+                                      "Approved" || busy
+                                  }
+                                >
                                   <option value="">Choose for approval</option>
                                   {zones.map((z: any) => (
                                     <option key={z.id} value={z.id}>
@@ -670,9 +836,17 @@ export default function AdminPortal({
                               </label>
                             </div>
                             <label>
-                              Private message to claimant
+                              {(decisions[c.id] || "More information") ===
+                              "More information"
+                                ? "Information requested (private, required)"
+                                : "Private message to claimant (optional)"}
                               <textarea
                                 name="message"
+                                required={
+                                  (decisions[c.id] || "More information") ===
+                                  "More information"
+                                }
+                                disabled={busy}
                                 rows={2}
                                 maxLength={2000}
                                 placeholder="Explain the next step without revealing the item’s identifying details."
@@ -686,9 +860,11 @@ export default function AdminPortal({
                       </section>
                     );
                   })}
-                  {!data.claims.length && (
+                  {!visibleClaims.length && (
                     <div className="panel staff-empty">
-                      No ownership claims are awaiting review.
+                      {data.claims.length
+                        ? "No claims match this queue."
+                        : "No ownership claims have been submitted yet."}
                     </div>
                   )}
                 </div>
@@ -731,38 +907,61 @@ export default function AdminPortal({
                   </section>
                   <section className="panel staff-panel">
                     <h2>Pickup records</h2>
-                    {data.pickups.map((p: any) => {
+                    <p className="staff-help">
+                      Deadlines are checked when this view refreshes and while
+                      it is open. Only confirmed physical handover marks an item
+                      Returned.
+                    </p>
+                    <label>
+                      Pickup queue
+                      <select
+                        value={pickupFilter}
+                        onChange={(e) => setPickupFilter(e.target.value)}
+                      >
+                        {[
+                          "All",
+                          "Action needed",
+                          "Ready for Pickup",
+                          "Returned",
+                          "Closed",
+                        ].map((s) => (
+                          <option key={s}>{s}</option>
+                        ))}
+                      </select>
+                    </label>
+                    {visiblePickups.map((p: any) => {
                       const c = data.claims.find(
-                          (c: any) => c.id === p.claim_id,
-                        ),
-                        m = data.matches.find((m: any) => m.id === c?.match_id);
+                        (c: any) => c.id === p.claim_id,
+                      );
+                      const m = c && recoveryFor(c);
                       return (
-                        <div className="staff-pickup" key={p.id}>
-                          <div>
-                            <strong>{report(m?.found_report_id)?.name}</strong>
-                            <small>
-                              {c?.email} · {p.location}
-                            </small>
-                            <small>Expires {date(p.expires_at)}</small>
-                          </div>
-                          <code>
-                            {!p.used_at && Date.parse(p.expires_at) > Date.now()
-                              ? p.display_code
-                              : "—"}
-                          </code>
-                          <span className="staff-pill">
-                            {p.used_at
-                              ? "Returned"
-                              : Date.parse(p.expires_at) <= Date.now()
-                                ? "Expired"
-                                : "Ready for Pickup"}
-                          </span>
-                        </div>
+                        <PickupRecord
+                          key={p.id}
+                          pickup={p}
+                          status={statusForPickup(p)}
+                          itemName={
+                            report(m?.found_report_id)?.name ||
+                            "Recovery record"
+                          }
+                          claimant={c?.email || "Claimant unavailable"}
+                          zones={zones}
+                          busy={busy}
+                          renew={async (id, zoneId) => {
+                            const ok = await act(
+                              { action: "reissuePickup", id, zoneId },
+                              "Pickup pass renewed. The previous code is invalid.",
+                            );
+                            if (!ok)
+                              throw new Error("Renewal could not be confirmed");
+                          }}
+                        />
                       );
                     })}
-                    {!data.pickups.length && (
+                    {!visiblePickups.length && (
                       <p className="staff-empty">
-                        Approved claims will appear here.
+                        {data.pickups.length
+                          ? "No pickups match this queue."
+                          : "Approved claims will appear here."}
                       </p>
                     )}
                   </section>
@@ -852,7 +1051,7 @@ export default function AdminPortal({
                           </label>
                         </div>
                         <label>
-                          Instructions
+                          Staff instructions (not published)
                           <textarea
                             name="instructions"
                             maxLength={2000}
@@ -860,6 +1059,37 @@ export default function AdminPortal({
                             rows={3}
                           />
                         </label>
+                        <label>
+                          Public handover instructions
+                          <textarea
+                            name="publicInstructions"
+                            required={zone.student_visible === true}
+                            maxLength={2000}
+                            rows={3}
+                            defaultValue={zone.public_instructions || ""}
+                            placeholder="Directions for handing an item to campus staff. Exclude storage rooms, access codes and staff-only details."
+                          />
+                        </label>
+                        <label className="staff-checkbox">
+                          <input
+                            name="studentVisible"
+                            type="checkbox"
+                            checked={zone.student_visible === true}
+                            onChange={(e) =>
+                              setZone({
+                                ...zone,
+                                student_visible: e.target.checked,
+                              })
+                            }
+                          />
+                          Approve student handover and publish this zone's name,
+                          public building and public instructions
+                        </label>
+                        <p className="staff-help">
+                          Review the name and public instructions before
+                          publishing. Existing staff instructions and exact zone
+                          coordinates are excluded from the student directory.
+                        </p>
                         <label className="staff-checkbox">
                           <input
                             name="active"
@@ -894,6 +1124,12 @@ export default function AdminPortal({
                         </div>
                         <h2>{z.name}</h2>
                         <p>{z.building}</p>
+                        <small>
+                          Student directory:{" "}
+                          {z.active && z.student_visible
+                            ? "Published"
+                            : "Hidden"}
+                        </small>
                         <p className="staff-help">
                           {z.instructions || "No instructions added."}
                         </p>
