@@ -1,0 +1,85 @@
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 20px;
+}
+.toolbar .search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  flex: 1 1 240px;
+  min-width: 0;
+  gap: 0;
+  margin: 0;
+}
+.toolbar .search > svg,
+.buildingControl .inputWrap > svg {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: #64748b;
+  pointer-events: none;
+}
+.toolbar .search input,
+.buildingControl .inputWrap input {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  min-height: 44px;
+  padding: 10px 14px 10px 40px;
+  font-size: 14px;
+  line-height: 22px;
+  border-radius: 8px;
+}
+.toolbar > select[aria-label] {
+  appearance: none;
+  flex: 0 1 180px;
+  width: 180px;
+  min-width: 140px;
+  min-height: 44px;
+  height: 44px;
+  padding: 10px 38px 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  line-height: 22px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 14px;
+}
+.buildingControl { min-width: 0; width: 100%; }
+.buildingControl .inputWrap { position: relative; width: 100%; min-width: 0; }
+.buildingControl .inputWrap input { padding-right: 46px; }
+.buildingControl .inputWrap > button {
+  position: absolute;
+  right: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #64748b;
+}
+.buildingControl .inputWrap > button:hover { background: #eff4fa; color: #1e40af; }
+.buildingControl .inputWrap > button:focus-visible { outline: 2px solid #2563eb; outline-offset: 1px; }
+.mapToolbar { display: block; padding: 16px 20px; }
+.mapToolbar > .buildingControl { max-width: 420px; }
+@media (max-width: 640px) {
+  .toolbar { padding: 16px; gap: 10px; }
+  .toolbar .search { flex-basis: 100%; }
+  .toolbar > select[aria-label] { flex: 1 1 140px; width: auto; min-width: 0; }
+  .mapToolbar { padding: 16px; }
+}

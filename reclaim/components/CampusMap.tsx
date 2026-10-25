@@ -84,10 +84,18 @@ export default function CampusMap({
         for (const building of campus.locations.filter(
           (b) => b.active !== false && validPoint(b),
         )) {
+          const pin = new g.marker.PinElement({
+            scale: 0.6,
+            background: "#e6eef8",
+            borderColor: "#7895b7",
+            glyphColor: "#42678f",
+          });
           const marker = new g.marker.AdvancedMarkerElement({
             map,
             position: { lat: building.lat, lng: building.lng },
             title: building.name,
+            content: pin.element,
+            collisionBehavior: g.CollisionBehavior.OPTIONAL_AND_HIDES_LOWER_PRIORITY,
             gmpClickable: true,
           });
           markers.push(marker);
@@ -144,11 +152,21 @@ export default function CampusMap({
     selectedMarker.current = null;
     if (status !== "ready" || !mapRef.current || !validPoint(value)) return;
     const position = { lat: value!.lat, lng: value!.lng };
+    const g = window.google.maps;
+    const pin = new g.marker.PinElement({
+      scale: 0.85,
+      background: "#2563eb",
+      borderColor: "#ffffff",
+      glyphColor: "#ffffff",
+    });
     selectedMarker.current =
-      new window.google.maps.marker.AdvancedMarkerElement({
+      new g.marker.AdvancedMarkerElement({
         map: mapRef.current,
         position,
         title: value!.name || "Selected location",
+        content: pin.element,
+        collisionBehavior: g.CollisionBehavior.REQUIRED_AND_HIDES_OPTIONAL,
+        zIndex: 1000,
       });
     mapRef.current.panTo(position);
   }, [value?.lat, value?.lng, value?.name, status]);

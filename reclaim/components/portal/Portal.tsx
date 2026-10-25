@@ -32,6 +32,7 @@ import {
 import QRCode from "qrcode";
 import Brand from "../Brand";
 import CampusMap from "../CampusMap";
+import controls from "../InputControls.module.css";
 import BuildingSelector from "../BuildingSelector";
 import ReportForm from "./ReportForm";
 import DropoffZones from "./DropoffZones";
@@ -841,10 +842,11 @@ export default function Portal({
                     description="Browse limited summaries. Item photos and identifying details are always private."
                   />
                   <div className="panel search-panel">
-                    <div className="search-toolbar">
-                      <label className="search-input">
+                    <div className={`search-toolbar ${controls.toolbar}`}>
+                      <label className={`search-input ${controls.search}`}>
                         <Search size={18} />
                         <input
+                          aria-label="Search campus items"
                           placeholder="Search by category or campus location"
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
@@ -1026,12 +1028,13 @@ export default function Portal({
                     }
                   />
                   <section className="panel">
-                    <div className="search-toolbar">
-                      <label className="search-input">
+                    <div className={`search-toolbar ${controls.toolbar}`}>
+                      <label className={`search-input ${controls.search}`}>
                         <Search size={17} />
                         <input
                           value={query}
                           onChange={(e) => setQuery(e.target.value)}
+                          aria-label="Search your reports"
                           placeholder="Search your reports"
                         />
                       </label>
@@ -1245,7 +1248,7 @@ export default function Portal({
                     description="Find campus buildings and learn how to hand found items to authorized staff."
                   />
                   <section className="panel map-panel">
-                    <div className="section-header">
+                    <div className={`section-header ${controls.mapToolbar}`}>
                       <BuildingSelector
                         label="Find a campus building"
                         value={mapBuildingId}
