@@ -109,6 +109,21 @@ export function adminRepository(query: Query) {
         data.message || "",
       ]);
     },
+    async reissue(
+      staff: string,
+      pickupId: string,
+      zoneId: string,
+      code: string,
+      hash: string,
+    ) {
+      await query("select reissue_expired_pickup($1,$2,$3,$4,$5)", [
+        staff,
+        pickupId,
+        zoneId,
+        code,
+        hash,
+      ]);
+    },
     async redeem(staff: string, hash: string) {
       await query("select redeem_pickup($1,$2)", [staff, hash]);
     },

@@ -78,3 +78,70 @@ Integration update: fetched and fast-forwarded origin/main 6cc04d2 after impleme
 ## Publication - 2026-10-24
 
 Implementation committed and pushed as `7eca198` on `origin/feature/admin-recovery`, after integrating origin/main `6cc04d2`. PR creation via the GitHub connector failed with HTTP 403 Resource not accessible by integration. Browser fallback verified the public comparison is mergeable, but its session is signed out, so no PR was created. Review/create link: https://github.com/AmritM05/LostAndFound/compare/main...feature/admin-recovery?expand=1 . No merge or deployment performed. Working tree was clean after implementation push; this log-only follow-up records the publication blocker.
+
+## 2026-10-24 — Admin Recovery Phase 2 startup / contract
+
+User assigned MAG-009 and admin workflow/testing independently. Working in isolated Codex work/admin-recovery, tracking feature/admin-recovery at 2ff9dc2. Ran pwd/status/branch/remotes, fetch, tracking pull --ff-only and merge origin/main (already current). Original main checkout and its untracked package-lock.json remain untouched. Reviewed AGENTS, relevant memory and all three logs, prior 7eca198 source/tests, and published student branch 153c0ed/PR #1 without merging it. No matching implementation is published in that branch's log yet.
+
+Owned scope: new admin pickup presentation helper/component, AdminPortal.tsx, adminRepository.ts, admin actions route, focused recovery tests, additive recovery migration, and this log only. Migration 005 remains reserved for matching; use **006_pickup_reissue.sql**, which changes no matcher definitions or table/column schema. The user explicitly authorizes necessary recovery migrations in this phase. No shared HTTP/security/types/global CSS or student edits are planned.
+
+Backward-compatible contract: add staff POST /api/admin/actions/ {action:'reissuePickup',id:pickupUUID,zoneId:activeZoneUUID}. Existing approved claim/status/pickup row stay in place; only an unused expired or missing-deadline pass on an Approved claim with both reports Ready for Pickup may be renewed. Lock reports (lost then found), match, claim and pickup; re-read eligibility under locks. Rotate code/hash, active pickup location and seven-day deadline atomically; clear legacy token hash; private owner notice and staff activity record renewal. Never set used_at or Returned on expiration/renewal. Repeated/concurrent renewal fails after the first extends the deadline; old code is invalid immediately. Existing terminal guards remain authoritative. Expiration is a time-derived read state, checked on demand; no scheduler or batch status mutation. New ineligible-renewal SQL error will map locally in the owned admin route to 409, avoiding shared error-handler changes.
+
+Student compatibility: published UI submits {matchId,answer} through existing POST claims; 004 keeps claim IDs, preserves previous answer in private report notes, returns Pending and staff reads updated answers. No requestId exists; notes are report-scoped, labelled as such in student UI. Renewal uses existing owner code/location projection; no student payload change. Developer 1 should optionally display deadline from a future additive owner DTO; this phase will not independently modify their repository/types/components. Deploy 004 and 006 before this admin UI; review ordered interaction with future matching 005 at final integration. These are branch implementations for review, not remote deployment claims.
+
+## Admin Recovery Phase 2 — implementation and verification
+
+**Branch:** feature/admin-recovery; baseline 2ff9dc2, origin/main 6cc04d2. No teammate branch merged; final fetch still shows these base heads. Work is isolated under the Codex task workspace. Original main checkout/untracked root lockfile preserved. Only this developer log changes in memory.
+
+### Existing work verified
+
+Migration 004 exists and was reviewed rather than rewritten. Its five targeted tests passed again: terminal-return/competing claim guards, repeat/invalid decisions, private nonblank bounded information requests, owner-only resubmission returning the existing claim to Pending while preserving prior evidence, archived/dismissed states, expired/null deadlines, queued duplicate actions and HTTP staff authorization. The full suite retains all 65 prior passing tests. **004 has not been deployed by this task.**
+
+### Completed MAG-009 pickup workflow
+
+- Expiration is a derived read state; repeated checks do not write statuses, create notices or release custody. Used pickups always display Returned even after their deadline. Unused expired pickups retain Approved and both reports Ready for Pickup, preserving assignment. No background job or automatic physical-return operation was added.
+- Staff can confirm renewal of an unused expired pass (or repair a missing deadline), choose an active desk, and receive explicit success/failure feedback. No renewal controls for valid, completed, dismissed, archived, returned or inconsistent recoveries. Old codes are hidden in expired/closed records.
+- Additive `reissuePickup` admin action rotates the existing pickup row's code/hash, clears legacy token_hash, assigns the selected active zone and a new seven-day deadline. It preserves claim/report status and used_at, produces a private owner notice with the deadline in UTC, and records staff activity. Old codes stop working immediately; no second pass/claim is inserted.
+- `reissue_expired_pickup` checks admin identity and rechecks eligibility under report→match→claim→pickup locks. It rejects active or used passes, terminal/inconsistent/dismissed records, competing Approved/Returned assignments, inactive desks and malformed/reused credentials. Concurrent/repeated renewal sees the newly valid deadline and rejects a duplicate, leaving one owner notice/activity entry. Existing redemption and terminal safeguards remain authoritative.
+
+### Admin workflow improvements
+
+- Dashboard counts only usable pickups as Ready; distinguishes pickup deadlines requiring action and awaiting claimant information; pending counts exclude already assigned/closed recoveries.
+- Pickup queue filters All/Action needed/Ready/Returned/Closed support current work and physical return history; filtered-empty copy differs from no records. Deadline presentation distinguishes missing/invalid dates and physical collection times.
+- Claim queue filters All/actionable/status; displays claim references, current evidence and report correspondence. Closed/assigned/dismissed claims retain history without actionable controls. More-information messages are required, and an active pickup location is required only for approval.
+- Found intake has clear staff-only handover/privacy/time guidance and retains the existing no-active-desk setup path. Admin zone adaptation uses configured campus.id rather than a hardcoded campus ID. Shared ReportForm/photo/upload/location code is unchanged.
+- Window focus refreshes staff data; a local 30-second presentation timer updates time-derived labels only. This is not realtime delivery or a database scheduler. Existing service errors remain visible; renewal also has local safe retry feedback.
+
+### Exact files changed in Phase 2 (relative to reclaim/)
+
+1. `app/api/admin/actions/route.ts` — additive reissue action, UUID validation, server-generated code/hash, locally mapped ineligible-renewal 409, invalid JSON-shape guard.
+2. `lib/server/adminRepository.ts` — parameterized reissue adapter only.
+3. `db/migrations/006_pickup_reissue.sql` — new guarded renewal function; no table/column changes, no matcher definitions or published migration edits.
+4. `components/admin/AdminPortal.tsx` — dashboard/intake/claim/pickup integration and queues.
+5. `components/admin/PickupRecord.tsx` — private pickup record, confirmation and error states.
+6. `components/admin/recoveryState.ts` — admin-only pickup/actionable-claim presentation helpers.
+7. `services/adminPickup.test.ts` — seven focused database/helper/auth/render tests.
+8. `memory/team-updates/developer-2.md` — own handoff only.
+
+No Student Portal, matching/scoring/normalization, shared security/session/types/global CSS, shared report/photo components, dependency manifests/lockfiles, other logs or central memory files edited.
+
+### Contracts and deployment
+
+Existing claims API remains POST `/api/claims/` `{matchId,answer}` → `{ok:true}` (201); More information→Pending, same claim ID. Existing owner workspace response remains unchanged. There is no separate information-request ID; staff notes are report-scoped. Published student branch 153c0ed/PR #1 correctly labels that ambiguity and submits the matching matchId. Its terminal/pass suppression and refresh behavior are compatible with this branch. No student implementation change is needed for basic resubmission or renewed code/location; the renewal's private notice supplies the deadline. Developer 1 may optionally expose the deadline as an additive owner DTO/UI field during coordinated integration. Do not infer a claim-specific request link from report notes.
+
+New staff contract: POST `/api/admin/actions/` `{action:'reissuePickup',id:<pickup UUID>,zoneId:<active zone UUID>}` → `{ok:true}`. Staff session and allowed Origin required. 400 invalid IDs/inactive desk, 401 no staff session, 403 Origin, 409 stale/ineligible renewal, 503 missing migration/service failure. No code/hash supplied by the browser. This action has no student authority and never returns a code publicly.
+
+**Required deployment:** review/apply sorted migrations 001–004 and new **006_pickup_reissue.sql** before enabling updated admin UI. 005 remains reserved for Developer 3; when published, integrate it in numeric order and verify it does not overwrite recovery functions. 006 changes only a new recovery function; it does not implement or depend on new scoring. No remote migration or service health/deployment check ran. Existing bad historical records are not automatically repaired. Prefer a later forward-fix migration; rolling back to pre-004 restores the known terminal-state defect. If 006 is absent, the new action will report the existing schema-update service error rather than fabricate success.
+
+### Test evidence
+
+- `npm test`: **72 passed, 0 failed** (65 preserved + seven new). Expired/missing deadlines; repeated read/renewal; completion-before-expiration; old-code invalidation; private owner projection/notices; unchanged custody; duplicate queued renewals/redemptions; competitor rejection; terminal/dismissed/authorization checks; sorted migration replay; exact-deadline presentation; private render/no expired codes; inactive desk guidance. Prior information-request/privacy/review tests remain passing.
+- `npm run typecheck`: **passed**.
+- `npm run build`: **passed**, 26 static pages generated plus server routes. Final repeat after the presentation/formatting changes also passed.
+- `git diff --check`: **passed**; ownership/staged diff reviewed before publication.
+- Browser smoke used actual admin components and built CSS in a test-only local synthetic harness outside the repository. Confirmed renewal confirmation, active-desk selection, failed renewal/retained form, successful renewal/removal of obsolete controls, required private-message validation, student-response evidence appearing in Pending after refresh, and truthful filtered empty states. Inspected 390px iframe and ordinary desktop layouts; renewal controls fit without horizontal overflow. A native link attempted navigation to a fixture-only URL and returned 404 because this component harness has no Next router; full Next navigation was not certified by it. No runtime application fallback was added. Screenshot is synthetic evidence, not real staff/item data.
+- PGlite queues one PostgreSQL connection; overlapping calls show one successful outcome but **do not certify independent-connection Neon lock contention**. No live Neon/Blob/Maps or deployed student→staff E2E flow was tested.
+
+### Remaining integration work
+
+Lead review/deployment of 004 and 006 and a live disposable-data acceptance run remain required. Verify expired pass→renewal→old-code denial→student current code/location/deadline→single physical pickup; repeated renewal/return; completed-before-deadline remains Returned; second competing claim cannot reopen it. Verify staff request→student private response→Pending/latest evidence→decision against the combined student branch. Request IDs remain absent/report notes ambiguous by design. Found-intake lost-response idempotency MAG-017 still needs coordinated shared-form/API work; this phase adds guidance, not that backend retry fix. Unpaginated queues and production identity limitations remain. No changes to matching are required here; review future 005 migration order at integration. Central memory reconciliation remains Developer 1 work after PR review. Publication result follows after commit/push.
