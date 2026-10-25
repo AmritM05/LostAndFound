@@ -102,6 +102,12 @@ Use synthetic users/items in a disposable configured environment, and record evi
 
 Also verify staff zone activation/deactivation reaches students once MAG-003 is implemented, loading/error/empty states, all six student navigation targets, Escape/focus behavior, and narrow/desktop layouts. No final combined acceptance is claimed by this checklist.
 
+### Publication outcome
+
+- Implementation committed as `51fa426` and ordinary non-force push to `origin/feature/student-experience` succeeded. Main was not modified. Only the eight owned paths above were staged.
+- Draft PR creation attempted through the connected GitHub integration; GitHub returned **403 Resource not accessible by integration**. Browser fallback reached the correct compare page but was signed out; no GitHub CLI is installed. **No PR was created.** A maintainer with PR permission can open it from https://github.com/AmritM05/LostAndFound/compare/main...feature/student-experience?expand=1 . PR creation is the remaining publication blocker; branch review is available now.
+- Final follow-up commit updates only this log with the verified publication result. This does not change application behavior or the check results above.
+
 
 ## 2026-10-24 — student implementation (MAG-005 / MAG-004 guidance / MAG-012)
 
@@ -128,3 +134,7 @@ Also verify staff zone activation/deactivation reaches students once MAG-003 is 
 - **Browser evidence:** `tests/student-portal.browser.mjs` **13 scenarios passed**, zero page errors/unexpected API requests. Local production server at loopback port 3011; Playwright with isolated headless Chrome, 390×844 and 1440×1000 layouts, test-only intercepted API responses. Verified whitespace rejection, evidence prefill/transport, failure retention/retry, Pending state, service-error snapshot retention, pass availability/returned-pass polling closure, account isolation/sign-out clearing, guidance, mobile navigation and lost-only intake. Inspected screenshots. No live Neon, Blob, staff session, migration, Maps-key or deployed end-to-end acceptance claimed.
 - **Reproduce browser fixtures:** With the isolated production server running, `MAGPIE_STUDENT_TEST_URL=http://127.0.0.1:3011 node tests/student-portal.browser.mjs`. Requires installed Playwright/browser; optionally set `PLAYWRIGHT_MODULE_PATH` to an existing module and `PLAYWRIGHT_CHANNEL=chrome` for installed Chrome. Every API is intercepted; the harness refuses non-loopback server URLs. No package/dependency changes required or included.
 - **Integration remaining:** Review/deploy Developer 2 migration 004 and test staff request→student response→staff review live with synthetic data; expired pass reissue remains MAG-009. Review Developer 3 matching contract/changes independently. Approve and implement MAG-003 before claiming live authorized-zone discovery. Complete the existing combined acceptance checklist after teammate PRs merge. No automatic merge into main; central memory reconciliation deferred to integration. Publication is confirmed by the Git/PR execution result, not presumed from this entry.
+
+### Publication synchronization follow-up
+
+Preserved remote documentation follow-up `39794d5` with another normal merge. Its PR-access blocker describes that earlier execution environment; this local checkout has authenticated GitHub CLI access, so PR creation will be retried here after push. This follow-up changes only this log; the verified application tree is unchanged.
