@@ -14,7 +14,7 @@ Dates below come from Git author timestamps shown in America/New_York offset. Co
 
 Earlier README/session reports describe successful local/live synthetic checks; see VERIFICATION for their scope and distinction from fresh checks. These commits do not prove that a compatible current Next.js deployment exists.
 
-## 2026-10-24 — memory and collaboration system (this task, uncommitted)
+## 2026-10-24 — initial memory creation (before publication)
 
 - Inspected clean main/upstream/root/remotes, safely ran fast-forward-only pull; remote already current at `6bf17fd`.
 - Created application-root memory index, overview, architecture, feature inventory, database/API/security/matching/design/setup docs, current and historical issue list, prioritized backlog, preliminary team split, current-status snapshot and verification ledger.
@@ -24,6 +24,15 @@ Earlier README/session reports describe successful local/live synthetic checks; 
 - Identified disconnected student zone guidance, partial information-response/expiry flows, refresh/campus/operations gaps and unused old staff adapters.
 - Initial task ownership remains unassigned. Documentation validation results belong in VERIFICATION; no automatic commit or push is performed by this task.
 
+## 2026-10-24 — shared publication and confirmed collaboration setup
+
+- Published the initial 17 documentation files to origin/main as `a02d102` (`docs: establish Magpie project memory and team coordination`); Git push succeeded and the remote main SHA was verified.
+- Recorded the user-confirmed Developer 1 student/integration, Developer 2 admin/recovery and Developer 3 matching scopes with their exact feature branch names. No application implementation was marked complete.
+- Initialized three exclusive-writer logs under team-updates. Developers 2/3 record progress and shared-contract proposals in their own logs; Developer 1 reconciles central status/backlog/changelog during integration.
+- Updated root AGENTS and memory startup/completion rules to avoid concurrent central-file edits; features use isolated branches/worktrees and PRs to main.
+- Reserved future migration numbers 004 (Developer 2 recovery) and 005 (Developer 3 matching) for coordination only; no schema file was created or applied.
+- This setup changes documentation only. Publication of this second setup change is confirmed by the execution report after Git push, rather than assumed from a local edit. Existing feature branches, if any, are preserved and must integrate main before dependent work.
+
 ## Rules for future entries
 
-Append a dated entry with task, commit/PR or explicit uncommitted status, changed behavior/contracts/schema, scoped tests and unresolved limitations. Preserve previous entries; annotate corrections with source evidence. Never invent implementation dates from a UI screenshot or assume a test against archived SQL proves the active runtime.
+Developers append actual dated evidence/proposals to their own team update logs. Developer 1 alone reconciles dated central entries here during integration, including task, commit/PR or explicit uncommitted status, changed behavior/contracts/schema, scoped tests and unresolved limitations. Preserve previous entries; annotate corrections with source evidence. Never invent implementation dates from a UI screenshot or assume a test against archived SQL proves the active runtime.

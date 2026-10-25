@@ -39,4 +39,10 @@ There is no committed Playwright/Cypress browser suite or GitHub Actions workflo
 
 ## How future evidence should be recorded
 
-For each feature: record commit/branch, command or reproducible manual steps, environment category (local/PGlite/live test/preview/production), expected vs observed behavior and what was not tested. Use synthetic photos and identities, avoid credentials/private evidence, and clean up explicitly scoped disposable data. Store durable summaries here or in the feature document; ephemeral machine-specific logs/screenshots are supplemental, not the sole shared source of truth.
+For each feature: record commit/branch, command or reproducible manual steps, environment category (local/PGlite/live test/preview/production), expected vs observed behavior and what was not tested. Use synthetic photos and identities, avoid credentials/private evidence, and clean up explicitly scoped disposable data. Developers store dated evidence/proposals in their own team update logs; Developer 1 reconciles central verification/feature summaries during integration. Ephemeral machine-specific logs/screenshots are supplemental, not the sole shared source of truth.
+
+## Documentation publication and ownership setup — 2026-10-24
+
+Initial documentation was committed as `a02d102` and Git confirmed its successful push to origin/main. The subsequent coordination update changes only repository-root AGENTS.md and memory documents, including three personal logs. Confirmed feature assignments do not complete application backlog tasks. No runtime code, schema, credentials or service data changed, and application tests/build were not rerun for these documentation-only edits.
+
+Publication validation checks all Markdown links and required log files, unique/defined backlog IDs, documentation-only staging and staged content against credential patterns and local secret values without printing them. The execution report records the final setup commit/push and feature-branch heads; branch readiness is not inferred from a filename.

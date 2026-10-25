@@ -1,10 +1,10 @@
 # Current status — start every coding session here
 
-**Snapshot:** 2026-10-24, inspected baseline `6bf17fd` on main, synchronized with origin/main. The memory system is a documentation-only addition pending review/commit. Re-read Git status/recent teammate changes before assuming this snapshot is current. No accepted developer ownership claims exist yet.
+**Snapshot:** 2026-10-24, inspected baseline `6bf17fd` on main, synchronized with origin/main. The initial memory system was published to origin/main in `a02d102`. The confirmed ownership/log setup is a subsequent documentation-only update; verify your fetched main includes it before starting. Re-read Git status/recent teammate changes and all three personal logs before assuming this snapshot is current.
 
 ## What works, with evidence limits
 
-The current code supports separate student email-demo and staff credential sessions; student lost reporting with optional building/map/unknown location, private original photos/HEIC/25 MB policy, owned reports/editing/eligible deletion; safe found Search; staff zone management and private found intake; automatic heuristic matching; private claims/updates/notes; staff decisions and single-use pickup/return. Active Neon/PGlite and API/helper tests are present; the existing suite passes **60 tests** and TypeScript passes in this memory task.
+The current code supports separate student email-demo and staff credential sessions; student lost reporting with optional building/map/unknown location, private original photos/HEIC/25 MB policy, owned reports/editing/eligible deletion; safe found Search; staff zone management and private found intake; automatic heuristic matching; private claims/updates/notes; staff decisions and single-use pickup/return. Active Neon/PGlite and API/helper tests are present; the initial memory audit passed **60 tests** and TypeScript. These application checks were not rerun for the documentation-publication update.
 
 A previous implementation session reported a production build and real Neon/private Blob/browser synthetic recovery checks, including a 25 MB upload and Blob deletion. Those checks are historical, not re-run remote health/deployment certification for this task. See [VERIFICATION](VERIFICATION.md). Existing screenshots are not substitutes for code or current test evidence.
 
@@ -25,13 +25,17 @@ The requested two-stage compatibility + image/semantic weighted matching, select
 
 On a correctly configured local Next server, migrated Neon/private Blob and active intake desk: create lost/found reports, upload private supported photos, show safe Search, generate a compatible match, submit a private claim, approve and redeem its pass, and delete an eligible lost report. Use synthetic data because student email ownership is unverified. Avoid presenting heuristic percentages as ownership probabilities or the multi-claim state defect as supported behavior. Fix MAG-008 before a multi-claim demo; prepare deployment smoke tests before promising an externally hosted demo.
 
-## Next work for three developers — preliminary
+## Confirmed assignments and next work
 
-- **Developer 1 / lead, student area:** MAG-005 information-response UX can start against existing APIs; coordinate MAG-006 hosting and consume MAG-003 zone contract in MAG-004.
-- **Developer 2 / staff area:** MAG-008 terminal-state regression and guarded claim transitions, reserving a focused migration with the DB integrator. Staff list/expiry UX follows the agreed transition contract.
-- **Developer 3 / backend/matching:** MAG-001 compatibility contract and MAG-002 active SQL/helper regression; provide MAG-003 safe zone read projection to unblock student guidance.
+| Developer | Branch | Confirmed responsibility | Existing tasks / start |
+| --- | --- | --- | --- |
+| Developer 1 — project lead | `feature/student-experience` | Student experience, information-response student UI, drop-off guidance, student-facing polish, final integration/testing | MAG-005 first; MAG-003/004 zone contract/guidance, MAG-012 student refresh, MAG-006/014/015 integration/checks. Owns central memory reconciliation (MAG-022) |
+| Developer 2 | `feature/admin-recovery` | Admin experience, claim lifecycle/recovery, terminal returned-state protection, information-request administration, expired pickup workflows | MAG-008 first, then MAG-009; staff side of MAG-005, MAG-017/021 staff improvements |
+| Developer 3 | `feature/matching-engine` | Compatibility contract, brand/model/color normalization, hard contradictions, similarity ranking and matching-specific tests | MAG-001 first, then MAG-002/007. MAG-011 remains planned; no AI model activated |
 
-These are suggestions, not assignments. Claim tasks/branches and shared files in [TEAM_COORDINATION](TEAM_COORDINATION.md) before coding. No new application feature is implemented by this memory task.
+Assignments are confirmed, but application implementation/status is unchanged. Read [TEAM_COORDINATION](TEAM_COORDINATION.md) for actual file/function boundaries, approved shared-contract process and migration reservations. Developer 3 does not own all backend/auth/infrastructure merely because matching uses SQL.
+
+Independent update logs: [Developer 1](team-updates/developer-1.md), [Developer 2](team-updates/developer-2.md), [Developer 3](team-updates/developer-3.md). Each author edits only their own log. Developers 2/3 record progress, test evidence, proposed contract changes and blockers there instead of concurrently editing central files. Developer 1 reconciles CURRENT_STATUS, TASK_BACKLOG and CHANGELOG during integration. All feature changes use owned branches and PRs to main.
 
 ## Largest integration risks
 
@@ -39,4 +43,4 @@ These are suggestions, not assignments. Claim tasks/branches and shared files in
 
 ## Update this snapshot when completing a task
 
-State the new source/commit, task status, exact verification and unresolved issues. Update feature/contract/schema documents and CHANGELOG together; never declare Done based on a button, local fake data or an unverified deployment.
+Developers record source/commit/PR, task status, exact verification and unresolved issues in their own personal log. Developer 1 alone reconciles this snapshot, TASK_BACKLOG, CHANGELOG and accepted shared contracts during integration. Never declare Done based on a button, local fake data or an unverified deployment.

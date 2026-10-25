@@ -1,14 +1,15 @@
 # Prioritized task backlog
 
-Baseline 2026-10-24, source `6bf17fd`. These are proposed tasks, **not accepted assignments**. All open tasks are unassigned until a developer records a branch/PR and claim in TEAM_COORDINATION. Ready means no known prerequisite prevents starting; Blocked means a dependency must be resolved first. Complexity: Small / Medium / Large. P0 is necessary for a trustworthy hackathon demonstration; P1 important functionality; P2 polish/optional. Do not fix tasks during this documentation-only phase.
+Baseline 2026-10-24, source `6bf17fd`. Task definitions remain unchanged; selected ownership assignments are now confirmed in TEAM_COORDINATION. Assignment is not implementation or completion. Developers record progress/evidence in their own logs; Developer 1 alone reconciles this central backlog during integration. Ready means no known prerequisite prevents starting; Blocked means a dependency must be resolved first. Complexity: Small / Medium / Large. P0 is necessary for a trustworthy hackathon demonstration; P1 important functionality; P2 polish/optional. Do not fix tasks during this documentation-only phase.
 
-Each task records description, status/priority/complexity, dependencies, likely files, proposed ownership, acceptance criteria and testing requirements. Move a task to Done only with commit/PR and scoped verification evidence.
+Each task records description, status/priority/complexity, dependencies, likely files, ownership area, acceptance criteria and testing requirements. Move a task to Done only with commit/PR and scoped verification evidence.
 
 ## P0 — demonstration reliability
 
 ### MAG-001 — Agree the two-stage matching contract
 
-- **Status / priority / complexity:** Ready, unassigned / P0 / Small.
+- **Confirmed owner:** Developer 3; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Ready, assigned Developer 3 / P0 / Small.
 - **Description:** Define canonical category/type/brand/model/color/identifier values, unknown/provenance rules, contradiction decisions, available-factor weighting, labels and compatibility between SQL/TypeScript/UI. Confirm which target ranking signals are feasible without AI.
 - **Dependencies / proposed area:** Team product agreement; backend/matching developer with both UI reviewers.
 - **Likely files:** `memory/AI_MATCHING.md`, `API_CONTRACTS.md`, `TEAM_COORDINATION.md`; proposed shared matcher types require review before code.
@@ -17,7 +18,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-002 — Implement contradiction-first candidate filtering
 
-- **Status / priority / complexity:** Blocked by MAG-001, unassigned / P0 / Large.
+- **Confirmed owner:** Developer 3; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Blocked by MAG-001, assigned Developer 3 / P0 / Large.
 - **Description:** Add hard rejection for confirmed high-confidence contradictions before scoring; align active SQL matcher with TS helper and preserve unknown data as non-rejection. Fix K-01.
 - **Dependencies / proposed area:** MAG-001; backend/matching, coordinated migration review.
 - **Likely files:** `services/matchingService.ts`, a new `db/migrations/` file replacing relevant functions/trigger policy, `services/matchingService.test.ts`, `services/adminBackend.test.ts`.
@@ -26,7 +28,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-003 — Expose a privacy-safe active drop-off read contract
 
-- **Status / priority / complexity:** Ready for contract review, unassigned / P0 / Small.
+- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Ready for contract review, assigned Developer 1 / P0 / Small.
 - **Description:** Add a safe read projection/API for approved active desks, separate from building data. Current listDropoffZones is a stub. Agree fields/auth/cache policy before frontend work.
 - **Dependencies / proposed area:** Agreement in API_CONTRACTS; backend/API owner, student reviewer. Existing zones/buildings schema can be reused.
 - **Likely files:** Proposed `app/api/dropoffs/route.ts`, server repository/projection tests, `memory/API_CONTRACTS.md`.
@@ -35,7 +38,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-004 — Connect student drop-off guidance and correct empty copy
 
-- **Status / priority / complexity:** Blocked by MAG-003, unassigned / P0 / Small.
+- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Blocked by MAG-003, assigned Developer 1 / P0 / Small.
 - **Description:** Wire listDropoffZones to the agreed read API and show real desks/instructions on the student map page. Distinguish buildings from staffed intake; fix K-02.
 - **Dependencies / proposed area:** MAG-003 accepted payload; student UI developer with shared map coordination.
 - **Likely files:** `services/workspaceService.ts`, `components/portal/Portal.tsx`; shared CampusMap only if explicitly needed/agreed.
@@ -44,6 +48,7 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-006 — Establish and verify the actual server deployment
 
+- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
 - **Status / priority / complexity:** Open; hosting choice/access and environment verification pending / P0 / Medium.
 - **Description:** Project lead selects compatible Next.js hosting, assigns preview/production databases and private Blob stores, controls secrets/referrers and performs a complete synthetic hosted smoke test. Do not republish old static out as this app.
 - **Dependencies / proposed area:** Hosting/account access, approved migrations, server variables, active zone; project lead/integration with both portal owners. Resolve MAG-008 before demonstrating multiple claims.
@@ -53,7 +58,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-008 — Guard terminal recoveries and stale competing claim decisions
 
-- **Status / priority / complexity:** Ready for policy/SQL coordination, unassigned / P0 / Medium.
+- **Confirmed owner:** Developer 2; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Ready for policy/SQL coordination, assigned Developer 2 / P0 / Medium.
 - **Description:** Fix K-03: returned/archived lost reports must not reopen through a pending claim on another found report. Define competing claims/matches cleanup/closure and notices; enforce both reports' terminal states under locks.
 - **Dependencies / proposed area:** Admin recovery-state agreement; staff workflow developer with database integrator review. Reserve a distinct migration filename before edits.
 - **Likely files:** New migration replacing `review_ownership_claim` and related transitions, `services/adminBackend.test.ts`, admin action/UI only as needed.
@@ -64,7 +70,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-005 — Complete the student more-information response loop
 
-- **Status / priority / complexity:** Ready, unassigned / P1 / Medium.
+- **Confirmed owner:** Developer 1; implementation remains open. Developer 2 owns the administration counterpart; shared contract changes require coordination.
+- **Status / priority / complexity:** Ready, assigned Developer 1 / P1 / Medium.
 - **Description:** Present More information claims with actionable private answer resubmission or an explicitly agreed notes workflow. Use the existing resubmission API where appropriate, and make staff evidence/state clear.
 - **Dependencies / proposed area:** Existing claim/notes contracts; student developer with staff reviewer. No new endpoint assumed.
 - **Likely files:** `components/portal/Portal.tsx`, workspaceService if required; admin evidence rendering only with staff owner agreement.
@@ -73,6 +80,7 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-007 — Make matcher lifecycle, parity and concurrency explicit
 
+- **Confirmed owner:** Developer 3; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
 - **Status / priority / complexity:** Blocked by MAG-001 contract; investigation may start / P1 / Large.
 - **Description:** Address dismissed-pair reactivation, stale claimed pairs, update/close behavior, simultaneous inserts, score-version/backfill needs and SQL/TS divergence. Improve candidate retrieval before scaling.
 - **Dependencies / proposed area:** MAG-001/002 policies, database review; backend/matching.
@@ -82,7 +90,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-009 — Reissue/revoke expired pickup passes safely
 
-- **Status / priority / complexity:** Blocked on recovery-state contract/MAG-008, unassigned / P1 / Medium.
+- **Confirmed owner:** Developer 2; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Blocked on recovery-state contract/MAG-008, assigned Developer 2 / P1 / Medium.
 - **Description:** Define a protected replacement-pass transition and UI for expired approvals, invalidating old credentials and recording activity/notices.
 - **Dependencies / proposed area:** MAG-008, reviewed new API/function contract; staff workflow with DB reviewer and student pass consumer.
 - **Likely files:** Admin actions, new migration, AdminPortal, student pass dialog, owner projection.
@@ -100,7 +109,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-012 — Refresh private state after remote staff changes
 
-- **Status / priority / complexity:** Ready for refresh policy agreement, unassigned / P1 / Medium.
+- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Ready for refresh policy agreement, assigned Developer 1 / P1 / Medium.
 - **Description:** Add a bounded refresh/focus/poll strategy or approved push approach; prevent selected-dialog stale state and misleading identity loss on transient failures.
 - **Dependencies / proposed area:** Current workspace APIs; student owner and staff reviewer, no new notification provider presumed.
 - **Likely files:** useWorkspace, Portal, AdminPortal, apiClient if errors require typed status.
@@ -118,7 +128,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-014 — Add CI for active application checks
 
-- **Status / priority / complexity:** Ready, unassigned / P1 / Small.
+- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Ready, assigned Developer 1 / P1 / Small.
 - **Description:** Add reviewed GitHub workflow for install/typecheck/test/build with synthetic/no service credentials. Separate archived and active coverage in reports.
 - **Dependencies / proposed area:** Repository permissions/branch protection agreement; lead/integration, test owners review.
 - **Likely files:** Proposed root `.github/workflows/` file, package scripts only if needed, VERIFICATION.
@@ -127,6 +138,7 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-015 — Commit repeatable browser recovery/privacy tests
 
+- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
 - **Status / priority / complexity:** Open; test-environment strategy required / P1 / Large.
 - **Description:** Add a maintained E2E harness for both portals, mixed sessions, private images, deletion, matching, claims and pickup. Avoid a hidden runtime fake-success fallback.
 - **Dependencies / proposed area:** MAG-008 and agreed isolated backend/storage strategy; integration/testing with all owners.
@@ -136,7 +148,8 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-017 — Make found intake retry-safe
 
-- **Status / priority / complexity:** Ready for contract agreement, unassigned / P1 / Medium.
+- **Confirmed owner:** Developer 2; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
+- **Status / priority / complexity:** Ready for contract agreement, assigned Developer 2 / P1 / Medium.
 - **Description:** Reproduce lost-response duplicate intake and define stable request/report ID semantics before extending the SQL function and form retry behavior.
 - **Dependencies / proposed area:** Staff form and server contract agreement; staff developer, DB reviewer.
 - **Likely files:** ReportForm, admin reports API/repository, new save_found_report migration, tests.
@@ -156,6 +169,7 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-011 — Specify real AI/semantic matching integration
 
+- **Confirmed owner:** Developer 3; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
 - **Status / priority / complexity:** Planned; provider/privacy/cost decision pending / P2 / Large.
 - **Description:** Evaluate an image/semantic extraction or embedding approach only after compatibility/fallback contracts, with explicit approved data handling and measured usefulness.
 - **Dependencies / proposed area:** MAG-001/002/007, team privacy/provider approval; backend/matching.
@@ -192,6 +206,7 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-021 — Staff list scale, filter and accessibility polish
 
+- **Confirmed owner:** Developer 2; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
 - **Status / priority / complexity:** Ready for scoped UI work, server paging contract pending / P2 / Medium.
 - **Description:** Improve pending/returned queue filters, empty states, date range, table responsiveness, dialog focus return and long-list behavior; add pagination only through agreed API contracts.
 - **Dependencies / proposed area:** Staff UI; shared CSS reviewer; MAG-018 if typed errors used.
@@ -201,9 +216,10 @@ Each task records description, status/priority/complexity, dependencies, likely 
 
 ### MAG-022 — Keep this memory system current
 
+- **Confirmed owner:** Developer 1; implementation remains open. See TEAM_COORDINATION for branch/file boundaries.
 - **Status / priority / complexity:** Ongoing; initial documentation created in this task / P1 / Small per change.
-- **Description:** Complete source/evidence/contract/backlog updates with every feature PR; maintain startup pointer and claimed-task register.
-- **Dependencies / proposed area:** Every developer, integration reviewer verifies completion.
+- **Description:** Collect each developer’s own log evidence for every feature PR; the lead reconciles central source/evidence/contracts/backlog/status and maintains the startup pointer/assignment register.
+- **Dependencies / proposed area:** Every developer owns their own log; Developer 1 reconciles central files and verifies completion.
 - **Likely files:** affected memory documents and repository-root AGENTS.md only when its startup procedure changes.
 - **Acceptance:** Distinguish current/target/status, no secrets, working links, preserved history and exact verification evidence.
 - **Tests:** Markdown file/link/secret scan, current source references and reviewed Git diff; no feature change hidden inside docs PR.

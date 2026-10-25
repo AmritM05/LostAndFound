@@ -13,10 +13,10 @@ This memory records current implementation separately from requirements. Source,
 1. Run `git status`, identify branch, repository root and upstream. Read the working diff before changing files.
 2. If clean and tracking the intended remote branch, synchronize with `git pull --ff-only`. Otherwise preserve local work and investigate; never automatically stash, reset, force-pull or overwrite another developer's changes.
 3. Read this file, [CURRENT_STATUS.md](CURRENT_STATUS.md), [TEAM_COORDINATION.md](TEAM_COORDINATION.md) and [CHANGELOG.md](CHANGELOG.md).
-4. Review recent Git commits, teammate PRs and the current backlog ownership claims.
+4. Fetch/review origin/main, integrate relevant main changes safely into your own feature branch, then review recent commits/PRs and all three [developer update logs](TEAM_COORDINATION.md).
 5. Read relevant feature documents below and [API_CONTRACTS.md](API_CONTRACTS.md).
-6. Confirm the task is neither implemented nor already claimed. Check dependencies and shared-file ownership. Use a separate feature branch before implementing code.
-7. Only then implement the agreed task. A proposed owner is not an actual assignment.
+6. Confirm the task is not implemented or claimed by another developer. Check dependencies and shared-file ownership. Use a separate feature branch before implementing code.
+7. Only then implement the owned task. Confirmed assignments/branches are in TEAM_COORDINATION; no application implementation is completed by the assignment itself.
 
 ## Documentation index
 
@@ -34,13 +34,15 @@ This memory records current implementation separately from requirements. Source,
 | [ENVIRONMENT_AND_SETUP.md](ENVIRONMENT_AND_SETUP.md) | Local tools, variable names, checks and deployment |
 | [KNOWN_BUGS.md](KNOWN_BUGS.md) | Confirmed gaps, risks and historical fixes |
 | [TASK_BACKLOG.md](TASK_BACKLOG.md) | Prioritized tasks, dependencies and acceptance criteria |
-| [TEAM_COORDINATION.md](TEAM_COORDINATION.md) | Preliminary work split and safe integration rules |
+| [TEAM_COORDINATION.md](TEAM_COORDINATION.md) | Confirmed work split, owned branches/logs and integration rules |
 | [CHANGELOG.md](CHANGELOG.md) | Evidence-backed project history |
 | [VERIFICATION.md](VERIFICATION.md) | What was tested, when and with which limits |
 
 ## Completion and maintenance rules
 
-Before completing a task: run appropriate checks; update affected memory documents; mark completed backlog tasks with evidence; refresh CURRENT_STATUS; append a concise CHANGELOG entry; document API/schema changes and consumer impact; report exact changed files and unresolved issues. Keep historical entries intact, adding corrections with evidence instead of rewriting history.
+Before completing a feature task, run appropriate checks, record changes/tests/proposed shared contracts/blockers in **your own developer log**, commit and push your owned feature branch, and integrate through a PR. Developer 1 alone reconciles CURRENT_STATUS, TASK_BACKLOG and CHANGELOG during integration; Developers 2/3 must not edit these central files concurrently. Coordinate shared production interfaces before changing them. Keep historical entries intact, adding corrections with evidence rather than rewriting history.
+
+Personal logs (one writer each): [Developer 1](team-updates/developer-1.md), [Developer 2](team-updates/developer-2.md), [Developer 3](team-updates/developer-3.md). This ownership policy supersedes the original all-developers-edit-central-memory procedure.
 
 Each update must state date, source/commit or uncommitted scope, status, verification and remaining limitations. Use these exact status meanings: **Implemented and verified**, **Implemented but unverified**, **Partially implemented**, **Planned but not implemented**, **Broken or blocked**. A passing unit test does not imply a deployed workflow works. No secrets or real private item evidence belong in memory, issues, commits or screenshots. Coordinate overlapping document edits just like shared code.
 
