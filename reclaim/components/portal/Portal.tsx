@@ -34,9 +34,11 @@ import CampusMap from "../CampusMap";
 import BuildingSelector from "../BuildingSelector";
 import ReportForm from "./ReportForm";
 import DropoffZones from "./DropoffZones";
+import StudentClaim from "./StudentClaim";
+import StudentDropoffGuidance from "./StudentDropoffGuidance";
+import { claimContext, claimStatusText } from "./studentExperience";
 import EditLostReport from "./EditLostReport";
 import StudentClaimStatus from "./StudentClaimStatus";
-import StudentDropoffGuidance from "./StudentHandoverSteps";
 import { studentClaimState } from "./studentClaimState";
 import studentStyles from "./StudentExperience.module.css";
 import { Badge, Empty, PrivacyNote, SectionTitle, dateLabel } from "./ui";
@@ -303,6 +305,11 @@ export default function Portal({
   );
   const itemFor = (m: Match) => state.items.find((i) => i.id === m.lostId);
   const claimFor = (m: Match) => state.claims.find((c) => c.matchId === m.id);
+  const attentionClaims = state.claims.filter((c) => c.status === "More information");
+  async function respondToClaim(matchId: string, answer: string) {
+    await api.submitClaim(matchId, answer);
+    await refresh();
+  }
   const title = nav.find((n) => n.id === section)?.name || "Overview";
   function reportTable(items: Item[]) {
     return items.length ? (
@@ -612,6 +619,13 @@ export default function Portal({
                   </button>
                 </div>
               )}
+              {!adminPortal && attentionClaims.length > 0 && section !== "updates" && (
+                <div className="alert info" role="status">
+                  <span>{attentionClaims.length} ownership {attentionClaims.length === 1 ? "claim needs" : "claims need"} more information.</span>
+                  <Link className="text-link" href="/student/updates#ownership-claims">Review private requests</Link>
+                </div>
+              )}
+              {!adminPortal && section === "overview" && <StudentDropoffGuidance compact />}
               {section === "overview" && (
                 <>
                   <SectionTitle
@@ -933,13 +947,12 @@ export default function Portal({
                         title={
                           query ||
                           category !== "All categories" ||
-                          type !== "All types"
+                          type !== "All types" || locationFilter !== "All locations" || dateFrom || dateTo
                             ? "No matching summaries"
                             : "No public reports available"
                         }
                       >
-                        No found-item summaries are available yet. You can save
-                        and review your own lost reports in My Reports.
+                        {publicReports.length ? "Try changing your search, category, location, or date filters." : "No found-item summaries are available yet. You can save and review your own lost reports in My Reports."}
                       </Empty>
                     )}
                   </div>
@@ -974,6 +987,7 @@ export default function Portal({
                       </Link>
                     </div>
                   )}
+                  {!adminPortal && <StudentDropoffGuidance compact />}
                   <ReportForm
                     mode={adminPortal ? "found" : "lost"}
                     zones={zones}
@@ -1066,16 +1080,15 @@ export default function Portal({
                   />
                   {!adminPortal && !user && !error && <div className="alert info"><Link className="text-link" href="/login/">Sign in to see your private updates and recovery status.</Link></div>}
                   {!adminPortal && user && (
-                    <section className="panel" aria-labelledby="student-recovery-heading">
+                    <section id="ownership-claims" aria-labelledby="student-recovery-heading">
                       <div className="section-header"><div><h2 id="student-recovery-heading">Your recoveries</h2><p>Private ownership requests and pickup status for your lost reports.</p></div></div>
                       {state.claims.length ? <div className={studentStyles.recoveryList}>{state.claims.map(claim => {
                         const match = state.matches.find(m => m.id === claim.matchId);
-                        const report = state.items.find(i => i.id === match?.lostId);
-                        const view = studentClaimState(claim, report);
-                        return <article className={studentStyles.recoveryCard} key={claim.id}>
-                          <div><Badge tone="blue">{view.title}</Badge><h3>{report?.name || "Your ownership claim"}</h3><p>{view.message}</p></div>
-                          {match ? <button className="button secondary compact" onClick={() => setSelectedMatch(match)}>{view.canRespond ? "Respond privately" : "View recovery"}</button> : <p>Contact campus staff for help with this recovery.</p>}
-                        </article>;
+                        const report = claimContext(state, claim);
+                        return <StudentClaim key={claim.id} claim={claim} report={report}
+                          messages={messages} submit={respondToClaim} showPass={showPass}
+                          disabled={busy || refreshing || Boolean(error)}
+                          onReview={match ? () => setSelectedMatch(match) : undefined} />;
                       })}</div> : <Empty title="No ownership requests yet">When you claim a possible match, its review and pickup status will appear here.</Empty>}
                     </section>
                   )}
@@ -1127,7 +1140,7 @@ export default function Portal({
                       <div className="section-header">
                         <div>
                           <h2>Report notes</h2>
-                          <p>Notes saved with your report in Magpie.</p>
+                          <p>Notes saved with your report. To answer an ownership information request, use Your ownership claims above.</p>
                         </div>
                         <LockKeyhole size={16} />
                       </div>
@@ -2052,13 +2065,12 @@ export default function Portal({
                   /> : <div className="claim-status">
                     <Badge tone="blue">{claimFor(selectedMatch)!.status}</Badge>
                     <p>
-                      {claimFor(selectedMatch)!.status === "More information"
-                        ? "The campus team needs additional details. Reply through private correspondence."
-                        : claimFor(selectedMatch)!.status === "Approved"
-                          ? "Your claim has been approved. Bring your pickup pass to the campus desk."
-                          : "Your ownership claim is being handled by the campus team."}
+                      {claimStatusText(claimFor(selectedMatch)!)}
                     </p>
-                    {claimFor(selectedMatch)!.status === "Approved" && (
+                    {!adminPortal && claimFor(selectedMatch)!.status === "More information" && (
+                      <Link className="button secondary" href={`/student/updates#claim-${claimFor(selectedMatch)!.id}`} onClick={() => setSelectedMatch(null)}>Respond privately</Link>
+                    )}
+                    {claimFor(selectedMatch)!.status === "Approved" && claimFor(selectedMatch)!.code && (
                       <button
                         className="button"
                         onClick={() => {
