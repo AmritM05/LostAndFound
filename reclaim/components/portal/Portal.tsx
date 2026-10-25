@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { rankPotentialMatches } from "../../lib/matchVisibility";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -121,9 +122,10 @@ export default function Portal({
   const active = state.items.filter(
       (i) => !["Returned", "Archived"].includes(i.status),
     ),
-    matches = state.matches.filter(
+    matches = rankPotentialMatches(state.matches).filter(
       (m) =>
         !m.dismissed &&
+        state.items.some((item) => item.id === m.lostId && !["Returned", "Archived", "Ready for Pickup"].includes(item.status)) &&
         !state.claims.some(
           (c) =>
             c.matchId === m.id && ["Rejected", "Returned"].includes(c.status),
@@ -418,7 +420,7 @@ export default function Portal({
                       ? "Strong potential match"
                       : m.score >= 75
                         ? "Strong possible match"
-                        : "Possible match"}
+                        : m.score >= 60 ? "Possible match" : "Weak potential match"}
                 </small>
               </div>
               <button

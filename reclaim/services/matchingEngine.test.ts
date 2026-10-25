@@ -68,7 +68,7 @@ test("hard contradictions precede ranking, including perfect optional image/sema
   }
 });
 
-test("missing signals redistribute weight; context alone cannot manufacture identity; ranking is deterministic", () => {
+test("missing signals redistribute weight; missing details stay eligible without an identity-factor cap; ranking is deterministic", () => {
   const a = item("lost"), b = item("found");
   const baseline = assessMatch(a, b);
   assert.equal(baseline.score, 99);
@@ -76,8 +76,8 @@ test("missing signals redistribute weight; context alone cannot manufacture iden
   assert.ok(!("Location" in baseline.factors));
   assert.deepEqual(assessMatch(a, b, { imageSimilarity: NaN, semanticSimilarity: 2 }), baseline);
   const thin = assessMatch(item("lost", { brand: "", model: "", color: "Unknown", description: "" }), item("found", { brand: "", model: "", color: "Unknown", description: "" }));
-  assert.equal(thin.classification, "weak_match");
-  assert.ok(thin.score < 60);
+  assert.equal(thin.eligible, true);
+  assert.ok(thin.score >= 50);
   const weaker = item("found", { id: id(12), description: "Unrelated scratches and broken hinge", date: "2026-10-25T12:00:00Z" });
   const list = [a, weaker, b, { ...b }];
   assert.equal(findMatches(list).filter(m => m.foundId === b.id).length, 1);
@@ -95,7 +95,7 @@ test("no embedding/provider is invented by the optional scoring adapter", async 
 test("active SQL and TypeScript agree on normalization, contradictions, ranking and future measured signals", async () => {
   const db = new PGlite();
   try {
-    for (const file of ["001_student_backend.sql", "002_report_deletion.sql", "003_admin_portal.sql", "005_matching_engine.sql"])
+    for (const file of ["001_student_backend.sql", "002_report_deletion.sql", "003_admin_portal.sql", "005_matching_engine.sql", "008_gemini_matching.sql", "009_match_threshold_50.sql"])
       await db.exec(await readFile(new URL("../db/migrations/" + file, import.meta.url), "utf8"));
     assert.deepEqual((await db.query<any>("select matching_policy() p")).rows[0].p, matchingPolicy);
     for (const kind of ["brand", "color", "category"] as const) {

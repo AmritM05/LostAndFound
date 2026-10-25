@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useState, type FormEvent } from "react";
 import Link from "next/link";
+import { rankPotentialMatches } from "../../lib/matchVisibility";
 import { useRouter } from "next/navigation";
 import {
   LayoutDashboard,
@@ -160,6 +161,10 @@ export default function AdminPortal({
         ? claimReviewable(c, recoveryFor(c), data.reports)
         : c.status === claimFilter),
   );
+  const candidateMatches = rankPotentialMatches<any>(data.matches).filter((m) =>
+    !!report(m.lost_report_id) && !!report(m.found_report_id) &&
+    !["Returned", "Archived", "Ready for Pickup"].includes(report(m.lost_report_id).status) &&
+    !["Returned", "Archived", "Ready for Pickup"].includes(report(m.found_report_id).status));
   const counts = [
     [
       "Found Items in Custody",
@@ -171,12 +176,7 @@ export default function AdminPortal({
     ],
     [
       "Potential Matches",
-      data.matches.filter(
-        (m: any) =>
-          !m.dismissed &&
-          active(report(m.lost_report_id) || {}) &&
-          active(report(m.found_report_id) || {}),
-      ).length,
+      candidateMatches.length,
     ],
     [
       "Pending Claims",
@@ -615,13 +615,7 @@ export default function AdminPortal({
               {section === "matches" && (
                 <div className="staff-stack">
                   <GeminiComparison reports={data.reports} onApplied={load} />
-                  {data.matches
-                    .filter(
-                      (m: any) =>
-                        !m.dismissed &&
-                        active(report(m.lost_report_id) || {}) &&
-                        active(report(m.found_report_id) || {}),
-                    )
+                  {candidateMatches
                     .map((m: any) => (
                       <section className="panel staff-panel" key={m.id}>
                         <div className="staff-panel-title">
@@ -681,7 +675,7 @@ export default function AdminPortal({
                         </div>
                       </section>
                     ))}
-                  {!data.matches.some((m: any) => !m.dismissed) && (
+                  {!candidateMatches.length && (
                     <div className="panel staff-empty">
                       No potential matches. Compatible reports are compared
                       automatically.

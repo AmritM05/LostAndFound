@@ -33,6 +33,10 @@ try {
     page.on('pageerror', e => {errors.push(e.message); console.error('Staff harness browser error:',e.message);});
     const report = (id,type) => ({id,type,name:`Synthetic ${type} earbuds`,category:'Electronics',location:'Unknown',status:'Matching',description:'Private sample description',image_paths:[],created_at:'2026-10-24T12:00Z'});
     const data = {reports:[report('lost','lost'),report('found','found')],matches:[{id:'match',lost_report_id:'lost',found_report_id:'found',score:98,factors:{Description:100},minutes_difference:15,distance_km:null,staff_reasoning:{eligible:true,classification:'very_strong_match',matchingFactors:['Same brand','Compatible model'],contradictions:[]}}], claims:[{id:'claim',match_id:'match',status:'Pending',display_name:'Synthetic claimant',email:'demo@example.test',answers:'Private ownership sample'}], pickups:[],zones:[{id:'desk',name:'Synthetic desk',active:true}],activity:[],buildings:[],notes:[]};
+    data.matches.push(
+      { ...data.matches[0], id: 'boundary-49', score: 49, staff_reasoning: {eligible:true,classification:'weak_match'} },
+      { ...data.matches[0], id: 'boundary-50', score: 50, staff_reasoning: {eligible:true,classification:'weak_match'} },
+    );
     await page.route('**/api/**', async route => {
       const path = new URL(route.request().url()).pathname;
       let response;
@@ -45,7 +49,9 @@ try {
     await page.goto(base);
     await page.getByText('Strong potential match',{exact:true}).waitFor();
     await page.getByText('Same brand · Compatible model',{exact:true}).waitFor();
-    await page.getByText(/Similarity ranking only; not an ownership probability/).waitFor();passed++;
+    assert.deepEqual((await page.locator('.staff-confidence').allTextContents()).map(s=>s.trim()),['Ranking index 98/100','Ranking index 50/100']);
+    await page.getByText('Weak potential match',{exact:true}).waitFor();passed++;
+    await page.getByText(/Similarity ranking only; not an ownership probability/).first().waitFor();passed++;
     if(process.env.STAFF_SCREENSHOT_DIR) await page.screenshot({path:`${process.env.STAFF_SCREENSHOT_DIR}/staff-matches-${width}.png`,fullPage:true});
     if (width===390) assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
     passed++;

@@ -1,3 +1,4 @@
+import { rankPotentialMatches } from "../lib/matchVisibility";
 import type { Item, Match } from "../lib/types";
 import {
   type MatchingItem, matchingPolicy, normalizedText, knownText,
@@ -53,10 +54,9 @@ export function assessMatch(lost: MatchingItem, found: MatchingItem, signals: Ma
     minutes: Number.isFinite(delta) ? Math.floor(delta + 0.5) : 0, policyVersion: matchingPolicy.version };
   if (contradictions.length) return { ...base, eligible: false, classification: "no_match", contradictions, matchingFactors: [], score: 0, factors: {} };
   const factors: Record<string, number> = {}, matchingFactors: string[] = [];
-  let numerator = 0, denominator = 0, identityFactors = 0;
-  const add = (name: string, score: number, weight: number, identity = true) => {
+  let numerator = 0, denominator = 0;
+  const add = (name: string, score: number, weight: number) => {
     factors[name] = Math.round(score); numerator += factors[name] * weight; denominator += weight;
-    if (identity) identityFactors++;
   };
   const attrs: number[] = [];
   for (const key of ["category", "type", "brand", "model"] as const) if (a[key] && b[key]) {
@@ -72,11 +72,9 @@ export function assessMatch(lost: MatchingItem, found: MatchingItem, signals: Ma
   const description = lexical === null ? semantic : semantic === null ? lexical : (lexical + semantic) / 2;
   if (description !== null) { add("Description", description, 20); if (description >= 60) matchingFactors.push("Similar description"); }
   if (validSignal(signals.imageSimilarity)) { add("Image similarity", signals.imageSimilarity * 100, 30); if (signals.imageSimilarity >= 0.6) matchingFactors.push("Similar images"); }
-  if (distance !== null) add("Location", Math.max(35, 100 - distance * 24), 10, false);
-  if (Number.isFinite(delta)) add("Time", Math.max(20, 100 - Math.abs(base.minutes) / 10), 10, false);
-  let score = denominator ? Math.min(99, Math.round(numerator / denominator)) : 0;
-  // Context/category alone cannot manufacture a strong identity match.
-  if (identityFactors < 2) score = Math.min(score, 59);
+  if (distance !== null) add("Location", Math.max(35, 100 - distance * 24), 10);
+  if (Number.isFinite(delta)) add("Time", Math.max(20, 100 - Math.abs(base.minutes) / 10), 10);
+  const score = denominator ? Math.min(99, Math.round(numerator / denominator)) : 0;
   return { ...base, eligible: true, classification: classifyMatch(score), contradictions: [], matchingFactors, score, factors };
 }
 /** Preserve the established student-safe Match shape; private assessment is separate. */
@@ -86,8 +84,6 @@ export function calculateMatchScore(lost: Item, found: Item): Match {
 }
 export function findMatches(items: Item[]): Match[] {
   const unique = [...new Map(items.map(i => [i.id, i])).values()];
-  return unique.filter(i => i.type === "lost").flatMap(l =>
-    unique.filter(i => i.type === "found").map(f => calculateMatchScore(l, f)))
-    .filter(m => m.score >= 60)
-    .sort((a, b) => b.score - a.score || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  return rankPotentialMatches(unique.filter(i => i.type === "lost").flatMap(l =>
+    unique.filter(i => i.type === "found").map(f => calculateMatchScore(l, f))));
 }

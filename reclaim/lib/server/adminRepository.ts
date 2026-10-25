@@ -1,3 +1,4 @@
+import { MIN_MATCH_SCORE } from "../matchVisibility";
 import type { Query } from "./repository";
 export function reportView(r: any, images: any[] = []) {
   return {
@@ -59,7 +60,7 @@ export function adminRepository(query: Query) {
         query(
           "select id,report_id from report_images where status='uploaded' and report_id is not null",
         ),
-        query("select * from potential_matches order by created_at desc"),
+        query("select m.* from potential_matches m join reports l on l.id=m.lost_report_id join reports f on f.id=m.found_report_id where (not m.dismissed and m.score >= $1 and coalesce(to_jsonb(m)->'staff_reasoning'->>'eligible','true')='true' and l.status not in ('Returned','Archived','Ready for Pickup') and f.status not in ('Returned','Archived','Ready for Pickup')) or exists(select 1 from claims c where c.match_id=m.id) order by m.score desc,m.id", [MIN_MATCH_SCORE]),
         query(
           "select c.*,u.email,u.display_name from claims c join users u on u.id=c.claimant_id order by c.created_at desc",
         ),
